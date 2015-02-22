@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^/change_password/$', views.change_password),
     url(r'^/profile/(?P<user_name>\w+)/$',views.profile),
     url(r'^/update_profile/$',views.update_profile),
+    url(r'^/update_profile_pic/$',views.update_profile_pic),
 )

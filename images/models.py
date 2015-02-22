@@ -1,6 +1,8 @@
 # Django Libraries
 from django.db import models
 from django.core.files.storage import FileSystemStorage
+from django.dispatch import receiver
+
 
 #Application specific import
 from register.models import User_info
@@ -73,3 +75,11 @@ class ProfileImage(models.Model):
     username = models.ForeignKey(User_info, blank=False, null=False)
 
 
+@receiver(models.signals.post_delete, sender=ProfileImage)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """Deletes file from filesystem
+    when corresponding `MediaFile` object is deleted.
+    """
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)

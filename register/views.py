@@ -396,3 +396,43 @@ def update_profile(request):
     except KeyError:
         return error_key(request)
 
+def update_profile_pic(request):
+    try:
+        is_loggedin, username = get_session_variables(request)
+        # User is not logged in
+        if not logged_in(request):
+            return HttpResponseRedirect('/register/login')
+        else:
+            user_details = get_object_or_404(User_info, username = username)
+            init_user_details = user_details.__dict__
+
+            #If method is not POST 
+            if request.method != 'POST':
+                #return form with old details
+                return render_to_response('register/update_profile_pic.html',\
+                    {'form':UpdateProfileForm(init_user_details),\
+                    'is_loggedin':is_loggedin, 'username':username},\
+                    RequestContext(request))
+
+            # If method is POST
+            else:
+                user_object = get_object_or_404(User_info, \
+                        username=username)
+                if 'image' in request.FILES:
+                    try:
+                        to_delete = ProfileImage.objects.get(username=username)
+                        to_delete.delete()
+                    except ProfileImage.DoesNotExist:
+                        pass
+                    profile_image = request.FILES['image']
+                    profile_image_object = ProfileImage \
+                            (image=profile_image, \
+                            username=user_object)
+                    profile_image_object.image.name = username + \
+                                                    ".jpg"
+                    profile_image_object.save()
+                redirect_url = "/register/profile/"+username+"/"
+                return HttpResponseRedirect(redirect_url)
+
+    except KeyError:
+        return error_key(request)
