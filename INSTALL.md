@@ -8,10 +8,9 @@ sudo apt-get install python-pip python-dev
 sudo pip install virtualenvwrapper
 ```
 ## Get the files
-As it is a private repository, you may have to click on the clone button
-to get a user specific clone link. 
+You can clone it directly from https://github.com/amfoss/website
 ```bash
-git clone https://YOURUSERNAME@bitbucket.org/fosswebsite/fosswebsite.git
+git clone https://github.com/amfoss/website.git
 ```
 ## Setup development environment
 First, some initialization steps. Most of this only needs to be done 
