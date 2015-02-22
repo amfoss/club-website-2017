@@ -143,6 +143,10 @@ body {
     line-height: 16px !important;
     height: auto !important;
 }
+#gsocuser ,#gsoclink {
+    color: black;
+}
+
 @media (min-width: 768px) {
     #masthead .well {
         margin: 0 !important;
