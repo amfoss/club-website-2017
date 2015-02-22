@@ -165,7 +165,7 @@ class UpdateArticleForm(ModelForm):
          required=True,
          label='Magazine',
          widget=forms.TextInput(
-            attrs={'placeholder': 'Mazagine Name'}
+            attrs={'placeholder': 'Magazine Name'}
          )
     )
 
