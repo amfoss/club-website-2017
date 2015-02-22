@@ -1,0 +1,74 @@
+{% if icpc_participants_final_list %}
+	<em><h3>FINALS</h3></em>
+	<table class="table table-bordered">
+    <thead>
+        <tr>
+        	
+            <th>Team</th>
+            <th>Participation Year</th>
+            <th>Ranking</th>
+            <th>Participants</th>
+        </tr>
+
+    </thead>
+    <tbody>
+	{% for icpc_final in icpc_participants_final_list %}
+	
+
+       	<tr>
+ 
+        	<td><b>{{icpc_final.0.team_name |title }}</b></td>
+        	<td>{{icpc_final.0.yr_of_participation}}</td>
+        	<td>{{icpc_final.0.ranking}}</td>
+        	<td>
+        		{% for p in icpc_final %}
+				
+					{% if p.1 %}
+						<a href = "/register/profile/{{p.1}}">{{p.0 | title}}</a><br>
+					{% else %}
+						{{p.0 | title}}<br>
+					{% endif %}
+				{% endfor %}
+			</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+	</table>	
+{% endif %}
+{% if icpc_participants_regional_list %}
+	<em><h3>REGIONALS</h3></em>
+	<table class="table table-bordered ">
+    <thead>
+        <tr>
+            <th>Team</th>
+            <th>Participation Year</th>
+            <th>Ranking</th>
+            <th>Participants</th>
+        </tr>
+
+    </thead>
+	<tbody>
+	{% for icpc_regionals in icpc_participants_regional_list %}
+
+
+
+    	<tr>
+        	<td  ><b>{{icpc_regionals.0.team_name | title }}</b></td>
+        	<td  >{{icpc_regionals.0.yr_of_participation}}</td>
+        	<td  >{{icpc_regionals.0.ranking}}</td>
+        	<td>
+        		{% for p in icpc_regionals %}
+					{% if p.1 %}
+						<a href = "/register/profile/{{p.1}}">{{p.0 | title}}</a><br>
+					{% else %}
+						{{p.0 | title}}<br>
+					{% endif %}
+				{% endfor %}
+			</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endif %}
+

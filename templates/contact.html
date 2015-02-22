@@ -1,0 +1,68 @@
+<div class="theme theme-2">
+    <h1 class="theme-2-h1 centered">Write to Us</h1>
+    <br>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <form role="form" method="post" action="/contact/" id="profileForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group" id="name">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <input type="text" class="form-control" name="sender_name" placeholder="Name"/>
+                </div><!--input-group-->
+            </div><!--form-group-->
+            <div class="form-group" id="email">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                    <input type="email" class="form-control" name="sender_email" placeholder="Email Address" required />
+                </div><!--input-group-->
+            </div><!--form-group-->
+            <div class="form-group" id="message">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-pencil"></i>
+                    </span>
+                    <textarea name="mail_text" class="form-control" rows="10" placeholder="Message"></textarea>
+                </div><!--input-group-->
+            </div><!--form-group-->
+            <div class="row"> <!--Captica and submit button goes in single row-->
+            	<div class="col-md-5">
+            		<div class="form-group">
+                		<div class="input-group">
+                			<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LfcYvkSAAAAAAW8UHVHw3oBuF7S5NJZ-jnBUxn1">
+                			</script>
+             
+             
+               				<noscript>
+                    			<iframe src="http://www.google.com/recaptcha/api/noscript?k=6LfcYvkSAAAAAAW8UHVHw3oBuF7S5NJZ-jnBUxn1" height="300" width="500" frameborder="0"></iframe><br>
+			                    <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+            			        <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
+                			</noscript>
+                 		</div>
+                 
+                		{% ifequal captcha 'false' %}
+                    		<div class="alert alert-danger">
+                    		    Incorrect Captcha
+                    		</div><!--error-msg has-error-->
+                		{% endifequal %}
+               
+            		</div><!-- form-group-->
+          		</div><!--col-md-5-->
+                <div class="col-md-5"> 
+                    
+                </div>
+
+                <div class="col-md-2">
+
+                    <input type="submit" name="contact_button" id="contact_id" value="Send" class="btn btn-info btn-block">
+                </div><!--col-md-4-->
+                
+          	</div><!--row-->
+        </form>
+    </div><!--col-md-8-->
+    <div class="col-md-2"></div>
+</div><!--theme theme-2-->

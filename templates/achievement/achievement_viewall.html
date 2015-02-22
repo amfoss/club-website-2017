@@ -1,0 +1,169 @@
+{% extends 'static/base2.html' %}
+{% block title %}Achievements{% endblock title %}
+{% block script %}
+{% endblock script %}
+{% block body %}
+<div class="theme theme-2" id="contribution" data-slide="1">
+    <div class="container">
+    <h1 class="theme-2-h1">
+            <i class="fa fa-share-alt"></i> Contribution
+        </h1>
+        <div class='contact_div'>
+            {% if contrib_list %}
+            <br>
+            {% include 'achievement/contrib_view.html' %}
+            <a href = "/achievement/contribution/">
+                <button class="btn btn-default" type="button">
+                    View all Contribution <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </a>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                <p>Sorry, No data to display</p>
+            </div><!--alert alert-info-->
+            {% endif %}
+        </div><!--contact-div-->
+    </div><!--container-->
+</div><!--theme theme-2-->
+
+<div class="theme theme-3" id="article"  data-slide="2">
+    <div class="container">
+    <h1 class="theme-3-h1">
+            <i class="fa fa-file-text"></i> Article
+        </h1>   
+        <div class='contact_div'>
+            {% if article_list %}
+            <br>
+            {% include 'achievement/article_view.html' %}
+            <a href = "/achievement/articles/">
+                <button class="btn btn-default"  type="button">
+                    View all Article <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </a>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                <p>Sorry, No data to display</p>
+            </div><!--alert alert-info-->
+            {% endif %}
+        </div><!--contact-div-->
+    </div><!--container-->
+</div><!--theme theme-3-->
+
+<div class="theme theme-1" id="gsoc"  data-slide="3">
+    <div class="container">
+    <h1 class="theme-2-h1">
+            <i class="fa fa-google-plus"></i> GSoC
+        </h1>
+        <div class='contact_div'>
+            {% if gsoc_list %}
+            <br>
+            {% include 'achievement/gsoc_view.html' %}
+            <a href = "/achievement/gsoc/">
+                <button class="btn btn-default" type="button">
+                    View all GSoC <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </a>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                <p>Sorry, No data to display</p>
+            </div><!--alert alert-info-->
+            {% endif %}
+        </div><!--contact-div-->
+    </div><!--container-->
+</div><!--theme theme-1-->
+
+<div class="theme theme-2" id="internship" data-slide="4">
+    <div class="container">
+    <h1 class="theme-2-h1">
+            <i class="fa fa-graduation-cap"></i> Internship
+        </h1>
+        <div class='contact_div'>
+            {% if intern_list %}
+            <br>
+            {% include 'achievement/intern_view.html' %}
+            <a href = "/achievement/interns/">
+                <button class="btn btn-default" type="button">
+                    View all Internship <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </a>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                <p>Sorry, No data to display</p>
+            </div><!--alert alert-info-->
+            {% endif %}
+        </div><!--contact-div-->
+    </div><!--container-->
+</div><!--theme theme-1-->
+
+<div class="theme theme-3" id="speaker" data-slide="5">
+    <div class="container">
+    <h1 class="theme-3-h1">
+            <i class="fa fa-bullhorn"></i> Speaker
+        </h1>
+        <div class='contact_div'>
+            {% if speaker_list %}
+            <br>
+            {% include 'achievement/speaker_view.html' %}
+            <a href = '/achievement/speakers/'>
+                <button class="btn btn-default" type="button">
+                    View all Speakers <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </a>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                <p>Sorry, No data to display</p>
+            </div><!--alert alert-info-->
+            {% endif %}
+        </div><!--contact-div-->
+    </div><!--container-->
+</div><!--theme theme-3-->
+
+
+<div class="theme theme-1" id="acmicpc" data-slide="6">
+    <div class="container">
+        <h1 class="theme-1-h1">
+            <i class="fa fa-code"></i> ACM-ICPC coders
+        </h1>
+        <div class='contact_div'>
+            {% if icpc_participants_regional_list or icpc_participants_final_list %}
+            <br>
+            {% include 'achievement/icpc_view.html' %}
+            <a href = '/achievement/icpc/'>
+                <button class="btn btn-default" type = "button">
+                    View all ICPC Participants <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </a>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                <p>Sorry, No data to display</p>
+            </div><!--alert alert-info-->
+            {% endif %}
+        </div><!--contact-div-->
+    </div><!--container-->
+</div><!--theme theme-1-->
+
+<!--
+<div class="theme theme-2" id="contest" data-slide="7">
+    <div class="container">
+        <h1 class="theme-2-h1">
+            <i class="fa fa-dashboard"></i> Contest winners
+        </h1>
+        <div class='contact_div'>
+            {% if contest_list %}
+            <br>
+            {% include 'achievement/contest_view.html' %}
+            <a href = '/contest/viewall'>
+                <button class="btn btn-default" type="button">
+                    View all the contest <i class="fa fa-arrow-circle-right"></i>
+                </button>
+            </a>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                <p>Sorry, No data to display</p>
+            </div><!--alert alert-info
+            {% endif %}
+        </div><!--contact-div
+    </div><!--container
+</div><!--theme theme-1
+{% endblock body %}
+-->

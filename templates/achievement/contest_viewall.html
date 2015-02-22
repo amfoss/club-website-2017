@@ -1,0 +1,16 @@
+{% extends 'static/base.html' %}
+{% block title %}
+Contest's Won
+{% endblock %}
+{% block body_content %}
+
+	{% if contest_list %}
+        <h1 class="theme-2-h1">
+            <i class="fa fa-dashboard"></i> Contest winners
+        </h1>
+
+		{% include 'achievement/contest_view.html' %}
+	{% endif %}
+
+{% endblock %}
+

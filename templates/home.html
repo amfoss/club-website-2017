@@ -1,0 +1,142 @@
+{% extends 'static/base.html' %}
+{% block title %}FOSS@amrita{% endblock title %}
+{% block script %}
+<script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrapValidator.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $('#profileForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+            fields: {
+                sender_name : {
+                    validators : {
+                        notEmpty: {
+                            message: 'The name cannot be empty'  
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 50,
+                            message: 'The name must be more than 2 and less than 50 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: 'The name can only consist of alphabetical, number and underscore'
+                        }
+                    }
+                }, 
+                mail_text : {
+                    validators : {
+                        notEmpty: {
+                            message: 'The name cannot be empty'  
+                        },
+                    }
+                }, 
+                email : {
+                    validators : {
+                        notEmpty: {
+                            message: 'Email cannot be empty'  
+                        },
+                        emailAddress: {
+                            message: 'The input is not a valid email address'
+                        }, 
+                    }
+                }
+            }
+        });
+});
+</script>
+    {% if captcha_error %}
+    <script type="text/javascript">
+        alert("Give Captcha");
+        window.location="/#slide-5";
+    </script>
+    {% endif %}
+{% endblock script %}
+{% block body %}
+<div class="slide" id="slide-1" data-slide="1">
+    <div class="header-bg"></div>
+    <div class="pattern"></div>
+    <div class="container">
+        <div id="home-row-1" class="row clearfix">
+        </div><!--home-row-1-->
+        <div id="home-row-2" class="row clearfix">
+        </div><!--home-row-2-->
+    </div><!--container-->
+    <h1 class="theme-1-h1"> Your Freedom begins here </h1>
+</div><!--slide-1-->
+<div class="theme theme-2" id="slide-2" data-slide="2">
+    <div class="container">
+        <h1 class="theme-2-h1 centered">FOSS is Free and Open Source Technology</h1>
+        <div class="row theme-2-p">
+        FOSS is a term inclusive of free software and open source software.
+        It is an approach, that is now gaining more recognition due to its 
+        potential benefits, in addition to providing an ideal platform for 
+        learning. With liberally licensed software that allows users to study, 
+        copy, and modify code students can enhance their learning in the vast 
+        and multiplying fields of computer science.
+
+        FOSS@Amrita is a student community at Amrita University. Being one of 
+        the most active student communities in the campus, we encourage, 
+        support and mentor students to improve their technical and social 
+        skills through contributing to open source.
+
+        We aim at encouraging students to embrace the free and open source 
+        approach that is fast gaining momentum. We’re a community of students 
+        that support and guide each other towards making open source 
+        contributions, and towards the usage of free software.
+        </div><!--row content-row-->
+    </div><!--container-->
+</div><!--theme theme-1-->
+<div class="slide theme" id="slide-4" data-slide="4">
+    <h1 class="theme-3-h1 centered">Connect With Us</h1>
+        <h3 class="theme-1-h2">
+            We'd enjoy connecting with you!<br/>
+            Interact with us through comments, questions, <br/>
+            suggestions, topic discussions etc.
+        </h3>
+    <div class="container">
+        <div id="contact-row-4" class="row centered">
+            <div class="col-12 col-sm-3 with-hover-text">
+                <p><i class="fa fa-phone button"></i>
+                    <br>943792737287
+                </p>
+            </div><!-- col12 -->
+            <div class="col-12 col-sm-3 with-hover-text">
+                <p>
+                <i class="fa fa-home button"></i><br>
+                    Amritapuri, Kollam, Kerala
+                </p>
+            </div><!-- /col12 -->
+            <div class="col-12 col-sm-3 with-hover-text">
+                <p>
+                    <a target="_blank" href="https://www.facebook.com/FossatAmrita">
+                        <i class="fa fa-facebook button"></i><br/>
+                    Fb/FossatAmrita
+                    </a>
+                </p>
+            </div><!-- /col12 -->
+            <div class="col-12 col-sm-3 with-hover-text">
+                <p>
+                    <a target="_blank" href="https://www.twitter.com/FossatAmrita">
+                        <i class="fa fa-twitter button"></i><br/>
+                        Twitter/FossAtAmrita
+                    </a>
+                </p>
+            </div><!-- /col12 -->
+        </div><!-- /row -->
+    </div><!--container-->
+</div><!-- slide-4 --> 
+<div class="slide theme" id="slide-5" data-slide="5">
+    {% if captcha_error %}
+
+    {% endif %}
+{% include 'contact.html' %}
+</div>
+{% endblock body %}
+

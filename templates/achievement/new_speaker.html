@@ -1,0 +1,83 @@
+{% extends 'static/base.html' %}
+{% load achievements_extras %}
+{% block title %}
+Add an Article information
+{% endblock %}
+{% block script %}
+{{ form.media }}
+{% endblock script %}
+{% block body %}
+<div class="container">
+    <br>
+    <div class="jumbo-header">
+        <h1> Add Speaker Details</h1>
+    </div><!--page-header-->
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if error %}
+            {{ error }}<br>
+            {% endif %}
+            {% for field in form.visible_fields %}
+            <div id="div_{{ field.html_name }}"
+                class="form-group{% if field.errors %} has-error{% endif %}">
+                    {% if field.name == "title" %}
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-file fa-fw"></i>
+                        </span>
+                        {{ field|addcss:"form-control" }}
+                    </div><!--input-group--> 
+                    {% elif field.name == "speaker_type" %}
+                    <label>Speaker type</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-microphone fa-fw"></i>
+                        </span>
+                        {{ field|addcss:"form-control" }}
+                    </div><!--input-group--> 
+                    {% elif field.name == "conference_name" %}
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-wifi fa-fw"></i>
+                        </span>
+                        {{ field|addcss:"form-control" }}
+                    </div><!--input-group--> 
+                    {% elif field.name == "speaker_url" %}
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-chain fa-fw"></i>
+                        </span>
+                        {{ field|addcss:"form-control" }}
+                    </div><!--input-group--> 
+                    {% elif field.name == "year" %}
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar fa-fw"></i>
+                        </span>
+                        {{ field|addcss:"form-control" }}
+                    </div><!--input-group--> 
+                    {% else %}
+                    {{ field|addcss:"form-control" }}
+                    {% endif %}
+                    <div class="text-muted pull-right">
+                        <small>{{ field.help_text }}</small>
+                    </div><!--form-group-->
+                    <span class="help-block">
+                        {% for error in field.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </span><!--help-block-->
+                </div><!--div_{{field.html_name}}-->
+            {% endfor %}
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary btn-block">Add</button>
+            </div>
+            <div class="col-md-4"></div>
+        </form>
+    </div><!--col-md-8-->
+    <div class="col-md-4"></div>
+</div><!--container-->
+{% endblock body %}

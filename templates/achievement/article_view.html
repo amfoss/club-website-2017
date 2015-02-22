@@ -1,0 +1,26 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Magazine</th>
+            <th>Title</th>
+            <th>Area</th>
+            <th>Date</th>
+        </tr>	    
+    </thead>
+    <tbody>
+    {% for c in article_list %}
+    <tr>		
+        <td>
+            <a href="/register/{{c.username.username}}/profile" target="_blank">
+                {{ c.username.firstname | title }} {{ c.username.lastname | title }}
+            </a>
+        </td>
+        <td>{{ c.magazine_name }}</td>
+        <td>{{ c.title }}</td>
+        <td>{{ c.area }}</td>
+        <td>{{ c.publication_date }}</td> 
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

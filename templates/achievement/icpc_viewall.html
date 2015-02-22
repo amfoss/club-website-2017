@@ -1,0 +1,52 @@
+{% extends 'static/base.html' %}
+{% block title %}
+ACM ICPC
+{% endblock %}
+{% block body_content %}
+
+    {% if icpc_participants_list %}
+        <h1 class="theme-1-h1">
+            <i class="fa fa-code"></i> ACM-ICPC coders
+        </h1>
+
+		<!--{% include 'achievement/icpc_view.html' %} -->
+		<table class="table table-bordered ">
+    	<thead>
+        	<tr>
+        		<th></th>
+	            <th>Team</th>
+    	        <th>Participation Year</th>
+        	    <th>Ranking</th>
+            	<th>Participants</th>
+        	</tr>
+
+    	</thead>
+	    <tbody>
+	    	
+		{% for icpc in icpc_participants_list %}
+    		<tr>
+ 				<td><b>{{icpc.0.level | title}}</td>
+        		<td><b>{{icpc.0.team_name}}</b></td>
+        		<td>{{icpc.0.yr_of_participation}}</td>
+        		<td>{{icpc.0.ranking}}</td>
+        		<td>
+        			{% for p in icpc %}
+
+        				
+						{% if p.1 %}
+							<a href = "/register/profile/{{p.1}}">{{p.0 | title}}</a><br>
+						{% else %}
+							{{p.0 | title}}<br>
+						{% endif %}
+					{% endfor %} 
+				</td>
+        	</tr>
+    	{% endfor %}
+    	</tbody>
+    	</table>
+
+
+	{% endif %}
+
+{% endblock %}
+

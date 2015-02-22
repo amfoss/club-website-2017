@@ -1,0 +1,23 @@
+{% extends "static/base.html" %}
+
+{% block title %}D'oh!{% endblock %}
+{% block header_title %}
+<h2><i class="fa fa-frown-o"></i>
+    Oops!</h2>
+{% endblock header_title %}
+{% block body %}
+<div class="container">
+    <div class="page-header">
+        <h1>Oh, Crap!</h1>
+    </div><!--page-header-->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="alert alert-info">
+                <p>You tried something you shouldn't have <i class="fa fa-smile-o fa-fw"></i>
+                or we screwed up. In case of the latter, tell us what happened at
+                <a href="mailto:amritapurifoss@gmail.com?subject=[Found_a_bug_in_FOSS_Website]" target="_blank">amritapurifoss@gmail.com</a></p>
+            </div><!--alert alert-info-->
+        </div><!--col-md-8-->
+    </div><!--row-->
+</div><!--container-->
+{% endblock %}

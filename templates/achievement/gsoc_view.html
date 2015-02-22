@@ -1,0 +1,30 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Organization</th>
+            <th>Project title</th>
+            <th>Mentor</th>
+            <th>Url</th>
+        </tr>	
+    </thead>
+    <tbody>
+    {% for c in gsoc_list %}
+    <tr>	
+        <td>
+            <a href="/register/{{c.username.username}}/profile" target="_blank">
+                {{ c.username.firstname | title }} {{ c.username.lastname | title }}
+            </a>
+        </td>
+        <td>{{ c.organization }}</td>
+        <td>{{ c.project_title }}</td>
+        <td>{{ c.mentor_name }}</td>
+        <td>
+            <a href="{{ c.gsoc_url" target="_blank">
+                {{ c.gsoc_url }}
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

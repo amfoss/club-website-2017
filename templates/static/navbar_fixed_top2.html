@@ -1,0 +1,158 @@
+{% block script %}
+<script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // navigation click actions 
+    $('.scroll-link').on('click', function(event){
+        event.preventDefault();
+        var sectionID = $(this).attr("data-id");
+        scrollToID('#' + sectionID, 1500);
+    });
+    // scroll to top action
+    $('.scroll-top').on('click', function(event) {
+        event.preventDefault();
+        $('html, body').animate({scrollTop:0}, 'slow');         
+    });
+    // mobile nav toggle
+    $('#nav-toggle').on('click', function (event) {
+        event.preventDefault();
+        $('#main-nav').toggleClass("open");
+    });
+});
+// scroll function
+function scrollToID(id, speed){
+    var offSet = 50;
+    var targetOffset = $(id).offset().top - offSet;
+    var mainNav = $('#main-nav');
+    $('html,body').animate({scrollTop:targetOffset}, speed);
+    if (mainNav.hasClass("open")) {
+        mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+        mainNav.removeClass("open");
+    }
+}
+if (typeof console === "undefined") {
+    console = {
+        log: function() { }
+    };
+}
+</script>
+{% endblock script %}
+<!-- NAVBAR
+================================================== -->
+<nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <i class="icon-bar"></i>
+                <i class="icon-bar"></i>
+            </button>
+            <a class="navbar-brand" href="/"><i class="fa fa-linux"></i> AM-FOSS</a>
+        </div><!--navbar-header-->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" role="navigation" id="navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% if request.path == '/achievement/viewall/' %}
+                <li data-slide="1" class="{% ifequal request.path '/achievement/viewall#contribution' %}active{% endifequal %}">
+                    <a data-id="contribution" href="#" class="scroll-top">
+                        <i class="fa fa-share-alt"></i> Contribution
+                    </a>
+                </li>
+                <li data-slide="2" class="{% ifequal request.path '/achievement/viewall#article' %}active{% endifequal %}">
+                    <a data-id="article" href="#" class="scroll-link">
+                        <i class="fa fa-file-text"></i> Article
+                    </a>
+                </li>
+                <li data-slide="3" class="{% ifequal request.path '/achievement/viewall#gsoc' %}active{% endifequal %}">
+                    <a data-id="gsoc" href="#" class="scroll-link">
+                        <i class="fa fa-google-plus"></i> GSoC
+                    </a>
+                </li>
+                <li data-slide="4" class="{% ifequal request.path '/achievement/viewall#internship' %}active{% endifequal %}">
+                    <a data-id="internship" href="#" class="scroll-link">
+                        <i class="fa fa-graduation-cap"></i> Internship
+                    </a>
+                </li>
+                <li data-slide="5" class="{% ifequal request.path '/achievement/viewall#speaker' %}active{% endifequal %}">
+                    <a data-id="speaker" href="#" class="scroll-link">
+                        <i class="fa fa-bullhorn"></i> Speaker
+                    </a>
+                </li>
+                <li data-slide="6" class="{% ifequal request.path '/achievement/viewall#acmicpc' %}active{% endifequal %}">
+                    <a data-id="acmicpc" href="#" class="scroll-link">
+                        <i class="fa fa-code"></i> ACM-ICPC
+                    </a>
+                </li>
+                <li data-slide="7" class="{% ifequal request.path '/achievement/viewall#contest' %}active{% endifequal %}">
+                    <a data-id="contest" href="#" class="scroll-link">
+                        <i class="fa fa-dashboard"></i> Contest
+                    </a>
+                </li>
+                {% else %}
+                <li class="{% ifequal request.path '/achievement/viewall#contribution' %}active{% endifequal %}">
+                    <a data-id="contribution" href="/achievement/viewall#contribution">
+                        <i class="fa fa-share-alt"></i> Contribution
+                    </a>
+                </li>
+                <li class="{% ifequal request.path '/achievement/viewall#article' %}active{% endifequal %}">
+                    <a data-id="article" href="/achievement/viewall#article">
+                        <i class="fa fa-file-text"></i> Article
+                    </a>
+                </li>
+                <li class="{% ifequal request.path '/achievement/viewall#gsoc' %}active{% endifequal %}">
+                    <a data-id="gsoc" href="/achievement/viewall#gsoc">
+                        <i class="fa fa-google-plus"></i> GSoC
+                    </a>
+                </li>
+                <li class="{% ifequal request.path '/achievement/viewall#internship' %}active{% endifequal %}">
+                    <a data-id="internship" href="/achievement/viewall#internship">
+                        <i class="fa fa-graduation-cap"></i> Internship
+                    </a>
+                </li>
+                <li class="{% ifequal request.path '/achievement/viewall#speaker' %}active{% endifequal %}">
+                    <a data-id="speaker" href="/achievement/viewall#speaker">
+                        <i class="fa fa-bullhorn"></i> Speaker
+                    </a>
+                </li>
+                <li class="{% ifequal request.path '/achievement/viewall#acmicpc' %}active{% endifequal %}">
+                    <a data-id="acmicpc" href="/achievement/viewall#acmicpc">
+                        <i class="fa fa-code"></i> ACM-ICPC
+                    </a>
+                </li>
+                <li class="{% ifequal request.path '/achievement/viewall#contest' %}active{% endifequal %}">
+                    <a data-id="contest" href="/achievement/viewall#contest">
+                        <i class="fa fa-dashboard"></i> Contest
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not is_loggedin %}
+                <li class="{% ifequal request.path '/register/login' %}active{% endifequal %}">
+                    <a href="/register/login"><i class="fa fa-sign-in fa-fw"></i> Login</a>
+                </li>
+                {% else %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user fa-fw"></i> {{ username }}<span class="caret"></span> 
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/register/mypage">
+                                <i class="fa fa-user"></i> My pages
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/register/change_password">
+                                <i class="fa fa-lock"></i> Change Password
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/register/logout"><i class="fa fa-power-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div><!--collapse-->
+    </div><!--container-->
+</nav> <!-- navbar navbar-inverse -->

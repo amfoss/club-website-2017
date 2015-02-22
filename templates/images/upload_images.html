@@ -1,0 +1,12 @@
+{% extends 'static/base.html' %}
+{% block body %}
+Add images of a new event
+<form method="post" action="" enctype="multipart/form-data" >
+    {% csrf_token %}
+        Event Name: {{ form.folder_name }} <br>
+        Event Description: {{ form.folder_description }} <br>
+        Event Type: {{ form.folder_type }} <br> <br>
+     Select images: <input type="file" name="image" multiple> <br>
+    <button name='submit' >Upload</button>
+</form>
+{% endblock %}

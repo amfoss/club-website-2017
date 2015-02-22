@@ -1,0 +1,320 @@
+{% extends 'static/base.html' %}
+{% block title %}
+Login page
+{% endblock %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="thumbnail">
+                <img src="{{ STATIC_URL }}images/profile_image/{{ image_name }}" 
+                    class="img-rounded img-thumbnail img-responsive"
+                    alt="{{ image_name }}" height="107" width="107">
+                <div class="caption centered">
+                    <strong>{{ user_object.firstname | title }} 
+                        {{ user_object.lastname | title }} </strong>
+                </div><!--caption-->
+            </div><!--thumbnail-->
+        </div><!--col-sm-2-->
+        <div class="col-sm-6">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <td>
+                        <strong>Email</strong> 
+                    </td>
+                    <td>
+                        {{ user_email }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Interests</strong>
+                    </td>
+                    <td>
+                        {{ user_object.interest }}
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        <strong>Expertise</strong> 
+                    </td>
+                    <td>
+                        {{ user_object.expertise }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Blog URL</strong>
+                    </td>
+                    <td>
+                        {% if user_object.blog_url %}
+                            {{user_object.blog_url }}
+                        {% else %}
+                            _
+                        {% endif %}
+
+                    </td>
+                </tr>
+                    <tr>
+                    <td>
+                        <strong>Twitter ID</strong>
+                    </td>
+                    <td>
+                        {% if user_object.twitter_id %}
+                            {{user_object.twitter_id }}
+                        {% else %}
+                            _
+                        {% endif %}
+
+                    </td>
+               </tr>
+               <tr>
+                    <td>
+                        <strong>Topcoder Handle</strong>
+                    </td>
+                    <td>
+                        {% if user_object.topcoder_handle %}
+                            {{user_object.topcoder_handle }}
+                        {% else %}
+                            _
+                        {% endif %}
+                    </td>
+                </tr>               
+                <tr>
+                    <td>
+                        <strong>Github ID</strong>
+                    </td>
+                    <td>                       
+                        {% if user_object.github_id %}
+                            {{user_object.github_id }}
+                        {% else %}
+                            _
+                        {% endif %}
+                   </td>
+               </tr>
+               <tr>
+                    <td>
+                        <strong>Bitbucket ID</strong>
+                    </td>
+                    <td>
+                        {% if user_object.bitbucket_id %} 
+                            {{user_object.bitbucket_id }}
+                        {% else %}
+                            _
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Typing Speed</strong>
+                    </td>
+                    <td>
+                        {{ user_object.typing_speed }} WPM
+                    </td>
+                </tr>
+           </table>
+        </div><!--col-sm-6-->
+        <div class="col-sm-4"></div>
+    </div><!--row-->
+
+    <!--CONTRIBUTIONS-->
+    {% if contributions %}
+    <div class="page-header">
+        <h1><i class="fa fa-share-alt"></i> Contributions</h1>
+    </div><!--page-header-->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Organization</th>
+                <th>Ticket</th>
+                <th>URL</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+	    {% for c in contributions %}
+        <tbody>
+            <tr>
+                <td>{{ c.org_name |title}}</td>
+                <td>{{ c.bug_id }}</td>
+                <td>
+                    <a href="{{ c.bug_url }}" target="_blank">
+                        {{ c.bug_url }}
+                    </a>
+                </td>
+	            <td>{{ c.bug_description }}</td>
+                <td>
+                {% if c.username.username == username %}
+                <a href="/achievement/contribution/update/{{c.achievement_id.achievement_id}}/" target="_blank">
+                    Update
+                </a>
+                {% endif %}
+                </td>
+            </tr>
+        </tbody>
+	    {% endfor %}
+    </table>
+    {% endif %}
+
+    <!--SPEAKERS-->
+    {% if speakers %}
+    <div class="page-header">
+        <h1><i class="fa fa-bullhorn"></i> Speaker</h1>
+    </div><!--page-header-->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Conference</td>
+                <td>Type</td>
+                <td>URL</td>
+            </tr>
+        </thead>
+        {% for s in speakers %}
+        <tbody>
+            <tr>
+                <td>
+                    {{ s.conference_name | title }}, {{s.year}} 
+                </td>
+                <td>{{ s.speaker_type }}</td>
+                <td>{{ s.title }} </td>
+                <td>
+                    <a href="{{ s.speaker_url }}" target="_blank">
+                        {{ s.speaker_url }}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!--ARTICLES-->
+    {% if articles %}
+    <div class="page-header">
+        <h1><i class="fa fa-file-text"></i> Articles Published</h1>
+    </div><!--page-header-->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Magazine</th>
+                <th>Title</th>
+                <th>Area</th>
+                <th>Publication date</th>
+                <th></th>
+            </tr>
+        </thead>
+        {% for a in articles %}
+        <tbody>
+            <tr>
+                <td>{{ a.magazine_name | title}}</td>
+                <td>{{ a.title | title }}</td>
+                <td>{{ a.area | title}}</td>
+                <td>{{ a.publication_date }}</td>
+                <td>
+                    {% if a.username.username == username %}
+                    <a href="/achievement/article/update/{{a.achievement_id.achievement_id}}/" target="_blank">
+                    Update
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <!--GSOC-->
+    {% if gsoc %}
+    <div class="page-header">
+        <h1><i class="fa fa-google-plus"></i> Google Summer Of Code</h1>
+    </div><!--page-header-->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Organization</th>
+                <th>Project</th>
+                <th>URL</th>
+                <th>Mentor</th>
+            </tr>
+        </thead>
+	    {% for g in gsoc %}
+        <tbody>
+            <tr>
+                <td>{{ g.organization | title}}</td>
+                <td>{{ g.project_title | title }}</td>
+                <td>
+                    <a href="{{ g.gsoc_url }}" target="_blank">
+                        {{ g.gsoc_url }}
+                    </a>
+                </td>
+                <td>{{ g.mentor_name }}</td>
+            </tr>
+        </tbody>
+	    {% endfor %}	
+    </table>
+    {% endif %}
+
+    <!--INTERNSHIPS-->
+    {% if interns %}
+    <div class="page-header">
+        <h1>Internships</h1>
+    </div><!--page-header-->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Organization</th>
+                <th>Project</th>
+                <th>Period</th>
+                <th></th>
+            </tr>
+        </thead>
+	    {% for internship in interns %}
+        <tbody>
+            <tr>
+	            <td>{{ internship.intern_type | title }}</td>
+                <td>{{ internship.place }}</td>
+                <td>{{ internship.period }}</td>
+                <td>
+                    {% if internship.username.username == username %}
+                    <a href="/achievement/intern/update/{{internship.achievement_id.achievement_id}}/" target="_blank">
+                    Update
+                    </a>
+                    {% endif %}
+                </td>
+
+            </tr>
+        </tbody>
+	    {% endfor %}	
+    </table>
+    {% endif %}
+    
+    {% if icpc_achievement %}
+    <div class="page-header">
+        <h1><i class="fa fa-google-plus"></i> ICPC Achievements </h1>
+    </div><!--page-header-->
+    <table class="table table-bordered ">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Team</th>
+                <th>Participation Year</th>
+                <th>Ranking</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            
+        {% for icpc in icpc_achievement %}
+            <tr>
+                <td><b>{{icpc.level | title}}</td>
+                <td><b>{{icpc.team_name}}</b></td>
+                <td>{{icpc.yr_of_participation}}</td>
+                <td>{{icpc.ranking}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {% endif %}
+</div><!--container-->
+{% endblock body %}

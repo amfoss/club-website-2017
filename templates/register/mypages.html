@@ -1,0 +1,187 @@
+{% extends 'static/base.html' %}
+{% block title %}
+My Page
+{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="jumbotron">
+        <div class="jumbo-header">
+            <h1>{{ firstname }}&nbsp;{{ lastname }}</h1>
+        </div><!--page-header-->
+    </div><!--jumbotron-->
+    <div class="row">
+        <!--VIEW FULL PROFILE-->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <a href="/register/profile/{{ username }}">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-user fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>View Full Profile</div>
+                                <div>{{ firstname}}&nbsp;{{ lastname }}</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <a href="/register/update_profile/">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-user fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>Edit profile</div>
+                                <div>{{ firstname}}&nbsp;{{ lastname }}</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+        <!-- NEW CONTRIBUTION -->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <a href="/achievement/new/contribution/">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-share-alt fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>New OpenSource Contribution</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+        <!-- SPEAKER -->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <a href="/achievement/new/talk/">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-bullhorn fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>New Talk</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+        <!--ARTICLE-->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <a href="/achievement/new/article/">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-file-text fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>New Article</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+    
+        <!--ADD INTERNSHIP DETAILS-->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <a href="/achievement/new/intern">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-graduation-cap fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>Add Internship details</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+        <!--ADD ICPC DETAILS-->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <a href="/achievement/new/icpc">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-share-alt fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>Add ICPC achievement</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+        <!--ADD CONTEST ACHEIVEMENTS 
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <a href="/achievement/new/contest/">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-dashboard fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>Add contest achievements</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div><!--col-lg-4 col-md-6-->
+        <!-- ADD GOOGLE OF SUMMER CODE-->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <a href="/achievement/new/gsoc/">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-google-plus fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>Add Google Summer of Code Experience</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+        <!--ADD NEW EVENT IMAGES -->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <a href="/images/new">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-dashboard fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div>Add new Event Images</div>
+                            </div><!--col-xs-9 text-right-->
+                        </div><!--row-->
+                    </div><!--panelheading-->
+                </a>
+            </div><!--panel-->
+        </div><!--col-lg-4 col-md-6-->
+    </div><!--row-->
+</div><!--container-->
+{% endblock body %}

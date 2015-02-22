@@ -1,0 +1,58 @@
+{% block script%}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+            ['Organization', 'No. of Bug Fix'],
+                {% for key, values in contrib_org.items %}
+                    ['{{key}}', {{ values }}],
+                {% endfor %}
+            ]);
+
+    var options = {
+        title: 'Contribution Stats',
+        backgroundColor: 'transparent',
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+}
+</script>
+{% endblock script%}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Bug id</th>
+            <th>Url to the bug</th>
+            <th>Organization</th>
+            <th>Bug description</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for c in contrib_list %}
+    <tr>
+        <td>
+            <a href="/register/profile/{{c.username.username}}/" target="_blank">
+                {{ c.username.firstname | title }} {{ c.username.lastname | title }}
+            </a>
+        </td>
+        <td>{{ c.bug_id }}</td>
+        <td>
+            <a href="{{ c.bug_url }}" target="_blank">
+                {{ c.bug_url }}
+            </a>
+        </td>
+        <td>{{ c.org_name }}</td>
+        <td>{{ c.bug_description }}</td>  
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div id="piechart" style="width: 900px; height: 550px; background:#ECF0F1;"></div>

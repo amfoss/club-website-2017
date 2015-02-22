@@ -1,0 +1,33 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Conference</th>
+            <th>URL</th>
+            <th>Year</th>
+        </tr>	
+    </thead>
+    <tbody>
+    {% for s in speaker_list %}
+    <tr>
+        <td>
+            <a href="/register/profile/{{s.username.username}}/" target="_blank">
+                {{ s.username.firstname | title }} {{ s.username.lastname | title }}
+            </a>
+        </td>
+        <td>{{ s.speaker_type }}</td>
+        <td>{{ s.title }}</td>
+        <td>{{ s.conference_name }}</td>
+        <td>
+            <a href="{{ s.speaker_url }}" target="_blank">
+                {{ s.speaker_url }}
+            </a>
+        </td>
+        <td>{{ s.year }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

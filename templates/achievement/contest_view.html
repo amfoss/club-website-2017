@@ -1,0 +1,14 @@
+{% for c in contest_list %}
+	<b>{{c.contest_name}}</b><br/>
+	<a href = "{{c.contest_url}}">{{c.contest_url}}</a></br>
+	Participants: 
+	{% for p in contest_participant_list %}
+		{% if p.contest_id.contest_id == c.contest_id %}
+			{{p.name}}
+		{% endif %}
+	{% endfor %}
+	<br/>
+	{{ c.description }}
+	<hr/>
+{% endfor %}
+

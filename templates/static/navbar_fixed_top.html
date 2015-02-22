@@ -1,0 +1,118 @@
+{% block script %}
+<script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // navigation click actions 
+    $('.scroll-link').on('click', function(event){
+        event.preventDefault();
+        var sectionID = $(this).attr("data-id");
+        scrollToID('#' + sectionID, 1500);
+    });
+    // scroll to top action
+    $('.scroll-top').on('click', function(event) {
+        event.preventDefault();
+        $('html, body').animate({scrollTop:0}, 'slow');         
+    });
+    // mobile nav toggle
+    $('#nav-toggle').on('click', function (event) {
+        event.preventDefault();
+        $('#main-nav').toggleClass("open");
+    });
+});
+// scroll function
+function scrollToID(id, speed){
+    var offSet = 50;
+    var targetOffset = $(id).offset().top - offSet;
+    var mainNav = $('#main-nav');
+    $('html,body').animate({scrollTop:targetOffset}, speed);
+    if (mainNav.hasClass("open")) {
+        mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+        mainNav.removeClass("open");
+    }
+}
+if (typeof console === "undefined") {
+    console = {
+        log: function() { }
+    };
+}
+</script>
+{% endblock script %}
+<!-- NAVBAR
+================================================== -->
+<nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <i class="icon-bar"></i>
+                <i class="icon-bar"></i>
+            </button>
+            {% if request.path != '/' %}
+            <a class="navbar-brand" href="/"><i class="fa fa-linux"></i> AM-FOSS</a>
+            {% else %}
+            <a class="navbar-brand scroll-top" href="#"><i class="fa fa-linux"></i> AM-FOSS</a>
+            {% endif %}
+        </div><!--navbar-header-->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" role="navigation" id="navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="{% ifequal request.path '/achievement/viewall' %}active{% endifequal %}">
+                    <a href="/achievement/viewall"><i class="fa fa-trophy"></i> Activities</a>
+                </li>
+                {% if request.path != '/' %}
+                <li class="{% ifequal request.path '/#slide-2' %}active{% endifequal %}">
+                    <a data-id="slide-2" href="/#slide-2"><i class="fa fa-book"></i> About FOSS</a>
+                </li>
+                <li class="{% ifequal request.path '/#slide-4' %}active{% endifequal %}">
+                    <a data-id="slide-4" href="/#slide-4"><i class="fa fa-envelope"></i> Connect with Us</a>
+                </li>
+                {% else %}
+                <li data-slide="2" class="{% ifequal request.path '/#slide-2' %}active{% endifequal %}">
+                    <a data-id="slide-2" href="/#slide-2" class="scroll-link"><i class="fa fa-book"></i> About FOSS</a>
+                </li>
+                <li data-slide="4" class="{% ifequal request.path '/#slide-4' %}active{% endifequal %}">
+                    <a data-id="slide-4" href="/#slide-4" class="scroll-link"><i class="fa fa-envelope"></i> Connect with Us</a>
+                </li>
+                <li data-slide="5" class="{% ifequal request.path '/#slide-5' %}active{% endifequal %}">
+                    <a data-id="slide-5" href="/#slide-5" class="scroll-link"><i class="fa fa-pencil"></i> Write to Us</a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form action="/search/" class="navbar-form navbar-left" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search_field" placeholder="Search for a foss member">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div><!--input-group-->
+                </form>  
+                {% if not is_loggedin %}
+                <li class="{% ifequal request.path '/register/login' %}active{% endifequal %}">
+                    <a href="/register/login"><i class="fa fa-sign-in fa-fw"></i> Login</a>
+                </li>
+                {% else %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user fa-fw"></i> {{ username }}<span class="caret"></span> 
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/register/mypage">
+                                <i class="fa fa-user"></i> My pages
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/register/change_password">
+                                <i class="fa fa-lock"></i> Change Password
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/register/logout"><i class="fa fa-power-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div><!--collapse-->
+    </div><!--container-->
+</nav> <!-- navbar navbar-inverse -->
