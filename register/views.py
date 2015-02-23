@@ -420,7 +420,11 @@ def update_profile_pic(request):
                         username=username)
                 if 'image' in request.FILES:
                     try:
+<<<<<<< HEAD
                         to_delete = ProfileImage.objects.filter(username=username)
+=======
+                        to_delete = ProfileImage.objects.filter(username=instance.username)
+>>>>>>> 9c3d46e40fed443b61815f7475dbf2eebfa844a2
                         for obj in to_delete:
                             obj.delete()
                     except ProfileImage.DoesNotExist:
