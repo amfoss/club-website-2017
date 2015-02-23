@@ -96,22 +96,24 @@ $(document).ready(function() {
 <div class="slide theme" id="slide-4" data-slide="4">
     <h1 class="theme-3-h1 centered">Connect With Us</h1>
         <h3 class="theme-1-h2">
-            We had enjoy connecting with you!<br/>
+            We would enjoy connecting with you!<br/>
             Interact with us through comments, questions, <br/>
-            suggestions, topic discussions etc.
+            suggestions, topic discussions or via IRC.
         </h3>
     <div class="container">
         <div id="contact-row-4" class="row centered">
             <div class="col-12 col-sm-3 with-hover-text">
                 <p>
 		    <a target="_blank" href="http://webchat.freenode.net/?channels=amfoss">
-		      <i class="fa fa-users button"></i>
-                    <br>#amfoss on freenode.net
+		    <i class="fa fa-users button"></i><br/>
+		    #amfoss on freenode.net
+                    </a>
                 </p>
             </div><!-- col12 -->
             <div class="col-12 col-sm-3 with-hover-text">
                 <p>
-                <i class="fa fa-home button"></i><br>
+		    <a target="_blank" href="https://www.amrita.edu/campus/amritapuri">
+		    <i class="fa fa-home button"></i><br>
                     Amritapuri, Kollam, Kerala
                 </p>
             </div><!-- /col12 -->
@@ -136,7 +138,6 @@ $(document).ready(function() {
 </div><!-- slide-4 --> 
 <div class="slide theme" id="slide-5" data-slide="5">
     {% if captcha_error %}
-
     {% endif %}
 {% include 'contact.html' %}
 </div>
