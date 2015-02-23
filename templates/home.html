@@ -3,7 +3,6 @@
 {% block script %}
 <script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrapValidator.min.js"></script>
-
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -136,7 +135,7 @@ $(document).ready(function() {
         </div><!-- /row -->
     </div><!--container-->
 </div><!-- slide-4 --> 
-<div class="slide theme" id="slide-5" data-slide="5">
+<div class="slide theme" id="slide-5" data-slide="5" style="padding-bottom: 0px;">
     {% if captcha_error %}
     {% endif %}
 {% include 'contact.html' %}
