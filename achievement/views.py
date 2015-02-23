@@ -54,7 +54,7 @@ def achieve_viewall(request):
             if contrib.org_name not in contrib_org.keys():
                 contrib_org[contrib.org_name] = 0
 
-        for contrib in contrib_list:
+        for contrib in contrib_list_all:
             contrib_org[contrib.org_name] += 1
 
     if contest_list:	
