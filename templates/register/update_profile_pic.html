@@ -1,74 +1,15 @@
 {% extends 'static/base.html' %}
 {% load register_extras %}
 {% block title %}
-Change Password
+Change Profile Picture
 {% endblock %}
 {% block script %}
 <script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#passwordForm')
-        .bootstrapValidator({
-            feedbackIcons: {
-                valid: 'fa fa-check',
-                invalid: 'fa fa-times',
-                validating: 'fa fa-refresh'
-            },
-            fields: {
-                old_password: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The password cannot be empty'  
-                        },
-                        regexp: {
-                            regexp: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}$/
-                        },
-                    }
-                },
-                new_password: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The password cannot be empty'  
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 32,
-                            message: 'The password length must be in b/n 6 and 32 characters long. It should have at least a small, capital and a special character'
-                        },
-                        regexp: {
-                            regexp: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}$/
-                        },
-                        identical: {
-                            field: 'confirm_new_password',
-                            message: 'The password and the confirm password doesn\'t match'
-                        },
-                        different: {
-                            field: 'old_password',
-                            message: 'The current and new passwords cannot be the same as each other'
-                        }
-                    }
-                },
-                confirm_new_password: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The confirm password cannot be empty'  
-                        },  
-                        regexp: {
-                            regexp: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}$/
-                        },
-                        identical: {
-                            field: 'new_password',
-                            message: 'The password and the confirm password doesn\'t match'
-                        },
-                        different: {
-                            field: 'old_password',
-                            message: 'The current and new passwords cannot be the same as each other'
-                        }
-                    }
-                },
-            }
-        });
-});
+function changeClass()
+{
+    document.getElementById("submit").className = "btn btn-primary btn-block";
+}
 </script>
 {% endblock script %}
 {% block body %}
@@ -91,14 +32,14 @@ $(document).ready(function() {
                 <label class="control-label">Choose a profile picture: </label>
                 <div class="input-group">
                     <a class="btn btn-primary" href='javascript:;'><i class="fa fa-upload"></i> Choose File
-                        <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="image" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+                        <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="image" size="40"  onchange='$("#upload-file-info").html($(this).val());changeClass()'>
                     </a>
                     <span type="text" class="label label-info" id="upload-file-info" value="The full path of the uploaded image will be appeared here" disabled></span>
                 </div><!--input-group-->
                 </span>
                 </div>
                 <div class="centered">
-                <input type='submit' class="btn btn-primary btn-block" value='Change Profile Picture'>
+                <input type='submit' class="btn btn-primary btn-block disabled" id="submit" value='Change Profile Picture'>
                 </div>
         </form>
     </div><!--col-lg-6-->
