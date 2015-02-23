@@ -1,4 +1,6 @@
 from django.db import models
+from django.dispatch import receiver
+
 # Create your models here.
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 ROLE_CHOICES = (('S', 'Student'), ('M', 'Mentor'), ('B', 'Both'))
@@ -31,3 +33,14 @@ class User_info(models.Model):
     def __unicode__(self):
         return self.email
 
+@receiver(models.signals.post_delete, sender=User_info)
+def auto_delete_profile_pic(sender, instance, **kwargs):
+    """
+    Deletes corresponding profile Pic
+    """
+    try:
+        to_delete = ProfileImage.objects.filter(username=instance.username)
+        for obj in to_delete:
+            obj.delete()
+    except ProfileImage.DoesNotExist:
+        pass
