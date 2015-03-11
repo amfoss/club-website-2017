@@ -45,7 +45,7 @@ def notify_new_user(username, email):
     Notifies the admins regarding a successful user registration
     """
     email_subject = "[FOSS@Amrita][User Registered] " + username
-    email_from = "Amritapuri FOSS <amritapurifoss@gmail.com>"
+    email_from = "Amritapuri FOSS <fossatamrita@gmail.com>"
     email_message = """
     A new user has been registered today!
     Username: """ + username + """
@@ -53,9 +53,9 @@ def notify_new_user(username, email):
 
     --
     Email deamon
-    Amritapuri FOSS
-    http://amritapurifoss.in
-    amritapurifoss@gmail.com
+    FOSS@Amrita
+    http://amritafoss.in
+    www.foss.amrita.ac.in
     """
 
     django_send_mail(email_subject, \
@@ -70,7 +70,7 @@ def sendmail_after_userreg(username, password, email_to):
     Email notification to be send to the user
     """
     email_subject = 'FOSS@Amrita User Registration'
-    email_from = 'Amritapuri FOSS <amritapurifoss@gmail.com>'
+    email_from = 'Amritapuri FOSS <fossatamrita@gmail.com>'
     email_message = """
     You have been successfully registered as a USER at Amritapuri FOSS.
     
@@ -78,9 +78,9 @@ def sendmail_after_userreg(username, password, email_to):
     Password: """ + password + """
     
     --
-    Amritapuri FOSS
-    http://amritapurifoss.in
-    amritapurifoss@gmail.com
+    FOSS@Amrita
+    http://amritafoss.in
+    www.foss.amrita.ac.in
     """    
 
     django_send_mail(email_subject, \
@@ -94,7 +94,7 @@ def sendmail_after_pass_change(username, password, email_to):
     Email notification to be send after user password change
     """
     email_subject = 'FOSS@Amrita User Password change'
-    email_from = 'Amritapuri FOSS <amritapurifoss@gmail.com>'
+    email_from = 'Amritapuri FOSS <fossatamrita@gmail.com>'
     email_message = """
     Your password has been recently changed.
     
@@ -102,9 +102,9 @@ def sendmail_after_pass_change(username, password, email_to):
     New Password: """ + password + """
     
     --
-    Amritapuri FOSS
-    http://amritapurifoss.in
-    amritapurifoss@gmail.com
+    FOSS@Amrita
+    http://amritafoss.in
+    www.foss.amrita.ac.in
     """    
 
     django_send_mail(email_subject, \

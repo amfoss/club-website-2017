@@ -78,7 +78,7 @@ def contact(request):
         sender_name = str(request.POST['sender_name'])
         sender_email = str(request.POST['sender_email'])
         email_message = str(request.POST['mail_text'])
-        email_from = "Amritapuri FOSS <amritapurifoss@gmail.com>"
+        email_from = "Amritapuri FOSS <fossatamrita@gmail.com>"
         # if captcha field is not given
         if not (request.POST['recaptcha_challenge_field'] and request.POST['recaptcha_response_field']):
             return render_to_response('home.html',{'captcha_error':'Captcha required'}, RequestContext(request))
@@ -96,7 +96,7 @@ def contact(request):
         django_send_mail(email_subject, \
                             email_message, \
                             email_from, \
-                            [sender_email, 'amritapurifoss@gmail.com'], \
+                            [sender_email, 'fossatamrita@gmail.com'], \
                             fail_silently= False)
         return render_to_response( 'contact_success.html', \
                 {}, RequestContext(request))
