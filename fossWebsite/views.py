@@ -87,7 +87,7 @@ def contact(request):
         recaptcha_remote_ip = ""
         captcha_is_correct = check_captcha(recaptcha_challenge_field, \
                             recaptcha_response_field,recaptcha_remote_ip)
-        email_subject = "[Contact Us]:"+ sender_name + sender_email
+        email_subject = "[Contact Us]:"+ sender_name + ' <' + sender_email + '>'
 
         print captcha_is_correct
         #To-Do: Need to enable captcha once the site is hosted with 
