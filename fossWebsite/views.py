@@ -95,8 +95,8 @@ def contact(request):
         #if captcha_is_correct:
         django_send_mail(email_subject, \
                             email_message, \
-                            email_from, \
-                            [sender_email, 'fossatamrita@gmail.com'], \
+                            sender_email, \
+                            ['fossatamrita@gmail.com'], \
                             fail_silently= False)
         return render_to_response( 'contact_success.html', \
                 {}, RequestContext(request))

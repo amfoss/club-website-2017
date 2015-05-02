@@ -124,56 +124,56 @@ def newregister(request):
                     RequestContext(request))
         
         # Upon Register button click
-        if request.method == 'POST':
-            form = NewRegisterForm(request.POST, request.FILES)
+        #if request.method == 'POST':
+            #form = NewRegisterForm(request.POST, request.FILES)
 
-            # Form has all valid entries
-            if form.is_valid():
-                cleaned_reg_data = form.cleaned_data
-                inp_username = cleaned_reg_data['username']
-                inp_password = cleaned_reg_data['password']
-                inp_email = cleaned_reg_data['email']
+            ## Form has all valid entries
+            #if form.is_valid():
+                #cleaned_reg_data = form.cleaned_data
+                #inp_username = cleaned_reg_data['username']
+                #inp_password = cleaned_reg_data['password']
+                #inp_email = cleaned_reg_data['email']
 
-                # Saving the user inputs into table 
-                new_register = form.save(commit=False)
-                new_register.password = hash_func(inp_password) \
-                                            .hexdigest()
-                new_register.save()
+                ## Saving the user inputs into table 
+                #new_register = form.save(commit=False)
+                #new_register.password = hash_func(inp_password) \
+                                            #.hexdigest()
+                #new_register.save()
                 
-                user_object = get_object_or_404(User_info, \
-                        username=inp_username)
+                #user_object = get_object_or_404(User_info, \
+                        #username=inp_username)
                 
-                # Optional image upload processing and saving
-                if 'image' in request.FILES:
-                    profile_image = request.FILES['image']
-                    profile_image_object = ProfileImage \
-                            (image=profile_image, \
-                            username=user_object)
-                    profile_image_object.image.name = inp_username + \
-                                                    ".jpg"
-                    profile_image_object.save()
+                ## Optional image upload processing and saving
+                #if 'image' in request.FILES:
+                    #profile_image = request.FILES['image']
+                    #profile_image_object = ProfileImage \
+                            #(image=profile_image, \
+                            #username=user_object)
+                    #profile_image_object.image.name = inp_username + \
+                                                    #".jpg"
+                    #profile_image_object.save()
                 
-                # Setting the session variables
-                request.session['username'] = cleaned_reg_data['username']
-                request.session['is_loggedin'] = True
-		request.session['email'] = cleaned_reg_data['email']
-                sendmail_after_userreg(inp_username, inp_password, inp_email)
-                notify_new_user(inp_username, inp_email)
-                return render_to_response('register/register_success.html',
-                            {'is_loggedin':logged_in(request), \
-                             'username':request.session['username']}, \
-                            RequestContext(request))
+                ## Setting the session variables
+                #request.session['username'] = cleaned_reg_data['username']
+                #request.session['is_loggedin'] = True
+		#request.session['email'] = cleaned_reg_data['email']
+                #sendmail_after_userreg(inp_username, inp_password, inp_email)
+                #notify_new_user(inp_username, inp_email)
+                #return render_to_response('register/register_success.html',
+                            #{'is_loggedin':logged_in(request), \
+                             #'username':request.session['username']}, \
+                            #RequestContext(request))
 
-            # Invalid form inputs
-            else:
-                error = "Invalid inputs"
-                return render_to_response('register/newregister.html', 
-                        {'form': form, 'error':error}, 
-                        RequestContext(request))
+            ## Invalid form inputs
+            #else:
+                #error = "Invalid inputs"
+                #return render_to_response('register/newregister.html', 
+                        #{'form': form, 'error':error}, 
+                        #RequestContext(request))
 
-        return render_to_response('register/newregister.html', 
-                {'form': NewRegisterForm}, 
-                RequestContext(request))
+        #return render_to_response('register/newregister.html', 
+                #{'form': NewRegisterForm}, 
+                #RequestContext(request))
 
     except KeyError:
         return error_key(request)
