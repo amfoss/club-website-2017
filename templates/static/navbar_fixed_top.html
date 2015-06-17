@@ -56,6 +56,9 @@ if (typeof console === "undefined") {
         <div class="collapse navbar-collapse" role="navigation" id="navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="{% ifequal request.path '/achievement/viewall' %}active{% endifequal %}">
+                    <a href="http://blog.amritafoss.in"><i class="fa fa-heart"></i> Blog</a>
+                </li>
+                <li class="{% ifequal request.path '/achievement/viewall' %}active{% endifequal %}">
                     <a href="/achievement/viewall"><i class="fa fa-trophy"></i> Activities</a>
                 </li>
                 {% if request.path != '/' %}
