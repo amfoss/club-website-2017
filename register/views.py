@@ -191,15 +191,15 @@ def profile(request, user_name):
     user_email = user_object.email.replace('.', ' DOT ') \
             .replace('@', ' AT ')
     contributions = Contribution.objects.all() \
-            .filter(username=user_name)[:3]
+            .filter(username=user_name)
     articles = Article.objects.all() \
-            .filter(username=user_name)[:3]
+            .filter(username=user_name)
     gsoc = Gsoc.objects.all() \
-            .filter(username=user_name)[:3]
+            .filter(username=user_name)
     interns = Intern.objects.all() \
-            .filter(username=user_name)[:3]
+            .filter(username=user_name)
     speakers = Speaker.objects.all() \
-            .filter(username=user_name)[:3]
+            .filter(username=user_name)
     email = user_object.email
     icpc_achievement = ACM_ICPC_detail.objects.filter(participant1_email=email)| \
         ACM_ICPC_detail.objects.filter(participant2_email=email)| ACM_ICPC_detail.objects.filter(participant3_email=email)

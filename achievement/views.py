@@ -40,11 +40,11 @@ def achieve_viewall(request):
     icpc_participants_final_list = []
 
     contrib_list_all = Contribution.objects.all()
-    contrib_list = Contribution.objects.all()[:5]
-    article_list = Article.objects.all()[:5]
-    gsoc_list = Gsoc.objects.all()[:5]
-    speaker_list = Speaker.objects.all()[:5]
-    intern_list = Intern.objects.all()[:5]
+    contrib_list = Contribution.objects.all()[:30]
+    article_list = Article.objects.all()[:10]
+    gsoc_list = Gsoc.objects.all()[:15]
+    speaker_list = Speaker.objects.all()[:10]
+    intern_list = Intern.objects.all()[:10]
     contest_list = Contest_won.objects.all()[:5]
 
     
