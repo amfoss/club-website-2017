@@ -61,6 +61,9 @@ if (typeof console === "undefined") {
                 <li class="{% ifequal request.path '/achievement/viewall' %}active{% endifequal %}">
                     <a href="/achievement/viewall"><i class="fa fa-trophy"></i> Activities</a>
                 </li>
+                    <li class="{% ifequal request.path '/achievement/viewall' %}active{% endifequal %}">
+                    <a href="http://phab.amritafoss.in"><i class="fa fa-bug"></i> Phab</a>
+                </li>
                 {% if request.path != '/' %}
                 <li class="{% ifequal request.path '/#slide-2' %}active{% endifequal %}">
                     <a data-id="slide-2" href="/#slide-2"><i class="fa fa-book"></i> About FOSS</a>
@@ -71,9 +74,6 @@ if (typeof console === "undefined") {
                 {% else %}
                 <li data-slide="2" class="{% ifequal request.path '/#slide-2' %}active{% endifequal %}">
                     <a data-id="slide-2" href="/#slide-2" class="scroll-link"><i class="fa fa-book"></i> About FOSS</a>
-                </li>
-                <li data-slide="4" class="{% ifequal request.path '/#slide-4' %}active{% endifequal %}">
-                    <a data-id="slide-4" href="/#slide-4" class="scroll-link"><i class="fa fa-envelope"></i> Connect with Us</a>
                 </li>
                 <li data-slide="5" class="{% ifequal request.path '/#slide-5' %}active{% endifequal %}">
                     <a data-id="slide-5" href="/#slide-5" class="scroll-link"><i class="fa fa-pencil"></i> Write to Us</a>
