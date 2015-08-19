@@ -221,6 +221,7 @@ class NewRegisterForm(ModelForm):
 
     class Meta:
         model = User_info
+	fields = '__all__'
 
     def clean_name(self):
         """
