@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'document',
     'event',	
     'images',
+    'passreset',
 )
 
 MIDDLEWARE_CLASSES = (
