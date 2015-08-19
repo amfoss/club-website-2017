@@ -3,4 +3,4 @@ django-bootstrap3-datetimepicker
 Pillow
 django-mailer
 django-recaptcha
-passreset
+django-passreset
