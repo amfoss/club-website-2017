@@ -110,7 +110,12 @@ def logout(request):
                 RequestContext(request))
     except KeyError:
         pass
-
+def forpass(request):
+    try:
+        return render_to_response('register/forpass.html', \
+                    RequestContext(request))
+    except KeyError:
+        pass
 
 def newregister(request):
     """

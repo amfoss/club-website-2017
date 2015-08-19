@@ -3,6 +3,7 @@ from register import views
 
 urlpatterns = patterns('',
     url(r'^/login/$', views.login),
+    url(r'^/forpass/$', views.forpass),
     url(r'^/logout/$', views.logout),
     url(r'^/new/$', views.newregister),
     url(r'^/mypage/$', views.mypage),
