@@ -3,7 +3,7 @@
     <br>
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <form role="form" method="post" action="/contact/" id="profileForm" enctype="multipart/form-data">
+        <form role="form" method="post" action="//formspree.io/admin@amritafoss.in" id="profileForm" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group" id="name">
                 <div class="input-group">
@@ -18,7 +18,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-envelope"></i>
                     </span>
-                    <input type="email" class="form-control" name="sender_email" placeholder="Email Address" required />
+                    <input type="email" class="form-control" name="_replyto" placeholder="Email Address" required />
                 </div><!--input-group-->
             </div><!--form-group-->
             <div class="form-group" id="message">
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="col-md-2">
-
+                  <input type="hidden" name="_next" value="http://www.amritafoss.in/contact_success.html/" />
                     <input type="submit" name="contact_button" id="contact_id" value="Send" class="btn btn-info btn-block">
                 </div><!--col-md-4-->
 
