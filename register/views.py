@@ -34,7 +34,7 @@ def login(request):
             return render_to_response('register/logged_in.html', \
                     RequestContext(request))
 
-        # Upon signin button click 
+        # Upon signin button click
         if request.method=='POST':
             form = LoginForm(request.POST)
 
@@ -46,18 +46,18 @@ def login(request):
                 hashed_password = hash_func(inp_password).hexdigest()
                 user_tuple = User_info.objects.all().filter \
                         (username = inp_username)
-                
+
                 # There exist an entry in table with the given username
                 if user_tuple:
                     actual_pwd = user_tuple[0].password
-                    
+
                     # Password matches: session validation
                     if actual_pwd == hashed_password:
                         request.session['is_loggedin'] = True
                         request.session['username'] = inp_username
 			request.session['email'] = user_tuple[0].email
                         return HttpResponseRedirect('/')
-                    
+
                     # Invalid password
                     else:
                         error = "Invalid password. Is it really you, " + \
@@ -114,66 +114,66 @@ def logout(request):
 
 def newregister(request):
     """
-    Make a new registration, inserting into User_info and 
+    Make a new registration, inserting into User_info and
     ProfileImage models.
-    """ 
+    """
     try:
         # If the user is already loggedin never show the login page
         if logged_in(request):
-            return render_to_response('register/logged_in.html', 
+            return render_to_response('register/logged_in.html',
                     RequestContext(request))
-        
-        # Upon Register button click
-        #if request.method == 'POST':
-            #form = NewRegisterForm(request.POST, request.FILES)
 
-            ## Form has all valid entries
-            #if form.is_valid():
-                #cleaned_reg_data = form.cleaned_data
-                #inp_username = cleaned_reg_data['username']
-                #inp_password = cleaned_reg_data['password']
-                #inp_email = cleaned_reg_data['email']
+        Upon Register button click
+        if request.method == 'POST':
+            form = NewRegisterForm(request.POST, request.FILES)
 
-                ## Saving the user inputs into table 
-                #new_register = form.save(commit=False)
-                #new_register.password = hash_func(inp_password) \
-                                            #.hexdigest()
-                #new_register.save()
-                
-                #user_object = get_object_or_404(User_info, \
-                        #username=inp_username)
-                
-                ## Optional image upload processing and saving
-                #if 'image' in request.FILES:
-                    #profile_image = request.FILES['image']
-                    #profile_image_object = ProfileImage \
-                            #(image=profile_image, \
-                            #username=user_object)
-                    #profile_image_object.image.name = inp_username + \
-                                                    #".jpg"
-                    #profile_image_object.save()
-                
-                ## Setting the session variables
-                #request.session['username'] = cleaned_reg_data['username']
-                #request.session['is_loggedin'] = True
-		#request.session['email'] = cleaned_reg_data['email']
-                #sendmail_after_userreg(inp_username, inp_password, inp_email)
-                #notify_new_user(inp_username, inp_email)
-                #return render_to_response('register/register_success.html',
-                            #{'is_loggedin':logged_in(request), \
-                             #'username':request.session['username']}, \
-                            #RequestContext(request))
+            # Form has all valid entries
+            if form.is_valid():
+                cleaned_reg_data = form.cleaned_data
+                inp_username = cleaned_reg_data['username']
+                inp_password = cleaned_reg_data['password']
+                inp_email = cleaned_reg_data['email']
 
-            ## Invalid form inputs
-            #else:
-                #error = "Invalid inputs"
-                #return render_to_response('register/newregister.html', 
-                        #{'form': form, 'error':error}, 
-                        #RequestContext(request))
+                # Saving the user inputs into table
+                new_register = form.save(commit=False)
+                new_register.password = hash_func(inp_password) \
+                                            .hexdigest()
+                new_register.save()
 
-        #return render_to_response('register/newregister.html', 
-                #{'form': NewRegisterForm}, 
-                #RequestContext(request))
+                user_object = get_object_or_404(User_info, \
+                        username=inp_username)
+
+                # Optional image upload processing and saving
+                if 'image' in request.FILES:
+                    profile_image = request.FILES['image']
+                    profile_image_object = ProfileImage \
+                            (image=profile_image, \
+                            username=user_object)
+                    profile_image_object.image.name = inp_username + \
+                                                    ".jpg"
+                    profile_image_object.save()
+
+                # Setting the session variables
+                request.session['username'] = cleaned_reg_data['username']
+                request.session['is_loggedin'] = True
+		request.session['email'] = cleaned_reg_data['email']
+                sendmail_after_userreg(inp_username, inp_password, inp_email)
+                notify_new_user(inp_username, inp_email)
+                return render_to_response('register/register_success.html',
+                            {'is_loggedin':logged_in(request), \
+                             'username':request.session['username']}, \
+                            RequestContext(request))
+
+            # Invalid form inputs
+            else:
+                error = "Invalid inputs"
+                return render_to_response('register/newregister.html',
+                        {'form': form, 'error':error},
+                        RequestContext(request))
+
+        return render_to_response('register/newregister.html',
+                {'form': NewRegisterForm},
+                RequestContext(request))
 
     except KeyError:
         return error_key(request)
@@ -234,7 +234,7 @@ def change_password(request):
         is_loggedin, username = get_session_variables(request)
         if not is_loggedin:
             return HttpResponseRedirect("/register/login")
-        # POST request 
+        # POST request
         if request.method == 'POST':
             form = ChangePasswordForm(request.POST)
 
@@ -251,10 +251,10 @@ def change_password(request):
 
                 user_data = User_info.objects.get(username = username)
                 actual_pwd = user_data.password
-                
+
                 # Given current and stored passwords same
                 if old_password == actual_pwd:
-                    # New and current passwords user provided are not same 
+                    # New and current passwords user provided are not same
                     if new_password != actual_pwd:
                         # Repass and new pass are same
                         if new_password == confirm_new_password:
@@ -273,7 +273,7 @@ def change_password(request):
                         else:
                             error = "New passwords doesn't match"
                             return render_to_response( \
-                                    'register/change_password.html', 
+                                    'register/change_password.html',
                                     {'form':form, \
                                     'username' :username, \
                                     'is_loggedin':is_loggedin, \
@@ -284,7 +284,7 @@ def change_password(request):
                         error = "Your old and new password are same. Please \
                                 choose a different password"
                         return render_to_response( \
-                                'register/change_password.html', 
+                                'register/change_password.html',
                                 {'form':form, \
                                 'username':username, \
                                 'is_loggedin':is_loggedin, \
@@ -294,7 +294,7 @@ def change_password(request):
                 else:
                     error = "Current password and given password doesn't match"
                     return render_to_response( \
-                            'register/change_password.html', 
+                            'register/change_password.html',
                             {'form':form, \
                             'username':username, \
                             'is_loggedin':is_loggedin, \
@@ -305,7 +305,7 @@ def change_password(request):
                 form = ChangePasswordForm()
 
             return render_to_response( \
-                    'register/change_password.html', 
+                    'register/change_password.html',
                     {'form':form, \
                     'username':username, \
                     'is_loggedin':is_loggedin}, \
@@ -327,7 +327,7 @@ def mypage(request):
     """
     if not logged_in(request):
         return HttpResponseRedirect('/register/login')
-    
+
     else:
         is_loggedin, username = get_session_variables(request)
         name = User_info.objects.get(username=username)
@@ -350,7 +350,7 @@ def update_profile(request):
             user_details = get_object_or_404(User_info, username = username)
             init_user_details = user_details.__dict__
 
-            #If method is not POST 
+            #If method is not POST
             if request.method != 'POST':
                 #return form with old details
                 return render_to_response('register/update_profile.html',\
@@ -369,7 +369,7 @@ def update_profile(request):
                     return render_to_response('register/update_profile.html',\
                         {'form':UpdateProfileForm(init_user_details),\
                         'is_loggedin':is_loggedin, 'username':username},\
-                        RequestContext(request))    
+                        RequestContext(request))
                 # Form is valid:
                 else:
                     user_details_form = profile_update_form.save(commit = False)
@@ -389,7 +389,7 @@ def update_profile(request):
                     user_details_obj.expertise = user_details_form.expertise
                     user_details_obj.goal = user_details_form.goal
                     #user_details_obj.email = user_details_form.email
-                    user_details_obj.save()  
+                    user_details_obj.save()
                     redirect_url = "/register/profile/"+username+"/"
                     return HttpResponseRedirect(redirect_url)
 
@@ -406,7 +406,7 @@ def update_profile_pic(request):
             user_details = get_object_or_404(User_info, username = username)
             init_user_details = user_details.__dict__
 
-            #If method is not POST 
+            #If method is not POST
             if request.method != 'POST':
                 #return form with old details
                 return render_to_response('register/update_profile_pic.html',\
