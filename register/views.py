@@ -123,7 +123,7 @@ def newregister(request):
             return render_to_response('register/logged_in.html',
                     RequestContext(request))
 
-        Upon Register button click
+        #Upon Register button click
         if request.method == 'POST':
             form = NewRegisterForm(request.POST, request.FILES)
 
