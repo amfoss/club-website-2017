@@ -40,14 +40,14 @@ def achieve_viewall(request):
     icpc_participants_final_list = []
 
     contrib_list_all = Contribution.objects.all()
-    contrib_list = Contribution.objects.all()[:30]
-    article_list = Article.objects.all()[:10]
-    gsoc_list = Gsoc.objects.all()[:15]
-    speaker_list = Speaker.objects.all()[:10]
-    intern_list = Intern.objects.all()[:10]
-    contest_list = Contest_won.objects.all()[:5]
+    contrib_list = Contribution.objects.all()
+    article_list = Article.objects.all()
+    gsoc_list = Gsoc.objects.all()
+    speaker_list = Speaker.objects.all()
+    intern_list = Intern.objects.all()
+    contest_list = Contest_won.objects.all()
 
-    
+
     contrib_org = {}
     if contrib_list_all:
         for contrib in contrib_list_all:
@@ -57,13 +57,13 @@ def achieve_viewall(request):
         for contrib in contrib_list_all:
             contrib_org[contrib.org_name] += 1
 
-    if contest_list:	
+    if contest_list:
         contest_participant_list = []
-	for contest_won_obj in contest_list:	
+	for contest_won_obj in contest_list:
 	    c_id = contest_won_obj.contest_id
 	    c_p_objs = Contest_won_participant.objects.filter(contest_id = c_id)
 	    contest_participant_list.extend(c_p_objs)
-    
+
     icpc_list_regionals = ACM_ICPC_detail.objects.filter(level='regional').order_by('ranking')[:2]
     if icpc_list_regionals:
         for icpc_obj in icpc_list_regionals:
@@ -125,7 +125,7 @@ def contrib_viewall(request):
 
         for contrib in contrib_list:
             contrib_org[contrib.org_name] += 1
-    
+
     if contrib_list:
         return render_to_response('achievement/contrib_viewall.html', \
                 {'is_loggedin':logged_in(request), \
@@ -228,9 +228,9 @@ def contest_won_viewall(request):
     is_loggedin, username = get_session_variables(request)
     contest_list = Contest_won.objects.all()
 
-    if contest_list:	
+    if contest_list:
         contest_participant_list = []
-        for contest_won_obj in contest_list:	
+        for contest_won_obj in contest_list:
             c_id = contest_won_obj.contest_id
             c_p_objs = Contest_won_participant.objects. \
                     filter(contest_id = c_id)
@@ -260,7 +260,7 @@ def icpc_viewall(request):
     if icpc_list:
 
         for icpc_obj in icpc_list:
-            
+
             team = icpc_obj.team_name
             member1 = [icpc_obj.participant1_name, \
                 get_username_from_email(icpc_obj.participant1_email)]
@@ -273,7 +273,7 @@ def icpc_viewall(request):
 
             icpc_participant_list = [icpc_obj, member1,member2,member3]
             icpc_participants_list.append(icpc_participant_list)
-            
+
         return render_to_response('achievement/icpc_viewall.html', \
             {'is_loggedin':logged_in(request), \
             'username':username, \
@@ -317,7 +317,7 @@ def insert_contribution(request):
                 # Form is valid
                 else:
                     # Get the new achievement_id
-                    achievement_id = get_achievement_id(request)	
+                    achievement_id = get_achievement_id(request)
                     achievement_type = "contribution"
 
                     # Saving inputs
@@ -376,7 +376,7 @@ def insert_article(request):
                 # Form is valid
                 else:
                     # Get the new achievement_id
-                    achievement_id = get_achievement_id(request)	
+                    achievement_id = get_achievement_id(request)
                     achievement_type = "Article"
 
                     # Saving inputs
@@ -435,7 +435,7 @@ def insert_talk(request):
                 # Form is valid
                 else:
                     # Get the new achievement_id
-                    achievement_id = get_achievement_id(request)	
+                    achievement_id = get_achievement_id(request)
                     achievement_type = "Speaker"
 
                     # Saving inputs
@@ -494,7 +494,7 @@ def insert_gsoc(request):
                 # Form is valid
                 else:
                     # Get the new achievement_id
-                    achievement_id = get_achievement_id(request)	
+                    achievement_id = get_achievement_id(request)
                     achievement_type = "GSoC"
 
                     # Saving inputs
@@ -553,7 +553,7 @@ def insert_intern(request):
                 # Form is valid
                 else:
                     # Get the new achievement_id
-                    achievement_id = get_achievement_id(request)	
+                    achievement_id = get_achievement_id(request)
                     achievement_type = "Intern"
 
                     # Saving inputs
@@ -612,7 +612,7 @@ def insert_icpc(request):
                 # Form is valid
                 else:
                     # Get the new achievement_id
-                    achievement_id = get_achievement_id(request)    
+                    achievement_id = get_achievement_id(request)
                     achievement_type = "acm"
 
                     # Saving inputs
@@ -652,7 +652,7 @@ def update_contribution(request,achievement_id):
             contribution = get_object_or_404(Contribution, achievement_id = achievement_id)
             init_contribution = contribution.__dict__
 
-                #If method is not POST 
+                #If method is not POST
             if request.method != 'POST':
                 #return form with old details
                 return render_to_response('achievement/update_contrib.html',\
@@ -669,7 +669,7 @@ def update_contribution(request,achievement_id):
                     return render_to_response('achievement/update_contrib.html',\
                         {'form':UpdateContributionForm(init_contribution),\
                         'is_loggedin':is_loggedin, 'username':username},\
-                        RequestContext(request)) 
+                        RequestContext(request))
                 # Form is valid:
                 else:
                     contribution_update = contribution_update_form.save(commit = False)
@@ -678,7 +678,7 @@ def update_contribution(request,achievement_id):
                     update_contribution_obj.org_name = contribution_update.org_name
                     update_contribution_obj.bug_url = contribution_update.bug_url
                     update_contribution_obj.bug_description = contribution_update.bug_description
-                    update_contribution_obj.save()  
+                    update_contribution_obj.save()
                     return render_to_response('achievement/success.html', \
                         {'achievement_type':'Update Contribution', \
                         'is_loggedin':is_loggedin, \
@@ -700,11 +700,11 @@ def update_article(request,achievement_id):
         if not logged_in(request):
             return HttpResponseRedirect('/register/login')
         else:
-            
+
             article = get_object_or_404(Article, achievement_id = achievement_id)
             init_article = article.__dict__
 
-            #If method is not POST 
+            #If method is not POST
             if request.method != 'POST':
                 #return form with old details
                 return render_to_response('achievement/update_article.html',\
@@ -721,7 +721,7 @@ def update_article(request,achievement_id):
                     return render_to_response('achievement/update_article.html',\
                         {'form':UpdateArticleForm(init_article),\
                         'is_loggedin':is_loggedin, 'username':username},\
-                        RequestContext(request)) 
+                        RequestContext(request))
                 # Form is valid:
                 else:
                     article_update = article_update_form.save(commit = False)
@@ -730,7 +730,7 @@ def update_article(request,achievement_id):
                     update_article_obj.magazine_name = article_update.magazine_name
                     update_article_obj.title = article_update.title
                     update_article_obj.publication_date = article_update.publication_date
-                    update_article_obj.save()  
+                    update_article_obj.save()
                     return render_to_response('achievement/success.html', \
                         {'achievement_type':'Update Article', \
                         'is_loggedin':is_loggedin, \
@@ -751,11 +751,11 @@ def update_intern(request,achievement_id):
         if not logged_in(request):
             return HttpResponseRedirect('/register/login')
         else:
-            
+
             internship = get_object_or_404(Intern, achievement_id = achievement_id)
             init_internship = internship.__dict__
 
-            #If method is not POST 
+            #If method is not POST
             if request.method != 'POST':
                 #return form with old details
                 return render_to_response('achievement/update_intern.html',\
@@ -772,7 +772,7 @@ def update_intern(request,achievement_id):
                     return render_to_response('achievement/update_intern.html',\
                         {'form':UpdateInternForm(init_internship),\
                         'is_loggedin':is_loggedin, 'username':username},\
-                        RequestContext(request)) 
+                        RequestContext(request))
                 # Form is valid:
                 else:
                     intern_update = intern_update_form.save(commit = False)
@@ -780,7 +780,7 @@ def update_intern(request,achievement_id):
                     intern_article_obj.place = intern_update.place
                     intern_article_obj.intern_type = intern_update.intern_type
                     intern_article_obj.period = intern_update.period
-                    intern_article_obj.save()  
+                    intern_article_obj.save()
                     return render_to_response('achievement/success.html', \
                         {'achievement_type':'Update Internship', \
                         'is_loggedin':is_loggedin, \
