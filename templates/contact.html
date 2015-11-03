@@ -33,34 +33,32 @@
             	<div class="col-md-5">
             		<div class="form-group">
                 		<div class="input-group">
-                			<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LfcYvkSAAAAAAW8UHVHw3oBuF7S5NJZ-jnBUxn1">
-                			</script>
-             
-             
+                			<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LemMxATAAAAAG8qyflYeJoJ5FBL48w6eqsZPNx6>
+                      </script>
                				<noscript>
-                    			<iframe src="http://www.google.com/recaptcha/api/noscript?k=6LfcYvkSAAAAAAW8UHVHw3oBuF7S5NJZ-jnBUxn1" height="300" width="500" frameborder="0"></iframe><br>
+                    			<iframe src="http://www.google.com/recaptcha/api/noscript?k=6LemMxATAAAAAG8qyflYeJoJ5FBL48w6eqsZPNx6" height="300" width="500" frameborder="0"></iframe><br>
 			                    <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
             			        <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
-                			</noscript>
+                          </noscript>
                  		</div>
-                 
+
                 		{% ifequal captcha 'false' %}
                     		<div class="alert alert-danger">
                     		    Incorrect Captcha
                     		</div><!--error-msg has-error-->
                 		{% endifequal %}
-               
+
             		</div><!-- form-group-->
           		</div><!--col-md-5-->
-                <div class="col-md-5"> 
-                    
+                <div class="col-md-5">
+
                 </div>
 
                 <div class="col-md-2">
 
                     <input type="submit" name="contact_button" id="contact_id" value="Send" class="btn btn-info btn-block">
                 </div><!--col-md-4-->
-                
+
           	</div><!--row-->
         </form>
     </div><!--col-md-8-->
