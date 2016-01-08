@@ -1,0 +1,22 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Date</th>
+	    <th>Dailyupdate</th>
+        </tr>	    
+    </thead>
+    <tbody>
+    {% for c in dupdates_list %}
+    <tr>		
+        <td>
+            <a href="/register/profile/{{c.username.username}}/" target="_blank">
+                {{ c.username.firstname | title }} {{ c.username.lastname | title }}
+            </a>
+        </td>
+	<td>{{ c.today_date }}</td> 
+	<td>{{ c.daily_updates }}</td>        
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
