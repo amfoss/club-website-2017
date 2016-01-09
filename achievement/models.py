@@ -7,7 +7,7 @@ from register.models import User_info
 ACHIEVEMENT_CHOICE = (('acm','ACM_ICPC'), ('article','Article'), \
         ('contribution','Contribution'), ('gsoc','GSoC'), \
         ('intern','Internship'), ('speaker','Speaker'), \
-        ('contest','Contest'), ('other','Other'))
+        ('contest','Contest'), ('other','Other'), ('dupdates','Dailyupdate'))
 INTERN_CHOICE = (('internship','Internship'),('masters','Masters'), \
         ('exchange student','Exchange programme'))
 SPEAKER_CHOICE =(('talk',' Talk'), ('demo','Demo'), \
@@ -55,6 +55,21 @@ class Article(models.Model):
 
     class Meta:
         unique_together = ('title','magazine_name')
+
+
+
+class Dailyupdate(models.Model):
+    """
+    Dailyupdate class: type = dupdates
+    """
+    achievement_id = models.ForeignKey(Achievement, \
+            blank=False, null=False)
+    username = models.ForeignKey(User_info, blank=False, null=False)
+    today_date = models.DateField(blank=False)
+    daily_updates = models.CharField(max_length=200)
+
+    class Meta:
+        unique_together = ('daily_updates','today_date')
 
 
 

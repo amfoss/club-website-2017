@@ -184,6 +184,47 @@ class UpdateArticleForm(ModelForm):
 
 
 
+class AdddupdateForm(ModelForm):
+    """
+    Form to add Daily updates
+    """    
+
+    daily_updates=forms.CharField(
+         required=True,
+         label='Description',
+         widget=forms.Textarea(
+            attrs={'placeholder': 'Daily Updates', \
+            'cols': 20, 'rows': 5}
+         )
+    )
+
+    class Meta:
+        model = Dailyupdate
+        exclude = ['username', 'achievement_id',]
+
+
+
+class UpdatedupdateForm(ModelForm):
+    """
+    Form to add Daily updates
+    """    
+
+    daily_updates=forms.CharField(
+         required=True,
+         label='Description',
+         widget=forms.Textarea(
+            attrs={'placeholder': 'Daily Updates', \
+            'cols': 20, 'rows': 5}
+         )
+    )
+    
+
+    class Meta:
+        model = Dailyupdate
+        exclude = ['username', 'achievement_id',]
+
+
+
 class AddSpeakerForm(ModelForm):
     """
     Form to add information about Speaker
@@ -275,6 +316,7 @@ class AddGSoCForm(ModelForm):
     class Meta:
         model = Gsoc
         exclude = ['username', 'achievement_id',]
+
 
 
 class AddInternForm(ModelForm):

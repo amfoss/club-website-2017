@@ -8,11 +8,11 @@ Login page
     <div class="row">
         <div class="col-sm-2">
             <div class="thumbnail">
-                <img src="{{ STATIC_URL }}images/profile_image/{{ image_name }}"
+                <img src="{{ STATIC_URL }}images/profile_image/{{ image_name }}" 
                     class="img-rounded img-thumbnail img-responsive"
                     alt="{{ image_name }}" height="107" width="107">
                 <div class="caption centered">
-                    <strong>{{ user_object.firstname | title }}
+                    <strong>{{ user_object.firstname | title }} 
                         {{ user_object.lastname | title }} </strong>
                 </div><!--caption-->
             </div><!--thumbnail-->
@@ -21,7 +21,7 @@ Login page
             <table class="table table-hover table-bordered">
                 <tr>
                     <td>
-                        <strong>Email</strong>
+                        <strong>Email</strong> 
                     </td>
                     <td>
                         {{ user_email }}
@@ -34,10 +34,10 @@ Login page
                     <td>
                         {{ user_object.interest }}
                     </td>
-                </tr>
+                </tr> 
                 <tr>
                     <td>
-                        <strong>Expertise</strong>
+                        <strong>Expertise</strong> 
                     </td>
                     <td>
                         {{ user_object.expertise }}
@@ -80,12 +80,12 @@ Login page
                             _
                         {% endif %}
                     </td>
-                </tr>
+                </tr>               
                 <tr>
                     <td>
                         <strong>Github ID</strong>
                     </td>
-                    <td>
+                    <td>                       
                         {% if user_object.github_id %}
                             {{user_object.github_id }}
                         {% else %}
@@ -98,7 +98,7 @@ Login page
                         <strong>Bitbucket ID</strong>
                     </td>
                     <td>
-                        {% if user_object.bitbucket_id %}
+                        {% if user_object.bitbucket_id %} 
                             {{user_object.bitbucket_id }}
                         {% else %}
                             _
@@ -130,6 +130,7 @@ Login page
                 <th>Ticket</th>
                 <th>URL</th>
                 <th>Description</th>
+                <th></th>
             </tr>
         </thead>
 	    {% for c in contributions %}
@@ -143,8 +144,8 @@ Login page
                     </a>
                 </td>
 	            <td>{{ c.bug_description }}</td>
-                {% if c.username.username == username %}
                 <td>
+                {% if c.username.username == username %}
                 <a href="/achievement/contribution/update/{{c.achievement_id.achievement_id}}/" target="_blank">
                     Update
                 </a>
@@ -166,7 +167,6 @@ Login page
             <tr>
                 <td>Conference</td>
                 <td>Type</td>
-                <td>Title</td>
                 <td>URL</td>
             </tr>
         </thead>
@@ -174,7 +174,7 @@ Login page
         <tbody>
             <tr>
                 <td>
-                    {{ s.conference_name | title }}, {{s.year}}
+                    {{ s.conference_name | title }}, {{s.year}} 
                 </td>
                 <td>{{ s.speaker_type }}</td>
                 <td>{{ s.title }} </td>
@@ -251,7 +251,7 @@ Login page
                 <td>{{ g.mentor_name }}</td>
             </tr>
         </tbody>
-	    {% endfor %}
+	    {% endfor %}	
     </table>
     {% endif %}
 
@@ -285,10 +285,10 @@ Login page
 
             </tr>
         </tbody>
-	    {% endfor %}
+	    {% endfor %}	
     </table>
     {% endif %}
-
+    
     {% if icpc_achievement %}
     <div class="page-header">
         <h1><i class="fa fa-google-plus"></i> ICPC Achievements </h1>
@@ -304,7 +304,7 @@ Login page
 
         </thead>
         <tbody>
-
+            
         {% for icpc in icpc_achievement %}
             <tr>
                 <td><b>{{icpc.level | title}}</td>
@@ -316,5 +316,40 @@ Login page
         </tbody>
         </table>
     {% endif %}
+
+    <!--DAILY UPDATE-->
+    {% if updates %}
+    <div class="page-header">
+        <h1>Daily Update</h1>
+    </div><!--page-header-->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Daily Update</th>
+                <th></th>
+            </tr>
+        </thead>
+	    {% for internship in updates %}
+        <tbody>
+            <tr>
+	            <!--<td>{{ internship.today_date | title }}</td>-->
+        	<td>{{today}}</td>
+                <td>{{ internship.daily_updates }}</td>
+		
+             <!--   <td>
+                    {% if internship.username.username == username %}
+                    <a href="/achievement/dailyupdate/update/{{internship.achievement_id.achievement_id}}/" target="_blank">
+                    Update
+                    </a>
+                    {% endif %}
+                </td>-->
+
+            </tr>
+        </tbody>
+	    {% endfor %}	
+    </table>
+    {% endif %}
+ 
 </div><!--container-->
 {% endblock body %}
