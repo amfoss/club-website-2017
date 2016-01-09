@@ -20,10 +20,10 @@ Add Daily Update
             <div id="div_{{ field.html_name }}">
                 <div class="form-group{% if field.errors %} has-error{% endif %}">             
                     {% if field.name == "today_date" %}
-                    <div class="input-group">
+                   <!-- <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                         {{ field|addcss:"form-control" }}
-                    </div><!--input-group--> 
+                    </div>input-group--> 
                     {% elif field.name == "daily_updates" %}
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
