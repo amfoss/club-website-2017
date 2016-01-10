@@ -189,8 +189,7 @@ def profile(request, user_name):
     """
     A view to display the profile (public)
     """
-    now = datetime.datetime.now()
-    today = now.strftime("%A, %b %d, %Y")
+
     is_loggedin, username = get_session_variables(request)
     user_object = get_object_or_404(User_info, \
             username = user_name)
@@ -233,7 +232,6 @@ def profile(request, user_name):
             'image_name':image_name, \
             'articles':articles, \
             'contributions':contributions, \
-            'today':today, \
             'icpc_achievement':icpc_achievement}, \
             RequestContext(request))
 

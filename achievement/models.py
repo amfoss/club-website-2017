@@ -65,7 +65,7 @@ class Dailyupdate(models.Model):
     achievement_id = models.ForeignKey(Achievement, \
             blank=False, null=False)
     username = models.ForeignKey(User_info, blank=False, null=False)
-    today_date = models.DateField(blank=False)
+    today_date = models.DateField(auto_now_add=True)
     daily_updates = models.CharField(max_length=200)
 
     class Meta:
