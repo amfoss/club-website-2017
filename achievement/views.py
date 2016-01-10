@@ -2,6 +2,7 @@
 from django.shortcuts import HttpResponseRedirect, render
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+import datetime
 
 
 # Application specific functions
@@ -436,6 +437,9 @@ def insert_dupdates(request):
     View to add new Update.
     Models used: Achievement, Dailyupdate
     """
+
+    now = datetime.datetime.now()
+    today = now.strftime("%A, %b %d, %Y")
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
@@ -484,6 +488,7 @@ def insert_dupdates(request):
                 return render_to_response('achievement/new_dupdate.html', \
                         {'form': AdddupdateForm, \
                         'is_loggedin':is_loggedin, \
+			'today':today, \
                         'username':username}, \
                         RequestContext(request))
     except KeyError:
