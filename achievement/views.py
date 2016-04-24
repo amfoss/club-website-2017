@@ -191,7 +191,7 @@ def gsoc_viewall(request):
     View to display all GSOCers
     """
     is_loggedin, username = get_session_variables(request)
-    gsoc_list = Gsoc.objects.all()
+    gsoc_list = Gsoc.objects.all().order_by('-year')
 
     if gsoc_list:
         return render_to_response('achievement/gsoc_viewall.html', \
