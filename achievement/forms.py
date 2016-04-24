@@ -263,7 +263,7 @@ class AddSpeakerForm(ModelForm):
          )
     )
 
-    year = forms.IntegerField(
+    g = forms.IntegerField(
         required=True,
         label='Year',
         widget=forms.TextInput(
@@ -311,6 +311,14 @@ class AddGSoCForm(ModelForm):
          widget=forms.TextInput(
             attrs={'placeholder': 'Link to GSoC'}
          )
+    )
+
+    year = forms.IntegerField(
+        required=True,
+        label='Year',
+        widget=forms.TextInput(
+            attrs={'placeholder':'Year'}
+        )
     )
 
     class Meta:

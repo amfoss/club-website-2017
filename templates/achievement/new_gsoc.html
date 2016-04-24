@@ -38,7 +38,12 @@ Add an OpenSource Contribution
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                         {{ field|addcss:"form-control" }}
-                    </div><!--input-group--> 
+                    </div><!--input-group-->
+                    {% elif field.name == "year" %}
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                        {{ field|addcss:"form-control" }}
+                    </div><!--input-group-->
                     {% else %}
                     {{ field|addcss:"form-control" }}
                     {% endif %}

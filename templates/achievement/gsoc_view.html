@@ -5,6 +5,7 @@
             <th>Organization</th>
             <th>Project title</th>
             <th>Mentor</th>
+            <th>Year</th>
             <th>Url</th>
         </tr>	
     </thead>
@@ -19,6 +20,7 @@
         <td>{{ c.organization }}</td>
         <td>{{ c.project_title }}</td>
         <td>{{ c.mentor_name }}</td>
+        <td>{{ c.year }}</td>
         <td>
             <a id="gsoclink" href="{{ c.gsoc_url" target="_blank">
                 {{ c.gsoc_url }}

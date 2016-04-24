@@ -88,6 +88,7 @@ class Gsoc(models.Model):
             blank=False, null=False)
     gsoc_url = models.URLField(max_length=400, \
             blank=False, null=False)
+    year = models.BigIntegerField( blank=True, null=True)
 
     class Meta:
         unique_together = ('organization','project_title')
