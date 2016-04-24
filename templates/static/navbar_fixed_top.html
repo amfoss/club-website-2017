@@ -56,13 +56,7 @@ if (typeof console === "undefined") {
         <div class="collapse navbar-collapse" role="navigation" id="navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="{% ifequal request.path '/achievement/viewall' %}active{% endifequal %}">
-                    <a href="http://blog.amritafoss.in" target="_blank"><i class="fa fa-heart"></i> Blog</a>
-                </li>
-                <li class="{% ifequal request.path '/achievement/viewall' %}active{% endifequal %}">
                     <a href="/achievement/viewall"><i class="fa fa-trophy"></i> Activities</a>
-                </li>
-                    <li class="{% ifequal request.path '/achievement/viewall' %}active{% endifequal %}">
-                    <a href="http://phab.amritafoss.in" target="_blank"><i class="fa fa-bug"></i> Phab</a>
                 </li>
                 {% if request.path != '/' %}
                 <li class="{% ifequal request.path '/#slide-2' %}active{% endifequal %}">
@@ -77,6 +71,9 @@ if (typeof console === "undefined") {
                 </li>
                 <li data-slide="5" class="{% ifequal request.path '/#slide-5' %}active{% endifequal %}">
                     <a data-id="slide-5" href="/#slide-5" class="scroll-link"><i class="fa fa-pencil"></i> Write to Us</a>
+                </li>
+                 <li data-slide="4" class="{% ifequal request.path '/#slide-4' %}active{% endifequal %}">
+                    <a data-id="slide-4" href="/#slide-4" class="scroll-link"><i class="fa fa-envelope"></i> Connect with Us</a>
                 </li>
                 {% endif %}
             </ul>
