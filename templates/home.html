@@ -1,8 +1,8 @@
 {% extends 'static/base.html' %}
 {% block title %}FOSS@amrita{% endblock title %}
 {% block script %}
-<script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
-<script src="{{ STATIC_URL }}js/bootstrapValidator.min.js"></script>
+<script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
+<script src="{% static "js/bootstrapValidator.min.js" %}"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
