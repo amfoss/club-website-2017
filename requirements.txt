@@ -1,5 +1,4 @@
 django
-django-bootstrap3-datetimepicker
 Pillow
 django-mailer
 django-recaptcha

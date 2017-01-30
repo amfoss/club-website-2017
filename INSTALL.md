@@ -32,6 +32,7 @@ workon foss
 All the requirements are mentioned in the file `requirements.txt`.
 ```bash
 pip install -r requirements.txt
+pip install git+https://github.com/nkunihiko/django-bootstrap3-datetimepicker.git
 ```
 ## Local settings
 Copy the `local-settings.py` from `conffiles` to `fossWebsite` directory.
@@ -46,7 +47,8 @@ mkdir db && touch db/db.db
 ```
 Setup tables in the DB
 ```bash
-python manage.py syncdb
+python manage.py makemigrations
+python manage.py migrate
 ```
 Collect all the static files for fast serving
 ```bash
