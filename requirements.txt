@@ -1,4 +1,4 @@
-Django==1.8.3
+django
 django-bootstrap3-datetimepicker
 Pillow
 django-mailer

@@ -76,3 +76,4 @@ static/
 !templates/static/
 db/
 media/images/profile_image/
+.idea/
