@@ -1,7 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
+from images.models import ProfileImage
 
-# Create your models here.
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 ROLE_CHOICES = (('S', 'Student'), ('M', 'Mentor'), ('B', 'Both'))
 GOAL_CHOICES = (('startup', 'startup'), ('higher_studies', 'Higher Studies'),\
@@ -22,8 +22,7 @@ class User_info(models.Model):
     interest = models.CharField(max_length=200)
     expertise = models.CharField(max_length=200)
     goal = models.CharField(max_length=15, choices=GOAL_CHOICES)
-    username = models.CharField(max_length=20, unique=True, blank=False,\
-        primary_key=True)
+    username = models.CharField(max_length=20, unique=True, blank=False, primary_key=True)
     email = models.EmailField(blank=False, unique=True) 
     password = models.CharField(max_length=255, blank=False)
 

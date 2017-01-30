@@ -1,6 +1,6 @@
 # Django libraries
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
 from django.contrib.auth.hashers import *
@@ -31,8 +31,7 @@ def login(request):
     try:
         # If the user is already loggedin never show the login page
         if logged_in(request):
-            return render_to_response('register/logged_in.html', \
-                    RequestContext(request))
+            return render(request, 'register/logged_in.html', {})
 
         # Upon signin button click 
         if request.method=='POST':
@@ -62,23 +61,20 @@ def login(request):
                     else:
                         error = "Invalid password. Is it really you, " + \
                                 str(inp_username) + "?"
-                        return render_to_response('register/login.html', \
-                                {'form':form, 'error':error},
-                                RequestContext(request))
+                        return render(request, 'register/login.html', \
+                                {'form':form, 'error':error})
 
                 # There's no entry in the table with the given username
                 else:
                     error = "User doesn't exist!"
-                    return render_to_response('register/login.html', \
-                            {'form':form, 'error':error},
-                            RequestContext(request))
+                    return render(request, 'register/login.html', \
+                            {'form':form, 'error':error})
 
             # Invalid form inputs
             else:
                 error = "Invalid username and password"
-                return render_to_response('register/login.html',
-                        {'form':form, 'error':error},
-                        RequestContext(request))
+                return render(request, 'register/login.html',
+                        {'form':form, 'error':error},)
 
         # 'GET' request i.e refresh
         else:
@@ -90,9 +86,8 @@ def login(request):
             else:
                 form=LoginForm()
 
-        return render_to_response('register/login.html',
-                {'form':form},
-                RequestContext(request))
+        return render(request, 'register/login.html',
+                {'form':form})
 
     except KeyError:
         return error_key(request)
@@ -125,8 +120,7 @@ def newregister(request):
     try:
         # If the user is already loggedin never show the login page
         if logged_in(request):
-            return render_to_response('register/logged_in.html', 
-                    RequestContext(request))
+            return render(request, 'register/logged_in.html', {})
         
         # Upon Register button click
         if request.method == 'POST':
@@ -164,10 +158,9 @@ def newregister(request):
 		request.session['email'] = cleaned_reg_data['email']
                 sendmail_after_userreg(inp_username, inp_password, inp_email)
                 notify_new_user(inp_username, inp_email)
-                return render_to_response('register/register_success.html',
+                return render(request, 'register/register_success.html',
                             {'is_loggedin':logged_in(request), \
-                             'username':request.session['username']}, \
-                            RequestContext(request))
+                             'username':request.session['username']},)
 
             # Invalid form inputs
             else:
@@ -176,9 +169,8 @@ def newregister(request):
                         {'form': form, 'error':error}, 
                         RequestContext(request))
 
-        return render_to_response('register/newregister.html', 
-                {'form': NewRegisterForm}, 
-                RequestContext(request))
+        return render(request, 'register/newregister.html',
+                {'form': NewRegisterForm})
 
     except KeyError:
         return error_key(request)

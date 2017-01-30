@@ -1,12 +1,10 @@
+import os
+
 # Django Libraries
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.dispatch import receiver
-
-
-#Application specific import
 from register.models import User_info
-import os
 
 
 FOLDER_CHOICE = (
