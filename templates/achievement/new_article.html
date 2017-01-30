@@ -4,8 +4,8 @@
 Add an Article information
 {% endblock %}
 {% block script %}
-<script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
-<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
 {{ form.media }}
 {% endblock script %}
 {% block body %}
