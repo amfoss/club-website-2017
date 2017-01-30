@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'document',
     'event',	
     'images',
+    'fossProposal',
 ]
 
 MIDDLEWARE = [
