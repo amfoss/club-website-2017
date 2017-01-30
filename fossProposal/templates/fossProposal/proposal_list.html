@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Proposals</h1>
+    <ul>
+    {% for proposal in object_list %}
+        <li>{{ proposal.date|date }} - {{ proposal.title }}</li>
+    {% empty %}
+        <li>No proposal yet.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
