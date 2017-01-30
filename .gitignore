@@ -69,7 +69,7 @@ target/
 ### Django ###
 *.pyc
 local_settings.py
-static/
+/static/
 !templates/static/
 db/
 media/images/profile_image/
