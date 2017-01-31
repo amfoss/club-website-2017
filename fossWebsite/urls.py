@@ -13,4 +13,3 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^proposal/', include('fossProposal.urls'), name='foss-proposals')
 ]
-
