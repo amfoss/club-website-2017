@@ -25,8 +25,11 @@ class User_info(models.Model):
     email = models.EmailField(blank=False, unique=True) 
     password = models.CharField(max_length=255, blank=False)
 
-    class meta:
-        db_table = 'user_info'
+    class Meta:
+        db_table = 'User_info'
 
     def __unicode__(self):
-        return self.email
+        return self.firstname + ' ' + self.lastname
+
+    def __str__(self):
+        return self.username + ' ' + self.lastname
