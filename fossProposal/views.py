@@ -12,5 +12,5 @@ class ProposalListView(ListView):
 class ProposalCreate(CreateView):
 
     model = Proposal
-    fields = ['title']
+    fields = '__all__'
 
