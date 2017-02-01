@@ -9,8 +9,13 @@ class ProposalListView(ListView):
     model = Proposal
 
 
-class ProposalCreate(CreateView):
+class ProposalCreateView(CreateView):
 
     model = Proposal
     fields = '__all__'
+
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.created_by = user
+        return super(ProposalCreateView, self).form_valid(form)
 
