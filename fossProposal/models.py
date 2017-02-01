@@ -1,8 +1,6 @@
 from django.db import models
 from register.models import User_info
 
-# Create your models here.
-
 
 class Proposal(models.Model):
 
