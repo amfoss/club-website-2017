@@ -14,6 +14,7 @@ class Proposal(models.Model):
     field = models.CharField(max_length=300)
 
     speakers = models.CharField(max_length=500)
+    nat_or_inter = models.CharField(max_length=500)
 
     prerequisites = models.TextField()
     level = models.CharField(max_length=200)
@@ -30,14 +31,12 @@ class Proposal(models.Model):
     icts_support = models.TextField()
 
     remote_or_local = models.CharField(max_length=200)
-    local_travel_details = models.CharField(max_length=200)
-    local_accommodation_details = models.CharField(max_length=200)
-    local_food = models.CharField(max_length=200)
+    local_travel_accommodation_food = models.CharField(max_length=200, null=True, blank=True)
 
     estimated_cost = models.FloatField()
 
     date_added = models.DateField(auto_now_add=True)
-    created_by = models.ForeignKey(User_info, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User_info, on_delete=models.CASCADE, blank=True)
 
     def __str__(self):
         return self.title

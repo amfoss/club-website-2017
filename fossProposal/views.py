@@ -18,4 +18,3 @@ class ProposalCreateView(CreateView):
         user = self.request.user
         form.instance.created_by = user
         return super(ProposalCreateView, self).form_valid(form)
-

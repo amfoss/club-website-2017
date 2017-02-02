@@ -1,4 +1,192 @@
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save" />
-</form>
+<!DOCTYPE html>
+{% load staticfiles %}
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Proposal form </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <script>
+      $(document).ready(function() {
+        $(".datepicker").datepicker();
+        $("#")
+      });
+    </script>
+</head>
+
+<body>
+  <h1> FOSS@Amrita
+  <small>Event proposal form</small>
+</h1>
+<section class="contact-wrap">
+
+
+  <form action="" class="contact-form" method="post">
+      {% csrf_token %}
+
+      <div class="col-sm-12">
+        <div class="input-block">
+            <label for="">Event title</label>
+            <input type="text" class="form-control" name="title">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="input-block">
+            <label for="">Type of event(FOSSTalk, lightening talk, workshop etc..)</label>
+            <input type="text" class="form-control" name="type">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="input-block" >
+            <label for="">Date</label>
+            <input type="text" class="form-control datepicker" name="date">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="input-block">
+            <label for="">Venue</label>
+            <input type="text" class="form-control" name="venue">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="input-block">
+            <label for="">Field (Web, Maths, Algorithm, Fedora, etc..):</label>
+            <input type="text" class="form-control" name="type">
+        </div>
+      </div>
+
+      <div class="col-sm-7">
+        <div class="input-block">
+            <label for="">Speakers (Name):</label>
+            <input type="text" class="form-control" name="type">
+        </div>
+      </div>
+
+      <div class="col-sm-5">
+        <div class="input-block">
+            <label for="">Select</label>
+            <select class="form-control" id="sel1" name="nat_or_inter">
+                <option>International</option>
+                <option>National</option>
+              </select>
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <div class="input-block textarea">
+            <label for="">Prerequisites</label>
+            <textarea rows="3" type="text" class="form-control" name="prerequisites"></textarea>
+          </div>
+        </div>
+
+      <div class="col-sm-5">
+        <div class="input-block">
+            <label for="">Event level</label>
+            <select class="form-control" id="sel1" name="level">
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+              </select>
+        </div>
+      </div>
+
+      <div class="col-sm-7">
+        <div class="input-block">
+            <label for="">Expected number of participants:</label>
+            <input type="number" class="form-control" name="expected_no_of_participants">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="input-block">
+            <label for="">Sponsor list:</label>
+            <input type="text" class="form-control" name="sponsor_list">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="input-block">
+            <label for="">Estimated cost in thousands</label>
+            <input type="number" class="form-control" name="estimated_cost">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <div class="input-block textarea">
+            <label for="">How beneficiary is the event for the students?</label>
+            <textarea rows="3" type="text" class="form-control" name="benefit_for_students"></textarea>
+          </div>
+      </div>
+
+      <div class="col-sm-12">
+          <div class="input-block textarea">
+            <label for="">Does it involve something new and innovative?</label>
+            <textarea rows="3" type="text" class="form-control" name="innovation"></textarea>
+          </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="input-block">
+            <label for="">Lab requirements</label>
+            <input type="text" class="form-control" name="lab_requirements">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <div class="input-block textarea">
+            <label for="">ICTS support (projector, sound, guest keys etc..)</label>
+            <textarea rows="2" type="text" class="form-control" name="icts_support"></textarea>
+          </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="input-block">
+            <label for="">Event is </label>
+            <select class="form-control" id="sel1" name="remote_or_local">
+                <option>Remote</option>
+                <option>local</option>
+              </select>
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <div class="input-block textarea">
+            <label for="">Travel, accommodation and food details </label>
+            <textarea rows="4" type="text" class="form-control" name="local_travel_accommodation_food"></textarea>
+          </div>
+      </div>
+
+      <div class="col-sm-12">
+          <div class="input-block textarea">
+            <label for=""> Any other information </label>
+            <textarea rows="3" type="text" class="form-control" name="other_info"></textarea>
+          </div>
+      </div>
+
+    <div class="col-sm-12">
+      <button class="square-button">Send</button>
+    </div>
+  </form>
+
+
+
+</section>
+
+<!-- follow me template -->
+<div class="made-with-love">
+  <a target="_blank" href="http://foss.amrita.ac.in/">FOSS@Amrita</a>
+</div>
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+</html>
