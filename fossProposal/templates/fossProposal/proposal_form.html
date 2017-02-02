@@ -16,7 +16,18 @@
     <script>
       $(document).ready(function() {
         $(".datepicker").datepicker();
-        $("#")
+
+        $("#more-local-info").hide();
+
+        $("#remote_local").change(function() {
+            if($("#remote_local").val() == "Local") {
+                $("#more-local-info").show();
+            }
+            else {
+               $("#more-local-info").hide();
+            }
+        });
+
       });
     </script>
 </head>
@@ -153,14 +164,14 @@
       <div class="col-sm-6">
         <div class="input-block">
             <label for="">Event is </label>
-            <select class="form-control" id="sel1" name="remote_or_local">
-                <option>Remote</option>
-                <option>local</option>
+            <select class="form-control" id="remote_local" name="remote_or_local">
+                <option value="Remote">Remote</option>
+                <option value="Local">local</option>
               </select>
         </div>
       </div>
 
-      <div class="col-sm-12">
+      <div class="col-sm-12" id="more-local-info">
           <div class="input-block textarea">
             <label for="">Travel, accommodation and food details </label>
             <textarea rows="4" type="text" class="form-control" name="local_travel_accommodation_food"></textarea>
