@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 ROLE_CHOICES = (('S', 'Student'), ('M', 'Mentor'), ('B', 'Both'))
@@ -27,6 +28,9 @@ class User_info(models.Model):
 
     class Meta:
         db_table = 'User_info'
+
+    def get_absolute_url(self):
+        return reverse('proposal-detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return self.firstname + ' ' + self.lastname

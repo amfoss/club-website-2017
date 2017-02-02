@@ -36,6 +36,9 @@
   <h1> FOSS@Amrita
   <small>Event proposal form</small>
 </h1>
+
+<p>{{ form.errors.as_text }}</p>
+
 <section class="contact-wrap">
 
 
@@ -65,6 +68,13 @@
 
       <div class="col-sm-12">
         <div class="input-block">
+            <label for="">Duration</label>
+            <input type="text" class="form-control" name="duration">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="input-block">
             <label for="">Venue</label>
             <input type="text" class="form-control" name="venue">
         </div>
@@ -72,15 +82,15 @@
 
       <div class="col-sm-12">
         <div class="input-block">
-            <label for="">Field (Web, Maths, Algorithm, Fedora, etc..):</label>
-            <input type="text" class="form-control" name="type">
+            <label for="">Topic (Web, Maths, Algorithm, Fedora, etc..):</label>
+            <input type="text" class="form-control" name="topic">
         </div>
       </div>
 
       <div class="col-sm-7">
         <div class="input-block">
             <label for="">Speakers (Name):</label>
-            <input type="text" class="form-control" name="type">
+            <input type="text" class="form-control" name="speakers">
         </div>
       </div>
 
@@ -88,8 +98,8 @@
         <div class="input-block">
             <label for="">Select</label>
             <select class="form-control" id="sel1" name="nat_or_inter">
-                <option>International</option>
-                <option>National</option>
+                <option value="International">International</option>
+                <option value="National">National</option>
               </select>
         </div>
       </div>
@@ -101,13 +111,20 @@
           </div>
         </div>
 
+      <div class="col-sm-12">
+          <div class="input-block textarea">
+            <label for="">Course plan</label>
+            <textarea rows="3" type="text" class="form-control" name="course_plan"></textarea>
+          </div>
+        </div>
+
       <div class="col-sm-5">
         <div class="input-block">
             <label for="">Event level</label>
             <select class="form-control" id="sel1" name="level">
-                <option>Beginner</option>
-                <option>Intermediate</option>
-                <option>Advanced</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
               </select>
         </div>
       </div>
@@ -186,7 +203,7 @@
       </div>
 
     <div class="col-sm-12">
-      <button class="square-button">Send</button>
+      <button class="square-button" type="submit" value="Send message" >Send</button>
     </div>
   </form>
 

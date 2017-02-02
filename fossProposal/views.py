@@ -1,6 +1,9 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+
+from fossWebsite.helper import get_session_variables
 from .models import Proposal
+from register.models import User_info
 
 # Create your views here.
 
@@ -11,10 +14,12 @@ class ProposalListView(ListView):
 
 class ProposalCreateView(CreateView):
 
+
     model = Proposal
     fields = '__all__'
 
     def form_valid(self, form):
-        user = self.request.user
-        form.instance.created_by = user
+        is_loggedin, username = get_session_variables(self.request)
+        print username
+        form.instance.created_by = User_info.objects.get(username=username)
         return super(ProposalCreateView, self).form_valid(form)
