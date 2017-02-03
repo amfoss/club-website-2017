@@ -50,8 +50,8 @@
       <div class="col-sm-12">
           <p style="color: white">{{ form.title.errors }}</p>
         <div class="input-block" id="inputError">
-            <label for="">Event title</label>
-            <input type="text" class="form-control" name="title">
+            <label for="{{ form.title.id_for_label }}">Event title</label>
+            <input id="{{ form.title.id_for_label }}" value="{% if form.type.value is not None %} {{ form.title.value }} {% endif %}" type="text" class="form-control" name="title">
         </div>
       </div>
 
@@ -59,7 +59,7 @@
           <p style="color: white">{{ form.type.errors }}</p>
         <div class="input-block">
             <label for="">Type of event(FOSSTalk, lightening talk, workshop etc..)</label>
-            <input type="text" class="form-control" name="type">
+            <input type="text" value="{% if form.type.value is not None %} {{ form.type.value }} {% endif %}" class="form-control" name="type">
         </div>
       </div>
 
