@@ -38,22 +38,25 @@
   <small>Event proposal form</small>
 </h1>
 
-<p>{{ form.errors.as_text }}</p>
-
 <section class="contact-wrap">
 
 
   <form action="" class="contact-form" method="post">
       {% csrf_token %}
 
+
+
+
       <div class="col-sm-12">
-        <div class="input-block">
+          <p style="color: white">{{ form.title.errors }}</p>
+        <div class="input-block" id="inputError">
             <label for="">Event title</label>
             <input type="text" class="form-control" name="title">
         </div>
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.type.errors }}</p>
         <div class="input-block">
             <label for="">Type of event(FOSSTalk, lightening talk, workshop etc..)</label>
             <input type="text" class="form-control" name="type">
@@ -61,6 +64,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.date.errors }}</p>
         <div class="input-block" >
             <label for="">Date</label>
             <input type="text" class="form-control datepicker" name="date">
@@ -68,6 +72,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.duration.errors }}</p>
         <div class="input-block">
             <label for="">Duration</label>
             <input type="text" class="form-control" name="duration">
@@ -75,6 +80,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.venue.errors }}</p>
         <div class="input-block">
             <label for="">Venue</label>
             <input type="text" class="form-control" name="venue">
@@ -82,6 +88,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.topic.errors }}</p>
         <div class="input-block">
             <label for="">Topic (Web, Maths, Algorithm, Fedora, etc..):</label>
             <input type="text" class="form-control" name="topic">
@@ -89,6 +96,7 @@
       </div>
 
       <div class="col-sm-7">
+          <p style="color: white">{{ form.speakers.errors }}</p>
         <div class="input-block">
             <label for="">Speakers (Name):</label>
             <input type="text" class="form-control" name="speakers">
@@ -96,6 +104,7 @@
       </div>
 
       <div class="col-sm-5">
+          <p style="color: white">{{ form.nat_or_inter.errors }}</p>
         <div class="input-block">
             <label for="">Select</label>
             <select class="form-control" id="sel1" name="nat_or_inter">
@@ -106,6 +115,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.prerequisites.errors }}</p>
           <div class="input-block textarea">
             <label for="">Prerequisites</label>
             <textarea rows="3" type="text" class="form-control" name="prerequisites"></textarea>
@@ -113,6 +123,7 @@
         </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.course_plan.errors }}</p>
           <div class="input-block textarea">
             <label for="">Course plan</label>
             <textarea rows="3" type="text" class="form-control" name="course_plan"></textarea>
@@ -120,6 +131,7 @@
         </div>
 
       <div class="col-sm-5">
+          <p style="color: white">{{ form.level.errors }}</p>
         <div class="input-block">
             <label for="">Event level</label>
             <select class="form-control" id="sel1" name="level">
@@ -131,6 +143,7 @@
       </div>
 
       <div class="col-sm-7">
+          <p style="color: white">{{ form.expected_no_of_participants.errors }}</p>
         <div class="input-block">
             <label for="">Expected number of participants:</label>
             <input type="number" class="form-control" name="expected_no_of_participants">
@@ -138,6 +151,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.sponsor_list.errors }}</p>
         <div class="input-block">
             <label for="">Sponsor list:</label>
             <input type="text" class="form-control" name="sponsor_list">
@@ -145,6 +159,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.estimated_cost.errors }}</p>
         <div class="input-block">
             <label for="">Estimated cost in thousands</label>
             <input type="number" class="form-control" name="estimated_cost">
@@ -152,6 +167,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.benefit_for_students.errors }}</p>
           <div class="input-block textarea">
             <label for="">How beneficiary is the event for the students?</label>
             <textarea rows="3" type="text" class="form-control" name="benefit_for_students"></textarea>
@@ -159,6 +175,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.innovation.errors }}</p>
           <div class="input-block textarea">
             <label for="">Does it involve something new and innovative?</label>
             <textarea rows="3" type="text" class="form-control" name="innovation"></textarea>
@@ -166,6 +183,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.lab_requirements.errors }}</p>
         <div class="input-block">
             <label for="">Lab requirements</label>
             <input type="text" class="form-control" name="lab_requirements">
@@ -173,6 +191,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.icts_support.errors }}</p>
           <div class="input-block textarea">
             <label for="">ICTS support (projector, sound, guest keys etc..)</label>
             <textarea rows="2" type="text" class="form-control" name="icts_support"></textarea>
@@ -180,6 +199,7 @@
       </div>
 
       <div class="col-sm-6">
+          <p style="color: white">{{ form.remote_or_local.errors }}</p>
         <div class="input-block">
             <label for="">Event is </label>
             <select class="form-control" id="remote_local" name="remote_or_local">
@@ -190,6 +210,7 @@
       </div>
 
       <div class="col-sm-12" id="more-local-info">
+          <p style="color: white">{{ form.local_travel_accommodation_food.errors }}</p>
           <div class="input-block textarea">
             <label for="">Travel, accommodation and food details </label>
             <textarea rows="4" type="text" class="form-control" name="local_travel_accommodation_food"></textarea>
@@ -197,6 +218,7 @@
       </div>
 
       <div class="col-sm-12">
+          <p style="color: white">{{ form.other_info.errors }}</p>
           <div class="input-block textarea">
             <label for=""> Any other information </label>
             <textarea rows="3" type="text" class="form-control" name="other_info"></textarea>

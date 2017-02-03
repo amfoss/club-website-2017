@@ -4,7 +4,7 @@
 }
 .contact-form .input-block {
   background-color: rgba(255, 255, 255, 0.8);
-  border: solid 1px #FF512F;
+  border: solid 1px #2d00b9;
   width: 100%;
   height: 60px;
   padding: 25px;
@@ -91,9 +91,9 @@ body {
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmNTEyZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RkMjQ3NiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ff512f), color-stop(100%, #dd2476));
-  background-image: -moz-linear-gradient(left, #ff512f, #dd2476);
-  background-image: -webkit-linear-gradient(left, #ff512f, #dd2476);
-  background-image: linear-gradient(to right, #ff512f, #dd2476);
+  background-image: -moz-linear-gradient(left, #47aaff, #6166dd);
+  background-image: -webkit-linear-gradient(left, #2fb2ff, rgba(36, 67, 221, 0.71));
+  background-image: linear-gradient(to right, #2fb2ff, rgba(36, 67, 221, 0.71));
   font-family: 'Roboto', sans-serif;
 }
 
