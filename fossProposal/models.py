@@ -42,6 +42,9 @@ class Proposal(models.Model):
     permisions = models.TextField()
 
     # other
+    other_info = models.TextField(blank=True, null=True)
+
+
     date_added = models.DateField(auto_now_add=True)
     created_by = models.ForeignKey(User_info, on_delete=models.CASCADE, blank=True, null=True)
 
