@@ -101,13 +101,13 @@ def logout(request):
         del request.session['is_loggedin']
         del request.session['username']
         request.session.flush()
-        return render_to_response('register/logout.html', \
+        return render(request, 'register/logout.html', \
                 RequestContext(request))
     except KeyError:
         pass
 def forpass(request):
     try:
-        return render_to_response('register/forpass.html', \
+        return render(request, 'register/forpass.html', \
                     RequestContext(request))
     except KeyError:
         pass
@@ -165,7 +165,7 @@ def newregister(request):
             # Invalid form inputs
             else:
                 error = "Invalid inputs"
-                return render_to_response('register/newregister.html', 
+                return render(request, 'register/newregister.html', 
                         {'form': form, 'error':error}, 
                         RequestContext(request))
 
@@ -206,7 +206,7 @@ def profile(request, user_name):
     else:
        	image_name = "default_image.jpeg"
 
-    return render_to_response( \
+    return render(request,  \
             'register/profile.html', \
             {'is_loggedin':is_loggedin, \
             'username':username, \
@@ -261,7 +261,7 @@ def change_password(request):
                                     new_pass, \
                                     user_data.email)
                             user_data.save()
-                            return render_to_response( \
+                            return render(request,  \
                                     'register/pass_success.html',
                                     {'username': username, \
                                     'is_loggedin': is_loggedin}, \
@@ -269,7 +269,7 @@ def change_password(request):
                         # Repass and new pass are not same
                         else:
                             error = "New passwords doesn't match"
-                            return render_to_response( \
+                            return render(request,  \
                                     'register/change_password.html', 
                                     {'form':form, \
                                     'username' :username, \
@@ -280,7 +280,7 @@ def change_password(request):
                     else:
                         error = "Your old and new password are same. Please \
                                 choose a different password"
-                        return render_to_response( \
+                        return render(request,  \
                                 'register/change_password.html', 
                                 {'form':form, \
                                 'username':username, \
@@ -290,7 +290,7 @@ def change_password(request):
                 # Given current and stored passwords are not same
                 else:
                     error = "Current password and given password doesn't match"
-                    return render_to_response( \
+                    return render(request,  \
                             'register/change_password.html', 
                             {'form':form, \
                             'username':username, \
@@ -301,14 +301,14 @@ def change_password(request):
             else:
                 form = ChangePasswordForm()
 
-            return render_to_response( \
+            return render(request,  \
                     'register/change_password.html', 
                     {'form':form, \
                     'username':username, \
                     'is_loggedin':is_loggedin}, \
                     RequestContext(request))
 
-        return render_to_response( \
+        return render(request,  \
                 'register/change_password.html',
                 {'username': username, \
                 'is_loggedin': is_loggedin}, \
@@ -328,7 +328,7 @@ def mypage(request):
     else:
         is_loggedin, username = get_session_variables(request)
         name = User_info.objects.get(username=username)
-        return render_to_response( \
+        return render(request,  \
                 'register/mypages.html',
                 {'username':username, \
                 'firstname':name.firstname, \
@@ -350,7 +350,7 @@ def update_profile(request):
             #If method is not POST 
             if request.method != 'POST':
                 #return form with old details
-                return render_to_response('register/update_profile.html',\
+                return render(request, 'register/update_profile.html',\
                     {'form':UpdateProfileForm(init_user_details),\
                     'is_loggedin':is_loggedin, 'username':username},\
                     RequestContext(request))
@@ -363,7 +363,7 @@ def update_profile(request):
                     #return form with old details
 
                     print profile_update_form.cleaned_data
-                    return render_to_response('register/update_profile.html',\
+                    return render(request, 'register/update_profile.html',\
                         {'form':UpdateProfileForm(init_user_details),\
                         'is_loggedin':is_loggedin, 'username':username},\
                         RequestContext(request))    
@@ -406,7 +406,7 @@ def update_profile_pic(request):
             #If method is not POST 
             if request.method != 'POST':
                 #return form with old details
-                return render_to_response('register/update_profile_pic.html',\
+                return render(request, 'register/update_profile_pic.html',\
                     {'form':UpdateProfileForm(init_user_details),\
                     'is_loggedin':is_loggedin, 'username':username},\
                     RequestContext(request))
