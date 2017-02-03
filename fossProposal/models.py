@@ -4,37 +4,44 @@ from register.models import User_info
 
 class Proposal(models.Model):
 
+    # basic information
     title = models.CharField(max_length=300)
     type = models.CharField(max_length=200)
-
     date = models.DateField(auto_now_add=False)
     duration = models.CharField(max_length=100)
-
     venue = models.CharField(max_length=200)
     topic = models.CharField(max_length=300)
-
     speakers = models.CharField(max_length=500)
     nat_or_inter = models.CharField(max_length=500)
-
-    prerequisites = models.TextField()
+    trainer_bio = models.TextField()
+    coordinators = models.CharField(max_length=400)
     level = models.CharField(max_length=200)
-    course_plan = models.TextField()
-
     expected_no_of_participants = models.IntegerField()
 
-    sponsor_list = models.TextField()
+    # prerequisites
+    prerequisites_software = models.TextField()
+    prerequisites_hardware = models.TextField()
+    prerequisites_knowledge = models.TextField()
 
-    benefit_for_students = models.TextField()
-    innovation = models.TextField()
+    # course
+    course_plan = models.TextField()
+    student_short_list = models.TextField()
 
+    # financial
+    travel = models.FloatField()
+    trainer_fee = models.FloatField()
+    accommodation = models.FloatField()
+    transportation = models.FloatField()
+    other = models.FloatField()
+
+    # lab requirements
     lab_requirements = models.CharField(max_length=200)
     icts_support = models.TextField()
 
-    remote_or_local = models.CharField(max_length=200)
-    local_travel_accommodation_food = models.CharField(max_length=200, null=True, blank=True)
+    # permissions
+    permisions = models.TextField()
 
-    estimated_cost = models.FloatField(null=True, blank=True)
-
+    # other
     date_added = models.DateField(auto_now_add=True)
     created_by = models.ForeignKey(User_info, on_delete=models.CASCADE, blank=True, null=True)
 

@@ -44,9 +44,6 @@
   <form action="" class="contact-form" method="post">
       {% csrf_token %}
 
-
-
-
       <div class="col-sm-12">
           <p style="color: white">{{ form.title.errors }}</p>
         <div class="input-block" id="inputError">
@@ -54,6 +51,8 @@
             <input id="{{ form.title.id_for_label }}" value="{% if form.type.value is not None %} {{ form.title.value }} {% endif %}" type="text" class="form-control" name="title">
         </div>
       </div>
+
+        <h5 style="margin-left:2.5%">Basic Information</h5>
 
       <div class="col-sm-12">
           <p style="color: white">{{ form.type.errors }}</p>
@@ -66,7 +65,7 @@
       <div class="col-sm-12">
           <p style="color: white">{{ form.date.errors }}</p>
         <div class="input-block" >
-            <label for="">Date</label>
+            <label for="">Proposed date</label>
             <input type="text" value="{% if form.date.value is not None %} {{ form.date.value }} {% endif %}" class="form-control datepicker" name="date">
         </div>
       </div>
@@ -98,7 +97,7 @@
       <div class="col-sm-7">
           <p style="color: white">{{ form.speakers.errors }}</p>
         <div class="input-block">
-            <label for="">Speakers (Name):</label>
+            <label for="">Speakers/Trainer (Name):</label>
             <input value="{% if form.speakers.value is not None %} {{ form.speakers.value }} {% endif %}" type="text" class="form-control" name="speakers">
         </div>
       </div>
@@ -113,6 +112,48 @@
               </select>
         </div>
       </div>
+
+        <div class="col-sm-12">
+          <p style="color: white">{{ form.trainer_bio.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">Brief trainer bio</label>
+            <textarea rows="3" type="text" class="form-control" name="trainer_bio">{% if form.trainer_bio.value is not None %} {{ form.trainer_bio.value }} {% endif %}</textarea>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <p style="color: white">{{ form.coordinators.errors }}</p>
+        <div class="input-block">
+            <label for="">Event coordinators</label>
+            <input value="{% if form.coordinators.value is not None %} {{ form.coordinators.value }} {% endif %}" type="text" class="form-control" name="coordinators">
+        </div>
+      </div>
+
+        <div class="col-sm-5">
+          <p style="color: white">{{ form.level.errors }}</p>
+        <div class="input-block">
+            <label for="">Event level</label>
+            <select class="form-control" id="sel1" name="level">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+        </div>
+      </div>
+
+
+        <div class="col-sm-7">
+          <p style="color: white">{{ form.expected_no_of_participants.errors }}</p>
+        <div class="input-block">
+            <label for="">Expected number of participants:</label>
+            <input value="{% if form.expected_no_of_participants.value is not None %} {{ form.expected_no_of_participants.value }} {% endif %}" type="number" class="form-control" name="expected_no_of_participants">
+        </div>
+      </div>
+
+
+        <h5 style="margin-left:2.5%">Prerequisites</h5>
+
+
 
       <div class="col-sm-12">
           <p style="color: white">{{ form.prerequisites.errors }}</p>
@@ -130,25 +171,9 @@
           </div>
         </div>
 
-      <div class="col-sm-5">
-          <p style="color: white">{{ form.level.errors }}</p>
-        <div class="input-block">
-            <label for="">Event level</label>
-            <select class="form-control" id="sel1" name="level">
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-              </select>
-        </div>
-      </div>
 
-      <div class="col-sm-7">
-          <p style="color: white">{{ form.expected_no_of_participants.errors }}</p>
-        <div class="input-block">
-            <label for="">Expected number of participants:</label>
-            <input value="{% if form.expected_no_of_participants.value is not None %} {{ form.expected_no_of_participants.value }} {% endif %}" type="number" class="form-control" name="expected_no_of_participants">
-        </div>
-      </div>
+
+
 
       <div class="col-sm-12">
           <p style="color: white">{{ form.sponsor_list.errors }}</p>
