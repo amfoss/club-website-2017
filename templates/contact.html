@@ -34,7 +34,7 @@
             	<div class="col-md-5">
             		<div class="form-group">
                 		<div class="input-group">
-                      <div class="g-recaptcha" data-sitekey="6LcpOBQUAAAAAPlESQ310zVECwm7GvBPUSf8CaJ1"></div> <!-- Google captcha for verification of bot -->
+                      <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6LcpOBQUAAAAAPlESQ310zVECwm7GvBPUSf8CaJ1"></div> <!-- Google captcha for verification of bot -->
                  		</div>
 
                 		{% ifequal captcha 'false' %}
@@ -51,7 +51,7 @@
 
                 <div class="col-md-2">
 
-                    <input type="submit" name="contact_button" id="contact_id" value="Send" class="btn btn-info btn-block">
+                    <input type="submit" name="contact_button" id="contact_id" value="Send" class="btn btn-info btn-block" disabled>
                 </div><!--col-md-4-->
 
           	</div><!--row-->
@@ -59,3 +59,9 @@
     </div><!--col-md-8-->
     <div class="col-md-2"></div>
 </div><!--theme theme-2-->
+
+<script>
+function recaptchaCallback() {
+    $('#contact_id').removeAttr('disabled');
+};
+</script>
