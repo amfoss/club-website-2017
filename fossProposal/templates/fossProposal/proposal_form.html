@@ -67,7 +67,7 @@
           <p style="color: white">{{ form.date.errors }}</p>
         <div class="input-block" >
             <label for="">Date</label>
-            <input type="text" class="form-control datepicker" name="date">
+            <input type="text" value="{% if form.date.value is not None %} {{ form.date.value }} {% endif %}" class="form-control datepicker" name="date">
         </div>
       </div>
 
@@ -75,7 +75,7 @@
           <p style="color: white">{{ form.duration.errors }}</p>
         <div class="input-block">
             <label for="">Duration</label>
-            <input type="text" class="form-control" name="duration">
+            <input value="{% if form.duration.value is not None %} {{ form.duration.value }} {% endif %}" type="text" class="form-control" name="duration">
         </div>
       </div>
 
@@ -83,7 +83,7 @@
           <p style="color: white">{{ form.venue.errors }}</p>
         <div class="input-block">
             <label for="">Venue</label>
-            <input type="text" class="form-control" name="venue">
+            <input value="{% if form.venue.value is not None %} {{ form.venue.value }} {% endif %}" type="text" class="form-control" name="venue">
         </div>
       </div>
 
@@ -91,7 +91,7 @@
           <p style="color: white">{{ form.topic.errors }}</p>
         <div class="input-block">
             <label for="">Topic (Web, Maths, Algorithm, Fedora, etc..):</label>
-            <input type="text" class="form-control" name="topic">
+            <input value="{% if form.topic.value is not None %} {{ form.topic.value }} {% endif %}" type="text" class="form-control" name="topic">
         </div>
       </div>
 
@@ -99,7 +99,7 @@
           <p style="color: white">{{ form.speakers.errors }}</p>
         <div class="input-block">
             <label for="">Speakers (Name):</label>
-            <input type="text" class="form-control" name="speakers">
+            <input value="{% if form.speakers.value is not None %} {{ form.speakers.value }} {% endif %}" type="text" class="form-control" name="speakers">
         </div>
       </div>
 
@@ -118,7 +118,7 @@
           <p style="color: white">{{ form.prerequisites.errors }}</p>
           <div class="input-block textarea">
             <label for="">Prerequisites</label>
-            <textarea rows="3" type="text" class="form-control" name="prerequisites"></textarea>
+            <textarea rows="3" type="text" class="form-control" name="prerequisites">{% if form.prerequisites.value is not None %} {{ form.prerequisites.value }} {% endif %}</textarea>
           </div>
         </div>
 
@@ -126,7 +126,7 @@
           <p style="color: white">{{ form.course_plan.errors }}</p>
           <div class="input-block textarea">
             <label for="">Course plan</label>
-            <textarea rows="3" type="text" class="form-control" name="course_plan"></textarea>
+            <textarea rows="3" type="text" class="form-control" name="course_plan">{% if form.course_plan.value is not None %} {{ form.course_plan.value }} {% endif %}</textarea>
           </div>
         </div>
 
@@ -146,7 +146,7 @@
           <p style="color: white">{{ form.expected_no_of_participants.errors }}</p>
         <div class="input-block">
             <label for="">Expected number of participants:</label>
-            <input type="number" class="form-control" name="expected_no_of_participants">
+            <input value="{% if form.expected_no_of_participants.value is not None %} {{ form.expected_no_of_participants.value }} {% endif %}" type="number" class="form-control" name="expected_no_of_participants">
         </div>
       </div>
 
@@ -154,7 +154,7 @@
           <p style="color: white">{{ form.sponsor_list.errors }}</p>
         <div class="input-block">
             <label for="">Sponsor list:</label>
-            <input type="text" class="form-control" name="sponsor_list">
+            <input value="{% if form.sponsor_list.value is not None %} {{ form.sponsor_list.value }} {% endif %}" type="text" class="form-control" name="sponsor_list">
         </div>
       </div>
 
@@ -162,7 +162,7 @@
           <p style="color: white">{{ form.estimated_cost.errors }}</p>
         <div class="input-block">
             <label for="">Estimated cost in thousands</label>
-            <input type="number" class="form-control" name="estimated_cost">
+            <input value="{% if form.estimated_cost.value is not None %} {{ form.estimated_cost.value }} {% endif %}" type="number" class="form-control" name="estimated_cost">
         </div>
       </div>
 
@@ -170,7 +170,7 @@
           <p style="color: white">{{ form.benefit_for_students.errors }}</p>
           <div class="input-block textarea">
             <label for="">How beneficiary is the event for the students?</label>
-            <textarea rows="3" type="text" class="form-control" name="benefit_for_students"></textarea>
+            <textarea rows="3" type="text" class="form-control" name="benefit_for_students">{% if form.benefit_for_students.value is not None %} {{ form.benefit_for_students.value }} {% endif %}</textarea>
           </div>
       </div>
 
@@ -178,7 +178,7 @@
           <p style="color: white">{{ form.innovation.errors }}</p>
           <div class="input-block textarea">
             <label for="">Does it involve something new and innovative?</label>
-            <textarea rows="3" type="text" class="form-control" name="innovation"></textarea>
+            <textarea rows="3" type="text" class="form-control" name="innovation">{% if form.innovation.value is not None %} {{ form.innovation.value }} {% endif %}</textarea>
           </div>
       </div>
 
@@ -186,7 +186,7 @@
           <p style="color: white">{{ form.lab_requirements.errors }}</p>
         <div class="input-block">
             <label for="">Lab requirements</label>
-            <input type="text" class="form-control" name="lab_requirements">
+            <input value="{% if form.lab_requirements.value is not None %} {{ form.lab_requirements.value }} {% endif %}" type="text" class="form-control" name="lab_requirements">
         </div>
       </div>
 
@@ -194,7 +194,7 @@
           <p style="color: white">{{ form.icts_support.errors }}</p>
           <div class="input-block textarea">
             <label for="">ICTS support (projector, sound, guest keys etc..)</label>
-            <textarea rows="2" type="text" class="form-control" name="icts_support"></textarea>
+            <textarea rows="2" type="text" class="form-control" name="icts_support">{% if form.icts_support.value is not None %} {{ form.icts_support.value }} {% endif %}</textarea>
           </div>
       </div>
 
@@ -221,7 +221,7 @@
           <p style="color: white">{{ form.other_info.errors }}</p>
           <div class="input-block textarea">
             <label for=""> Any other information </label>
-            <textarea rows="3" type="text" class="form-control" name="other_info"></textarea>
+            <textarea rows="3" type="text" class="form-control" name="other_info">{% if form.local_travel_accommodation_food.value is not None %} {{ form.local_travel_accommodation_food.value }} {% endif %}</textarea>
           </div>
       </div>
 
