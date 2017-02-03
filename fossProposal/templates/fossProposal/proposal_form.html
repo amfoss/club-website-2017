@@ -40,7 +40,7 @@
         </div>
       </div>
 
-        <h5 style="margin-left:2.5%">Basic Information</h5>
+        <h5 style="margin-left:2.5%" class="col-md-12">Basic Information</h5>
 
       <div class="col-sm-12">
           <p style="color: white">{{ form.type.errors }}</p>
@@ -139,7 +139,7 @@
       </div>
 
 
-        <h5 style="margin-left:2.5%">Prerequisites</h5>
+        <h5 style="margin-left:2.5%" class="col-md-12">Prerequisites</h5>
 
         <div class="col-sm-12">
           <p style="color: white">{{ form.prerequisites_software.errors }}</p>
@@ -166,7 +166,7 @@
           </div>
         </div>
 
-        <h5 style="margin-left:2.5%">Course</h5>
+        <h5 style="margin-left:2.5%" class="col-md-12">Course</h5>
 
       <div class="col-sm-12">
           <p style="color: white">{{ form.course_plan.errors }}</p>
@@ -184,9 +184,9 @@
           </div>
         </div>
 
-<h5 style="margin-left:2.5%">Financials</h5>
+<h5 style="margin-left:2.5%" class="col-md-12">Financials</h5>
 
-      <div class="col-sm-3">
+      <div class="col-sm-6">
           <p style="color: white">{{ form.travel.errors }}</p>
         <div class="input-block">
             <label for="">Travel</label>
@@ -194,7 +194,7 @@
         </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="col-sm-6">
           <p style="color: white">{{ form.trainer_fee.errors }}</p>
         <div class="input-block">
             <label for="">Trainer fee</label>
@@ -202,7 +202,7 @@
         </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="col-sm-6">
           <p style="color: white">{{ form.accommodation.errors }}</p>
         <div class="input-block">
             <label for="">Accommodation</label>
@@ -210,15 +210,23 @@
         </div>
       </div>
 
-      <div class="col-sm-3">
-          <p style="color: white">{{ form.other.errors }}</p>
+      <div class="col-sm-6">
+          <p style="color: white">{{ form.transportation.errors }}</p>
         <div class="input-block">
-            <label for="">Other</label>
-            <input value="{% if form.other.value is not None %} {{ form.other.value }} {% endif %}" type="number" class="form-control" name="transportation">
+            <label for="">Transportation</label>
+            <input value="{% if form.transportation.value is not None %} {{ form.transportation.value }} {% endif %}" type="number" class="form-control" name="transportation">
         </div>
       </div>
 
-<h5 style="margin-left:2.5%">Lab</h5>
+      <div class="col-sm-6">
+          <p style="color: white">{{ form.other.errors }}</p>
+        <div class="input-block">
+            <label for="">Other</label>
+            <input value="{% if form.other.value is not None %} {{ form.other.value }} {% endif %}" type="number" class="form-control" name="other">
+        </div>
+      </div>
+
+<h5 class="col-md-12" style="margin-left:2.5%">Lab</h5>
 
       <div class="col-sm-12">
           <p style="color: white">{{ form.lab_requirements.errors }}</p>
@@ -236,8 +244,8 @@
           </div>
       </div>
 
-  <h5 style="margin-left:2.5%">Permissions</h5>
-  <h6 style="margin-left:2.5%; margin-right: 2.5%;">The event need to be approved by Principal and HOD if it is on working days or if it is a major event. The proposal for the event needs to be done and approval is needed by principal and HOD to conduct this. Mention if anyone needs duty leave etc here.
+  <h5 style="margin-left:2.5%" class="col-md-12">Permissions</h5>
+  <h6 style="margin-left:2.5%; padding-right: 7%;" class="col-md-12">The event need to be approved by Principal and HOD if it is on working days or if it is a major event. The proposal for the event needs to be done and approval is needed by principal and HOD to conduct this. Mention if anyone needs duty leave etc here.
 </h6>
 
 
@@ -253,7 +261,7 @@
           <p style="color: white">{{ form.other_info.errors }}</p>
           <div class="input-block textarea">
             <label for=""> Any other information </label>
-            <textarea rows="3" type="text" class="form-control" name="other_info">{% if form.local_travel_accommodation_food.value is not None %} {{ form.local_travel_accommodation_food.value }} {% endif %}</textarea>
+            <textarea rows="3" type="text" class="form-control" name="other_info">{% if form.other_info.value is not None %} {{ form.other_info.value }} {% endif %}</textarea>
           </div>
       </div>
 
