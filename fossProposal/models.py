@@ -50,7 +50,7 @@ class Proposal(models.Model):
     created_by = models.ForeignKey(User_info, on_delete=models.CASCADE, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('author-detail', kwargs={'pk': self.pk})
+        return reverse('proposal-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
