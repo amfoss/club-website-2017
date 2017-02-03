@@ -3,7 +3,7 @@ from register import views
 
 
 urlpatterns = [
-    url(r'^login/$', views.login),
+    url(r'^login/$', views.login, name='login'),
     url(r'^forpass/$', views.forpass),
     url(r'^logout/$', views.logout),
     url(r'^new/$', views.newregister),
