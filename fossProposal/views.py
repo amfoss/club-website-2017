@@ -1,6 +1,3 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 

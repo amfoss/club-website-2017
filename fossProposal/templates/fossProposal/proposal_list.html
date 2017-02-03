@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'static/base.html' %}
+{% block title %}
+ ALl proposals
+{% endblock %}
+{% block body %}
     <h1>Proposals</h1>
     <ul>
     {% for proposal in object_list %}
@@ -13,5 +11,4 @@
         <li>No proposal yet.</li>
     {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock body %}
