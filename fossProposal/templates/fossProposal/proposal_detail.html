@@ -1,0 +1,13 @@
+{% extends 'static/base.html' %}
+{% block title %}
+ ALl proposals
+{% endblock %}
+{% block body %}
+    <ul>
+    <h1>{{ object.title }}</h1>
+    <p>{{ object.created_by }}</p>
+    <p>Reporter: {{ object.type }}</p>
+    </ul>
+{% endblock body %}
+
+

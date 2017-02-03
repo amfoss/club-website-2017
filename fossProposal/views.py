@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 
@@ -6,9 +7,9 @@ from fossWebsite.helper import get_session_variables
 from .models import Proposal
 from register.models import User_info
 
-# Create your views here.
 
 class ProposalListView(ListView):
+
     model = Proposal
 
     def get(self, request, *args, **kwargs):
@@ -19,6 +20,11 @@ class ProposalListView(ListView):
         if is_loggedin is False:
             return redirect('login')
         return self.render_to_response(context)
+
+
+class ProposalDetailView(DetailView):
+
+    model = Proposal
 
 
 class ProposalCreateView(CreateView):
