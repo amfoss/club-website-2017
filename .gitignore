@@ -69,6 +69,7 @@ target/
 ### Django ###
 *.pyc
 local_settings.py
+local_settings_production.py
 /static/
 !templates/static/
 db/
@@ -77,3 +78,4 @@ media/images/profile_image/
 .idea/
 foss/
 
+images/uploads/
