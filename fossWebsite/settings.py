@@ -22,7 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['35.167.82.240:8000', 'ec2-35-167-82-240.us-west-2.compute.amazonaws.com']
+
 
 ROOT_URLCONF = 'fossWebsite.urls'
 WSGI_APPLICATION = 'fossWebsite.wsgi.application'
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'alerts',
     'achievement',
     'document',
-    'event',	
+    'event',
     'images',
     'fossProposal',
 ]
@@ -65,7 +66,7 @@ X_FRAME_OPTIONS = 'ALLOWALL'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR + '/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': DEBUG,
