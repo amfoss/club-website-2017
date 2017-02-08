@@ -37,3 +37,36 @@ class User_info(models.Model):
 
     def __str__(self):
         return self.username + ' ' + self.lastname
+
+
+class Student(models.Model):
+
+    username = models.ForeignKey(User_info, on_delete=models.CASCADE)
+
+    # college
+    roll_number = models.CharField(max_length=200)
+    branch = models.CharField(max_length=100)
+    year = models.CharField(max_length=10)
+    cgpa = models.CharField(max_length=10)
+
+    # lab
+    mentors = models.CharField(max_length=200)
+    system_number = models.CharField(max_length=10)
+
+    # responsibilities
+
+    responsibility1 = models.CharField(max_length=600)
+    responsibility2 = models.CharField(max_length=600)
+    responsibility3 = models.CharField(max_length=600)
+    responsibility4 = models.CharField(max_length=600)
+    responsibility5 = models.CharField(max_length=600)
+    responsibility_count = models.CharField(max_length=10)
+    comments = models.TextField()
+
+    def __unicode__(self):
+        return self.username.firstname + ' ' + self.username.lastname
+
+    def __str__(self):
+        return self.username.username + ' ' + self.username.lastname
+
+
