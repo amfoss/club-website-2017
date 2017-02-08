@@ -7,13 +7,13 @@ from register.models import User_info
 class Attendance(models.Model):
 
     # student details
-    username = models.ForeignKey(User_info, on_delete=models.CASCADE)
+    username = models.ForeignKey(User_info, related_name='student', on_delete=models.CASCADE)
 
     # date and time added
     date_added = models.DateTimeField(auto_now_add=True)
 
     # added by
-    added_by = models.ForeignKey(User_info, on_delete=models.CASCADE, blank=True, null=True)
+    added_by = models.ForeignKey(User_info, related_name='attendance_taker', on_delete=models.CASCADE, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('attendance-detail', kwargs={'pk': self.pk})

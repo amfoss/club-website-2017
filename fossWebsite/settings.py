@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'event',
     'images',
     'fossProposal',
+    'attendance',
 ]
 
 MIDDLEWARE = [

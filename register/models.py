@@ -41,7 +41,7 @@ class User_info(models.Model):
 
 class Student(models.Model):
 
-    username = models.ForeignKey(User_info, on_delete=models.CASCADE)
+    username = models.ForeignKey(User_info, related_name='user_student', on_delete=models.CASCADE)
 
     # college
     roll_number = models.CharField(max_length=200)
