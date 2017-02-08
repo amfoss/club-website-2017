@@ -31,15 +31,21 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 
 INSTALLED_APPS = [
+    # django default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # third party apps
     'bootstrap3_datetime',
     'captcha',
     'mailer',
+    'rest_framework',
+
+    # custom django apps
     'register',
     'project',
     'alerts',

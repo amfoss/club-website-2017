@@ -3,4 +3,5 @@ Pillow
 django-mailer
 django-recaptcha
 django-password-reset
+djangorestframework
 git+https://github.com/nkunihiko/django-bootstrap3-datetimepicker.git
