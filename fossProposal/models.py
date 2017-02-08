@@ -18,7 +18,7 @@ class Proposal(models.Model):
     trainer_bio = models.TextField()
     coordinators = models.CharField(max_length=400)
     level = models.CharField(max_length=200)
-    expected_no_of_participants = models.IntegerField()
+    expected_no_of_participants = models.CharField(max_length=200)
 
     # prerequisites
     prerequisites_software = models.TextField()
@@ -30,11 +30,11 @@ class Proposal(models.Model):
     student_short_list = models.TextField()
 
     # financial
-    travel = models.FloatField()
-    trainer_fee = models.FloatField()
-    accommodation = models.FloatField()
-    transportation = models.FloatField()
-    other = models.FloatField()
+    travel = models.CharField(max_length=200)
+    trainer_fee = models.CharField(max_length=200)
+    accommodation = models.CharField(max_length=200)
+    transportation = models.CharField(max_length=200)
+    other = models.CharField(max_length=200)
 
     # lab requirements
     lab_requirements = models.CharField(max_length=200)

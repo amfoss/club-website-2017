@@ -133,7 +133,7 @@
           <p style="color: white">{{ form.expected_no_of_participants.errors }}</p>
         <div class="input-block">
             <label for="">Expected number of participants:</label>
-            <input value="{% if form.expected_no_of_participants.value is not None %} {{ form.expected_no_of_participants.value }} {% endif %}" type="number" class="form-control" name="expected_no_of_participants">
+            <input value="{% if form.expected_no_of_participants.value is not None %} {{ form.expected_no_of_participants.value }} {% endif %}" type="text" class="form-control" name="expected_no_of_participants">
         </div>
       </div>
 
@@ -189,7 +189,7 @@
           <p style="color: white">{{ form.travel.errors }}</p>
         <div class="input-block">
             <label for="">Travel</label>
-            <input value="{% if form.travel.value is not None %} {{ form.travel.value }} {% endif %}" type="number" class="form-control" name="travel">
+            <input value="{% if form.travel.value is not None %} {{ form.travel.value }} {% endif %}" type="text" class="form-control" name="travel">
         </div>
       </div>
 
@@ -197,7 +197,7 @@
           <p style="color: white">{{ form.trainer_fee.errors }}</p>
         <div class="input-block">
             <label for="">Trainer fee</label>
-            <input value="{% if form.trainer_fee.value is not None %} {{ form.trainer_fee.value }} {% endif %}" type="number" class="form-control" name="trainer_fee">
+            <input value="{% if form.trainer_fee.value is not None %} {{ form.trainer_fee.value }} {% endif %}" type="text" class="form-control" name="trainer_fee">
         </div>
       </div>
 
@@ -205,7 +205,7 @@
           <p style="color: white">{{ form.accommodation.errors }}</p>
         <div class="input-block">
             <label for="">Accommodation</label>
-            <input value="{% if form.accommodation.value is not None %} {{ form.accommodation.value }} {% endif %}" type="number" class="form-control" name="accommodation">
+            <input value="{% if form.accommodation.value is not None %} {{ form.accommodation.value }} {% endif %}" type="text" class="form-control" name="accommodation">
         </div>
       </div>
 
@@ -213,7 +213,7 @@
           <p style="color: white">{{ form.transportation.errors }}</p>
         <div class="input-block">
             <label for="">Transportation</label>
-            <input value="{% if form.transportation.value is not None %} {{ form.transportation.value }} {% endif %}" type="number" class="form-control" name="transportation">
+            <input value="{% if form.transportation.value is not None %} {{ form.transportation.value }} {% endif %}" type="text" class="form-control" name="transportation">
         </div>
       </div>
 
@@ -221,7 +221,7 @@
           <p style="color: white">{{ form.other.errors }}</p>
         <div class="input-block">
             <label for="">Other</label>
-            <input value="{% if form.other.value is not None %} {{ form.other.value }} {% endif %}" type="number" class="form-control" name="other">
+            <input value="{% if form.other.value is not None %} {{ form.other.value }} {% endif %}" type="text" class="form-control" name="other">
         </div>
       </div>
 
