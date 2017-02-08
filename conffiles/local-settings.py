@@ -5,8 +5,9 @@ import os
 # Rename the file as local_settings.py
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+
 PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ADMINS = (
     ('Seshagiri Prabhu', 'seshagiriprabhu@gmail.com'),
@@ -64,18 +65,12 @@ DATABASES = {
         'PORT': '',                              # Set to empty string for default. Not used with sqlite3.
     }
 }
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'Asia/Kolkata'
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    PROJECT_PATH + "/templates",
-)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
