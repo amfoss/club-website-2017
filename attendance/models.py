@@ -12,6 +12,9 @@ class Attendance(models.Model):
     # date and time added
     date_added = models.DateTimeField(auto_now_add=True)
 
+    # present or absent
+    present = models.BooleanField(default=False)
+
     # added by
     added_by = models.ForeignKey(User_info, related_name='attendance_taker', on_delete=models.CASCADE, blank=True, null=True)
 
