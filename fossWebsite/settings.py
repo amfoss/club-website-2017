@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'captcha',
     'mailer',
     'rest_framework',
+    'django_archive',
 
     # custom django apps
     'register',
