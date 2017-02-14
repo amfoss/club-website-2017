@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['35.167.82.240:8000', 'ec2-35-167-82-240.us-west-2.compute.amazonaws.com']
 
@@ -42,9 +42,8 @@ INSTALLED_APPS = [
     # third party apps
     'bootstrap3_datetime',
     'captcha',
-    'mailer',
     'rest_framework',
-    'django_archive',
+    'dbbackup',
 
     # custom django apps
     'register',
@@ -142,5 +141,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': '/home/domains/foss/db_backups/'}
 
 from local_settings import *

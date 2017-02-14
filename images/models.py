@@ -69,6 +69,9 @@ class ProfileImage(models.Model):
     image = models.ImageField(upload_to="images/profile_image/", storage=OverwriteStorage(), blank=False, null=False)
     username = models.ForeignKey(User_info, blank=False, null=False, on_delete=models.CASCADE)
 
+ #   def __str__(self):
+#	return self.image
+
 
 @receiver(models.signals.post_delete, sender=ProfileImage)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
