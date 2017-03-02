@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response, get_object_or_404, render, reso
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import *
 from django.template.response import TemplateResponse
-from django.utils.http import  urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_decode
 
 # Application specific functions
 from django.views.decorators.cache import never_cache
@@ -31,6 +31,8 @@ from fossWebsite.helper import get_session_variables
 # Python libraries
 from hashlib import sha512 as hash_func
 import json
+
+from django.utils.translation import ugettext as _
 
 
 # Create your views here.
@@ -499,8 +501,8 @@ def password_reset(request, is_admin_site=False,
     }
     if extra_context is not None:
         context.update(extra_context)
-    return TemplateResponse(request, template_name, context,
-                            current_app=current_app)
+    return TemplateResponse(request, template_name, context)
+                            #current_app=current_app)
 
 
 def password_reset_done(request,
@@ -511,8 +513,8 @@ def password_reset_done(request,
     }
     if extra_context is not None:
         context.update(extra_context)
-    return TemplateResponse(request, template_name, context,
-                            current_app=current_app)
+    return TemplateResponse(request, template_name, context)
+                            #current_app=current_app)
 
 
 # Doesn't need csrf_protect since no-one can guess the URL

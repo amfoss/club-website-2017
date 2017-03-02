@@ -5,6 +5,7 @@ from register import views
 urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     url(r'^forpass/$', views.password_reset),
+    url(r'^reset_done/$', views.password_reset_done, name='password_reset_done'),
     url(r'^logout/$', views.logout),
     url(r'^new/$', views.newregister),
     url(r'^mypage/$', views.mypage),
@@ -13,4 +14,5 @@ urlpatterns = [
     url(r'^update_profile_pic/$',views.update_profile_pic),
 
 ]
+
 
