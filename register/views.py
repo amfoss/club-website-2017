@@ -1,5 +1,5 @@
 # Django libraries
-from django.template import RequestContext
+from django.template import RequestContext, context
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
@@ -101,15 +101,17 @@ def logout(request):
         del request.session['is_loggedin']
         del request.session['username']
         request.session.flush()
-        return render_to_response('register/logout.html',RequestContext(request))
+        return render_to_response('register/logout.html', RequestContext(request))
     except KeyError:
         pass
+
+
 def forpass(request):
     try:
-        return render(request, 'register/forpass.html', \
-                    RequestContext(request))
+        return render(request, 'register/forpass.html', {'context': context})
     except KeyError:
         pass
+
 
 def newregister(request):
     """
