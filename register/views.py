@@ -710,7 +710,8 @@ class PasswordResetConfirmView(FormView):
         View that checks the hash in a password reset link and presents a
         form for entering a new password.
         """
-        UserModel = get_user_model()
+        UserModel = User_info
+        print request.POST
         form = self.form_class(request.POST)
         assert uidb64 is not None and token is not None  # checked by URLconf
         try:
@@ -723,7 +724,7 @@ class PasswordResetConfirmView(FormView):
             if form.is_valid():
                 new_password = form.cleaned_data['new_password2']
                 print new_password
-                user.set_password(new_password)
+                user.password = hash_func(new_password).hexdigest()
                 user.save()
                 messages.success(request, 'Password has been reset.')
                 print "sucessful"
