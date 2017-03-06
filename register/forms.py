@@ -569,8 +569,8 @@ class PasswordResetForm(forms.Form):
         return (u for u in active_users if u.has_usable_password())
 
     def save(self, domain_override=None,
-             subject_template_name='registration/password_reset_subject.txt',
-             email_template_name='registration/password_reset_email.html',
+             subject_template_name='register/password_reset_subject.txt',
+             email_template_name='register/password_reset_email.html',
              use_https=False, token_generator=default_token_generator,
              from_email=None, request=None, html_email_template_name=None):
         """

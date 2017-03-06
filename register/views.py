@@ -598,7 +598,7 @@ from django.db.models.query_utils import Q
 DEFAULT_FROM_EMAIL = 'amritapurifoss@gmail.com'
 
 class ResetPasswordRequestView(FormView):
-    template_name = "register/forpass.html"
+    template_name = 'register/forpass.html'
     success_url = '/register/login'
     form_class = PasswordResetRequestForm
 
@@ -683,7 +683,7 @@ class ResetPasswordRequestView(FormView):
                         'protocol': 'http',
                     }
                     subject_template_name = 'registration/password_reset_subject.txt'
-                    email_template_name = 'registration/password_reset_email.html'
+                    email_template_name = 'register/password_reset_email.html'
                     subject = loader.render_to_string(subject_template_name, c)
                     # Email subject *must not* contain newlines
                     subject = ''.join(subject.splitlines())
@@ -698,3 +698,62 @@ class ResetPasswordRequestView(FormView):
             return result
         messages.error(request, 'Invalid Input')
         return self.form_invalid(form)
+
+
+class SetPasswordForm(forms.Form):
+    """
+    A form that lets a user change set their password without entering the old
+    password
+    """
+    error_messages = {
+        'password_mismatch': ("The two password fields didn't match."),
+        }
+    new_password1 = forms.CharField(label=("New password"),
+                                    widget=forms.PasswordInput)
+    new_password2 = forms.CharField(label=("New password confirmation"),
+                                    widget=forms.PasswordInput)
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError(
+                    self.error_messages['password_mismatch'],
+                    code='password_mismatch',
+                    )
+        return password2
+
+
+class PasswordResetConfirmView(FormView):
+    template_name = 'register/forpass.html'
+    success_url = '/admin/'
+    form_class = SetPasswordForm
+
+    def post(self, request, uidb64=None, token=None, *arg, **kwargs):
+        """
+        View that checks the hash in a password reset link and presents a
+        form for entering a new password.
+        """
+        UserModel = get_user_model()
+        form = self.form_class(request.POST)
+        assert uidb64 is not None and token is not None  # checked by URLconf
+        try:
+            uid = urlsafe_base64_decode(uidb64)
+            user = UserModel._default_manager.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            if form.is_valid():
+                new_password= form.cleaned_data['new_password2']
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, 'Password has been reset.')
+                return self.form_valid(form)
+            else:
+                messages.error(request, 'Password reset has not been unsuccessful.')
+                return self.form_invalid(form)
+        else:
+            messages.error(request,'The reset password link is no longer valid.')
+            return self.form_invalid(form)
