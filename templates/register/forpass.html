@@ -11,6 +11,10 @@ Password Change Page
 
         {% csrf_token %}
 
+        <h4 class="form-signin-heading centered">Enter username or email</h4>
+
+        <br>
+
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -22,7 +26,7 @@ Password Change Page
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input name="email_or_username" type="text" class="form-control" id="email" placeholder="Email ID"/>
+                <input name="email_or_username" type="text" class="form-control" id="email" placeholder="Email ID or Username"/>
             </div><!--form-group-->
         </div><!--form-group-->
 
