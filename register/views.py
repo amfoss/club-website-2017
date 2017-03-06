@@ -700,33 +700,8 @@ class ResetPasswordRequestView(FormView):
         return self.form_invalid(form)
 
 
-class SetPasswordForm(forms.Form):
-    """
-    A form that lets a user change set their password without entering the old
-    password
-    """
-    error_messages = {
-        'password_mismatch': ("The two password fields didn't match."),
-        }
-    new_password1 = forms.CharField(label=("New password"),
-                                    widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label=("New password confirmation"),
-                                    widget=forms.PasswordInput)
-
-    def clean_new_password2(self):
-        password1 = self.cleaned_data.get('new_password1')
-        password2 = self.cleaned_data.get('new_password2')
-        if password1 and password2:
-            if password1 != password2:
-                raise forms.ValidationError(
-                    self.error_messages['password_mismatch'],
-                    code='password_mismatch',
-                    )
-        return password2
-
-
 class PasswordResetConfirmView(FormView):
-    template_name = 'register/forpass.html'
+    template_name = 'register/forpass_reset.html'
     success_url = '/admin/'
     form_class = SetPasswordForm
 
@@ -746,10 +721,12 @@ class PasswordResetConfirmView(FormView):
 
         if user is not None and default_token_generator.check_token(user, token):
             if form.is_valid():
-                new_password= form.cleaned_data['new_password2']
+                new_password = form.cleaned_data['new_password2']
+                print new_password
                 user.set_password(new_password)
                 user.save()
                 messages.success(request, 'Password has been reset.')
+                print "sucessful"
                 return self.form_valid(form)
             else:
                 messages.error(request, 'Password reset has not been unsuccessful.')
