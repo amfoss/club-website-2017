@@ -638,17 +638,17 @@ class ResetPasswordRequestView(FormView):
                     c = {
                         'email': user.email,
                         'domain': request.META['HTTP_HOST'],
-                        'site_name': 'your site',
+                        'site_name': 'foss@amrita',
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'user': user,
                         'token': default_token_generator.make_token(user),
                         'protocol': 'http',
                     }
-                    subject_template_name = 'registration/password_reset_subject.txt'
+                    subject_template_name = 'register/password_reset_subject.txt'
 
                     # copied from django/contrib/admin/templates/registration/password_reset_subject.txt to templates directory
 
-                    email_template_name = 'registration/password_reset_email.html'
+                    email_template_name = 'register/password_reset_email.html'
 
                     # copied from django/contrib/admin/templates/registration/password_reset_email.html to templates directory
 
@@ -675,14 +675,14 @@ class ResetPasswordRequestView(FormView):
                 for user in associated_users:
                     c = {
                         'email': user.email,
-                        'domain': 'example.com',  # or your domain
-                        'site_name': 'example',
+                        'domain': 'foss.amrita.ac.in',  # or your domain
+                        'site_name': 'foss@amrita',
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'user': user,
                         'token': default_token_generator.make_token(user),
                         'protocol': 'http',
                     }
-                    subject_template_name = 'registration/password_reset_subject.txt'
+                    subject_template_name = 'register/password_reset_subject.txt'
                     email_template_name = 'register/password_reset_email.html'
                     subject = loader.render_to_string(subject_template_name, c)
                     # Email subject *must not* contain newlines
