@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     # third party apps
     'bootstrap3_datetime',
     'captcha',
-    'mailer',
     'rest_framework',
+    'dbbackup',
 
     # custom django apps
     'register',
@@ -142,7 +142,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_USE_TLS = True
@@ -154,3 +153,4 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'amritapurifoss@gmail.com'
 
 from local_settings import *
+
