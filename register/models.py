@@ -25,6 +25,7 @@ class User_info(models.Model):
     username = models.CharField(max_length=20, unique=True, blank=False, primary_key=True)
     email = models.EmailField(blank=False, unique=True) 
     password = models.CharField(max_length=255, blank=False)
+    last_login = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'User_info'

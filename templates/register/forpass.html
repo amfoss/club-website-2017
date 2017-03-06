@@ -1,32 +1,18 @@
-{% extends 'static/base.html' %}
-{% block title %}
-Password Change Page
-{% endblock %}
-{% block body %}
-
-    <div class="jumbo-header">
-        <h1>Forgot Password</h1>
-    </div>
-     <form class="form-signin" role="form" method="POST">
-        
-        {% csrf_token %}
-        
-        <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input name="username" type="text" class="form-control" id="email" placeholder="Email ID"/>
-            </div><!--form-group-->
-        </div><!--form-group-->
-        
-        {% if error %}
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <i class="fa fa-warning"></i> {{ error }}
-        </div>
+ {# test template #}
+    <!-- code for displaying success or error message in template -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
         {% endif %}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-       
+    </ul>
+
+    <!-- Form rendering code for template -->
+    <form action="" method="post">
+
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Submit" />
     </form>
-    
-   
-{% endblock body %}

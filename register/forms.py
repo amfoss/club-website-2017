@@ -5,22 +5,15 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
 from django.forms import ModelForm
 from django import forms
-from django.db import models
-from django.forms.fields import DateField, ChoiceField
-from django.forms.fields import MultipleChoiceField
 from django.forms.utils import flatatt
-from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
-from captcha.fields import ReCaptchaField
 import re
 
-#from django.core import Validator
-from django.shortcuts import get_object_or_404
+
 from django.template import loader
 from django.utils.encoding import force_bytes
 from django.utils.html import format_html_join, format_html
 from django.utils.http import urlsafe_base64_encode
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext
 
 from register.models import User_info
 
@@ -44,9 +37,9 @@ def check_alpha(name):
     Checks for the only presence of alphabets
     """
     if re.match("^[a-za-z ]*$",name):
-        return true
+        return True
     else:
-        return false
+        return False
 
 
 def user_exists(email_):
@@ -54,9 +47,9 @@ def user_exists(email_):
     Checks if a user exists or not
     """
     if User_info.objects.all().filter(email=email_):
-        return true
+        return True
     else:
-        return false
+        return False
 
 
 class LoginForm(forms.Form):
@@ -605,3 +598,11 @@ class PasswordResetForm(forms.Form):
             self.send_mail(subject_template_name, email_template_name,
                            context, from_email, user.email,
                            html_email_template_name=html_email_template_name)
+
+
+# password reset
+
+from django import forms
+
+class PasswordResetRequestForm(forms.Form):
+    email_or_username = forms.CharField(label=("Email Or Username"), max_length=254)

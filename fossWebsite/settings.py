@@ -151,5 +151,6 @@ SERVER_EMAIL = 'amritapurifoss@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 
+DEFAULT_FROM_EMAIL = 'amritapurifoss@gmail.com'
 
 from local_settings import *
