@@ -27,7 +27,7 @@ def home(request):
         is_loggedin = False
         username = None
 
-    return render_to_response('home.html', \
+    return render(request, 'home.html', \
             {'is_loggedin':is_loggedin, \
             'username':username}, \
             RequestContext(request))
@@ -62,7 +62,7 @@ def search(request):
         if result:
             is_empty = False
 
-        return render_to_response( \
+        return render(request, \
                 'search_result.html', \
                 {'is_empty':is_empty, \
                 'is_loggedin':is_loggedin, \
@@ -81,7 +81,7 @@ def contact(request):
         email_from = "Amritapuri FOSS <amritapurifoss@gmail.com>"
         # if captcha field is not given
         if not (request.POST['recaptcha_challenge_field'] and request.POST['recaptcha_response_field']):
-            return render_to_response('home.html',{'captcha_error':'Captcha required'}, RequestContext(request))
+            return render(request, 'home.html',{'captcha_error':'Captcha required'}, RequestContext(request))
         recaptcha_challenge_field = request.POST['recaptcha_challenge_field']
         recaptcha_response_field = request.POST['recaptcha_response_field']
         recaptcha_remote_ip = ""
@@ -98,7 +98,7 @@ def contact(request):
                             email_from, \
                             [sender_email, 'amritapurifoss@gmail.com'], \
                             fail_silently= False)
-        return render_to_response( 'contact_success.html', \
+        return render(request, 'contact_success.html', \
                 {}, RequestContext(request))
         
 
