@@ -8,6 +8,22 @@
 
 # KDE directory preferences
 .directory
+foss/
+
+get_env_details
+initialize
+
+postactivate
+postdeactivate
+postmkproject
+postmkvirtualenv
+postrmvirtualenv
+preactivate
+predeactivate
+premkproject
+premkvirtualenv
+prermvirtualenv
+
 
 
 ### Python ###
@@ -67,12 +83,15 @@ target/
 
 
 ### Django ###
-*.log
-*.pot
 *.pyc
-__pycache__/
 local_settings.py
-static/
+local_settings_production.py
+/static/
 !templates/static/
 db/
 media/images/profile_image/
+
+.idea/
+foss/
+
+images/uploads/

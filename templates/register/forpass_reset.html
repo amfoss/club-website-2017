@@ -1,0 +1,50 @@
+{% extends 'static/base.html' %}
+{% block title %}
+Password Change Page
+{% endblock %}
+{% block body %}
+
+    <div class="jumbo-header">
+        <h1>Forgot Password</h1>
+    </div>
+     <form class="form-signin" role="form" method="POST">
+
+        <h3 class="form-signin-heading centered">Enter new password</h3>
+        <br>
+
+        {% csrf_token %}
+
+         {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+            </ul>
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <input name="new_password1" type="password" class="form-control" id="password" placeholder="Password" />
+            </div><!--form-group-->
+        </div><!--form-group-->
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <input name="new_password2" type="password" class="form-control" id="password" placeholder="Password" />
+            </div><!--form-group-->
+        </div><!--form-group-->
+
+        {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="fa fa-warning"></i> {{ error }}
+        </div>
+        {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+
+    </form>
+
+
+{% endblock body %}

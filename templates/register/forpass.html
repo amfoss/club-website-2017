@@ -1,0 +1,44 @@
+{% extends 'static/base.html' %}
+{% block title %}
+Password Change Page
+{% endblock %}
+{% block body %}
+
+    <div class="jumbo-header">
+        <h1>Forgot Password</h1>
+    </div>
+     <form class="form-signin" role="form" method="POST">
+
+        {% csrf_token %}
+
+        <h4 class="form-signin-heading centered">Enter username or email</h4>
+
+        <br>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+            </ul>
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input name="email_or_username" type="text" class="form-control" id="email" placeholder="Email ID or Username"/>
+            </div><!--form-group-->
+        </div><!--form-group-->
+
+        {% if error %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="fa fa-warning"></i> {{ error }}
+        </div>
+        {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+
+    </form>
+
+
+{% endblock body %}

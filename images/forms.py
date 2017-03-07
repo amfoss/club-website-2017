@@ -27,3 +27,4 @@ class FolderForm(ModelForm):
     """
     class Meta:
         model = Folder
+	fields = '__all__'

@@ -1,8 +1,9 @@
 {% extends "static/base.html" %}
+{%  load static %}
 {% load register_extras %}
 {% block title %} Register {% endblock %}
 {% block script %}
-<script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
+<script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#registerForm')
@@ -292,4 +293,3 @@ $(document).ready(function() {
     <div class="col-lg-3"></div>
 </div><!--container-->
 {% endblock body %}
-

@@ -5,7 +5,7 @@ from django.conf.urls import *
 from images import views
 
 
-urlpatterns = patterns('',
-    url(r'^/new$',views.upload_images),
-)
+urlpatterns = [
+    url(r'^new$',views.upload_images),
+]
 

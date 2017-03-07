@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New proposal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <script>
+      $(document).ready(function() {
+        $(".datepicker").datepicker();
+      });
+    </script>
+</head>
+
+<body>
+
+  <h1> FOSS@Amrita
+  <small>Event proposal form</small>
+</h1>
+
+<div class="contact-wrap">
+
+  <form action="" class="contact-form" method="post">
+      {% csrf_token %}
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.title.errors }}</p>
+        <div class="input-block" id="inputError">
+            <label for="{{ form.title.id_for_label }}">Event title</label>
+            <input id="{{ form.title.id_for_label }}" value="{% if form.type.value is not None %} {{ form.title.value }} {% endif %}" type="text" class="form-control" name="title">
+        </div>
+      </div>
+
+        <h5 style="margin-left:2.5%" class="col-md-12">Basic Information</h5>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.type.errors }}</p>
+        <div class="input-block">
+            <label for="">Type of event(FOSSTalk, lightening talk, workshop etc..)</label>
+            <input type="text" value="{% if form.type.value is not None %} {{ form.type.value }} {% endif %}" class="form-control" name="type">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.date.errors }}</p>
+        <div class="input-block" >
+            <label for="">Proposed date</label>
+            <input type="text" value="{% if form.date.value is not None %} {{ form.date.value }} {% endif %}" class="form-control datepicker" name="date">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.duration.errors }}</p>
+        <div class="input-block">
+            <label for="">Duration</label>
+            <input value="{% if form.duration.value is not None %} {{ form.duration.value }} {% endif %}" type="text" class="form-control" name="duration">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.venue.errors }}</p>
+        <div class="input-block">
+            <label for="">Venue</label>
+            <input value="{% if form.venue.value is not None %} {{ form.venue.value }} {% endif %}" type="text" class="form-control" name="venue">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.topic.errors }}</p>
+        <div class="input-block">
+            <label for="">Topic (Web, Maths, Algorithm, Fedora, etc..):</label>
+            <input value="{% if form.topic.value is not None %} {{ form.topic.value }} {% endif %}" type="text" class="form-control" name="topic">
+        </div>
+      </div>
+
+      <div class="col-sm-7">
+          <p style="color: white">{{ form.speakers.errors }}</p>
+        <div class="input-block">
+            <label for="">Speakers/Trainer (Name):</label>
+            <input value="{% if form.speakers.value is not None %} {{ form.speakers.value }} {% endif %}" type="text" class="form-control" name="speakers">
+        </div>
+      </div>
+
+      <div class="col-sm-5">
+          <p style="color: white">{{ form.nat_or_inter.errors }}</p>
+        <div class="input-block">
+            <label for="">Select</label>
+            <select class="form-control" id="sel1" name="nat_or_inter">
+                <option value="International">International</option>
+                <option value="National">National</option>
+              </select>
+        </div>
+      </div>
+
+        <div class="col-sm-12">
+          <p style="color: white">{{ form.trainer_bio.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">Brief trainer bio</label>
+            <textarea rows="3" type="text" class="form-control" name="trainer_bio">{% if form.trainer_bio.value is not None %} {{ form.trainer_bio.value }} {% endif %}</textarea>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <p style="color: white">{{ form.coordinators.errors }}</p>
+        <div class="input-block">
+            <label for="">Event coordinators</label>
+            <input value="{% if form.coordinators.value is not None %} {{ form.coordinators.value }} {% endif %}" type="text" class="form-control" name="coordinators">
+        </div>
+      </div>
+
+        <div class="col-sm-5">
+          <p style="color: white">{{ form.level.errors }}</p>
+        <div class="input-block">
+            <label for="">Event level</label>
+            <select class="form-control" id="sel1" name="level">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+        </div>
+      </div>
+
+
+        <div class="col-sm-7">
+          <p style="color: white">{{ form.expected_no_of_participants.errors }}</p>
+        <div class="input-block">
+            <label for="">Expected number of participants:</label>
+            <input value="{% if form.expected_no_of_participants.value is not None %} {{ form.expected_no_of_participants.value }} {% endif %}" type="text" class="form-control" name="expected_no_of_participants">
+        </div>
+      </div>
+
+
+        <h5 style="margin-left:2.5%" class="col-md-12">Prerequisites</h5>
+
+        <div class="col-sm-12">
+          <p style="color: white">{{ form.prerequisites_software.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">Software</label>
+            <textarea rows="2" type="text" class="form-control" name="prerequisites_software">{% if form.prerequisites_software.value is not None %} {{ form.prerequisites_software.value }} {% endif %}</textarea>
+          </div>
+        </div>
+
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.prerequisites_hardware.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">Hardware</label>
+            <textarea rows="2" type="text" class="form-control" name="prerequisites_hardware">{% if form.prerequisites_hardware.value is not None %} {{ form.prerequisites_hardware.value }} {% endif %}</textarea>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <p style="color: white">{{ form.prerequisites_knowledge.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">Knowledge</label>
+            <textarea rows="3" type="text" class="form-control" name="prerequisites_knowledge">{% if form.prerequisites_knowledge.value is not None %} {{ form.prerequisites_knowledge.value }} {% endif %}</textarea>
+          </div>
+        </div>
+
+        <h5 style="margin-left:2.5%" class="col-md-12">Course</h5>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.course_plan.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">Course plan</label>
+            <textarea rows="3" type="text" class="form-control" name="course_plan">{% if form.course_plan.value is not None %} {{ form.course_plan.value }} {% endif %}</textarea>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <p style="color: white">{{ form.student_short_list.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">How are you short listing students for this event?</label>
+            <textarea rows="2" type="text" class="form-control" name="student_short_list">{% if form.student_short_list.value is not None %} {{ form.student_short_list.value }} {% endif %}</textarea>
+          </div>
+        </div>
+
+<h5 style="margin-left:2.5%" class="col-md-12">Financials</h5>
+
+      <div class="col-sm-6">
+          <p style="color: white">{{ form.travel.errors }}</p>
+        <div class="input-block">
+            <label for="">Travel</label>
+            <input value="{% if form.travel.value is not None %} {{ form.travel.value }} {% endif %}" type="text" class="form-control" name="travel">
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+          <p style="color: white">{{ form.trainer_fee.errors }}</p>
+        <div class="input-block">
+            <label for="">Trainer fee</label>
+            <input value="{% if form.trainer_fee.value is not None %} {{ form.trainer_fee.value }} {% endif %}" type="text" class="form-control" name="trainer_fee">
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+          <p style="color: white">{{ form.accommodation.errors }}</p>
+        <div class="input-block">
+            <label for="">Accommodation</label>
+            <input value="{% if form.accommodation.value is not None %} {{ form.accommodation.value }} {% endif %}" type="text" class="form-control" name="accommodation">
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+          <p style="color: white">{{ form.transportation.errors }}</p>
+        <div class="input-block">
+            <label for="">Transportation</label>
+            <input value="{% if form.transportation.value is not None %} {{ form.transportation.value }} {% endif %}" type="text" class="form-control" name="transportation">
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+          <p style="color: white">{{ form.other.errors }}</p>
+        <div class="input-block">
+            <label for="">Other</label>
+            <input value="{% if form.other.value is not None %} {{ form.other.value }} {% endif %}" type="text" class="form-control" name="other">
+        </div>
+      </div>
+
+<h5 class="col-md-12" style="margin-left:2.5%">Lab</h5>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.lab_requirements.errors }}</p>
+        <div class="input-block">
+            <label for="">Lab requirements</label>
+            <input value="{% if form.lab_requirements.value is not None %} {{ form.lab_requirements.value }} {% endif %}" type="text" class="form-control" name="lab_requirements">
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.icts_support.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">ICTS support (projector, sound, guest keys etc..)</label>
+            <textarea rows="2" type="text" class="form-control" name="icts_support">{% if form.icts_support.value is not None %} {{ form.icts_support.value }} {% endif %}</textarea>
+          </div>
+      </div>
+
+  <h5 style="margin-left:2.5%" class="col-md-12">Permissions</h5>
+  <h6 style="margin-left:2.5%; padding-right: 7%;" class="col-md-12">The event need to be approved by Principal and HOD if it is on working days or if it is a major event. The proposal for the event needs to be done and approval is needed by principal and HOD to conduct this. Mention if anyone needs duty leave etc here.
+</h6>
+
+
+      <div class="col-sm-12" id="permisions">
+          <p style="color: white">{{ form.permisions.errors }}</p>
+          <div class="input-block textarea">
+            <label for="">Permission status </label>
+            <textarea rows="4" type="text" class="form-control" name="permisions">{% if form.permisions.value is not None %} {{ form.permisions.value }} {% endif %}</textarea>
+          </div>
+      </div>
+
+      <div class="col-sm-12">
+          <p style="color: white">{{ form.other_info.errors }}</p>
+          <div class="input-block textarea">
+            <label for=""> Any other information </label>
+            <textarea rows="3" type="text" class="form-control" name="other_info">{% if form.other_info.value is not None %} {{ form.other_info.value }} {% endif %}</textarea>
+          </div>
+      </div>
+
+    <div class="col-sm-12">
+      <button class="square-button" type="submit" value="Send message" >Send</button>
+    </div>
+  </form>
+<!-- follow me template -->
+<div class="made-with-love">
+  <a target="_blank" href="http://foss.amrita.ac.in/">FOSS@Amrita</a>
+</div>
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+</html>

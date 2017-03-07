@@ -1,4 +1,5 @@
 {% extends 'static/base.html' %}
+{%  load static %}
 {% block title %}
 Login page
 {% endblock %}
@@ -8,7 +9,7 @@ Login page
     <div class="row">
         <div class="col-sm-2">
             <div class="thumbnail">
-                <img src="{{ STATIC_URL }}images/profile_image/{{ image_name }}" 
+                <img src="{% static 'images/profile_image/' %}{{ image_name }}"
                     class="img-rounded img-thumbnail img-responsive"
                     alt="{{ image_name }}" height="107" width="107">
                 <div class="caption centered">

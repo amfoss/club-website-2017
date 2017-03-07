@@ -17,6 +17,13 @@ Login page
                 <i class="fa fa-user fa-stack-1x" style="color:#eee;"></i>
             </span>
         </div><!--centered-->
+    {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+            </ul>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -37,6 +44,7 @@ Login page
         {% endif %}
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <p class="centered"><a href="/register/new">New User?</a></p>
+        <p class="centered"><a href="/register/forpass">Forgot Password</a></p>
     </form>
 </div><!--container-->
 {% endblock body %}

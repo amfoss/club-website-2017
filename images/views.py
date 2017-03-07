@@ -1,5 +1,5 @@
 # Django libraries
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.http import HttpResponse
 from django.shortcuts import HttpResponseRedirect
 from django.forms.formsets import formset_factory
@@ -34,7 +34,7 @@ def upload_images(request):
                 # form is not valid          
                 if not form.is_valid():
                     error = "Invalid inputs"
-                    return render_to_response('images/upload_images.html', \
+                    return render(request, 'images/upload_images.html', \
                         {'form':form, 'error':error, }, \
                         RequestContext(request))
                 
@@ -52,9 +52,9 @@ def upload_images(request):
                         folder_name = folder)
                     img_name = new_image_object.img.name 
                     new_image_object.save()
-                    return render_to_response("images/success.html")
+                    return render(request, "images/success.html")
             else:
-                return render_to_response('images/upload_images.html', \
+                return render(request, 'images/upload_images.html', \
                     {'form':FolderForm(), 'is_loggedin': is_loggedin },\
                      RequestContext(request))
     except KeyError:

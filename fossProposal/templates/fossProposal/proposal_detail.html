@@ -1,0 +1,87 @@
+{% extends 'static/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}
+    All proposals
+{% endblock %}
+
+{% block style %}
+
+    <link type="text/css" href="{% static "css/proposal.css" %}" rel="stylesheet"/>
+
+{% endblock style %}
+
+{% block script %}
+
+    <script>
+        // Toggle Function
+        $('.toggle').click(function () {
+            // Switches the Icon
+            $(this).children('i').toggleClass('fa-pencil');
+            // Switches the forms
+            $('.form').animate({
+                height: "toggle",
+                'padding-top': 'toggle',
+                'padding-bottom': 'toggle',
+                opacity: "toggle"
+            }, "slow");
+        });
+    </script>
+
+{% endblock script %}
+
+{% block body %}
+    <br><br>
+    <!-- Form Module-->
+    <div class="module form-module">
+        <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+        </div>
+        <div class="form">
+            <div style="text-align: center;">
+
+                <h2><u>Event Title:</u> <span>{{ object.title }}</span></h2>
+                <h2><u>Event Type:</u> <span>{{ object.type }}</span></h2>
+                <h2><u>Co-Ordinator:</u> <span>{{ object.coordinators }}</span></h2><br>
+            </div>
+
+            <hr>
+            <br>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2><u>Date:</u> <span>{{ object.date }}.</span></h2><br>
+
+                    <h2><u>Duration: </u> <span>{{ object.duration }}.</span></h2><br>
+
+                    <h2><u>venue:</u> <span>{{ object.venue }}.</span></h2><br>
+
+                    <h2><u>Level:</u> <span>{{ object.level }}</span></h2><br>
+
+                </div>
+                <div class="col-md-4">
+                    <h2><u>Topic:</u> <span>{{ object.topic }}</span></h2><br>
+
+                    <h2><u>Speaker:</u><span>{{ object.speakers }}</span></h2><br>
+
+                    <h2><u>Orgin:</u> <span>{{ object.nat_or_inter }}</span></h2><br>
+
+                    <h2><u>No of Participates:</u> <span>{{ object.expected_no_of_participants }}</span></h2><br>
+                    <br></div>
+
+                <div class="col-md-4">
+                    <h2><u>Topic:</u> <span>{{ object.topic }}</span></h2><br>
+
+                    <h2><u>Speaker:</u><span>{{ object.speakers }}</span></h2><br>
+
+                    <h2><u>Orgin:</u> <span>{{ object.nat_or_inter }}</span></h2><br>
+
+                    <h2><u>No of Participates:</u> <span>{{ object.expected_no_of_participants }}</span></h2><br>
+                    <br></div>
+            </div>
+
+            {#            <h2><u>Trainer Bio:</u></h2>#}
+            {#            <p class="largetext">{{ object.trainer_bio }}</p>#}
+        </div>
+    </div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+{% endblock body %}

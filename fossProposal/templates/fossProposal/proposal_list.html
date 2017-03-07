@@ -1,0 +1,14 @@
+{% extends 'static/base.html' %}
+{% block title %}
+ ALl proposals
+{% endblock %}
+{% block body %}
+    <h1>Proposals</h1>
+    <ul>
+    {% for proposal in object_list %}
+        <li>{{ proposal.date|date }} - {{ proposal.title }}</li>
+    {% empty %}
+        <li>No proposal yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock body %}

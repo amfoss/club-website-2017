@@ -1,5 +1,6 @@
 {% block script %}
-<script src="{{ STATIC_URL }}js/jquery-2.1.1.min.js"></script>
+    {% load static %}
+<script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     // navigation click actions 

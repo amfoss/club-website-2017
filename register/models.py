@@ -1,13 +1,13 @@
 from django.db import models
-from django.dispatch import receiver
+from django.urls import reverse
 
-# Create your models here.
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 ROLE_CHOICES = (('S', 'Student'), ('M', 'Mentor'), ('B', 'Both'))
-GOAL_CHOICES = (('startup', 'startup'), ('higher_studies', 'Higher Studies'),\
-    ('job', 'Job'), ('other', 'Others'))
+GOAL_CHOICES = (('startup', 'startup'), ('higher_studies', 'Higher Studies'), ('job', 'Job'), ('other', 'Others'))
+
 
 class User_info(models.Model):
+
     firstname = models.CharField(max_length=20, blank=False, unique=False)
     lastname = models.CharField(max_length=20, blank=False, unique=False)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
@@ -22,25 +22,52 @@ class User_info(models.Model):
     interest = models.CharField(max_length=200)
     expertise = models.CharField(max_length=200)
     goal = models.CharField(max_length=15, choices=GOAL_CHOICES)
-    username = models.CharField(max_length=20, unique=True, blank=False,\
-        primary_key=True)
+    username = models.CharField(max_length=20, unique=True, blank=False, primary_key=True)
     email = models.EmailField(blank=False, unique=True) 
     password = models.CharField(max_length=255, blank=False)
+    last_login = models.DateTimeField(auto_now=True)
 
-    class meta:
-        db_table= 'user_info'          
+    class Meta:
+        db_table = 'User_info'
+
+    def get_absolute_url(self):
+        return reverse('proposal-detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
-        return self.email
+        return self.firstname + ' ' + self.lastname
 
-@receiver(models.signals.post_delete, sender=User_info)
-def auto_delete_profile_pic(sender, instance, **kwargs):
-    """
-    Deletes corresponding profile Pic
-    """
-    try:
-        to_delete = ProfileImage.objects.filter(username=instance.username)
-        for obj in to_delete:
-            obj.delete()
-    except ProfileImage.DoesNotExist:
-        pass
+    def __str__(self):
+        return self.username + ' ' + self.lastname
+
+
+class Student(models.Model):
+
+    username = models.ForeignKey(User_info, related_name='user_student', on_delete=models.CASCADE)
+
+    # college
+    roll_number = models.CharField(max_length=200)
+    branch = models.CharField(max_length=100)
+    year = models.CharField(max_length=10)
+    cgpa = models.CharField(max_length=10)
+
+    # lab
+    mentors = models.CharField(max_length=200)
+    system_number = models.CharField(max_length=10)
+
+    # responsibilities
+
+    responsibility1 = models.CharField(max_length=600)
+    responsibility2 = models.CharField(max_length=600)
+    responsibility3 = models.CharField(max_length=600)
+    responsibility4 = models.CharField(max_length=600)
+    responsibility5 = models.CharField(max_length=600)
+    responsibility_count = models.CharField(max_length=10)
+    comments = models.TextField()
+
+    def __unicode__(self):
+        return self.username.firstname + ' ' + self.username.lastname
+
+    def __str__(self):
+        return self.username.username + ' ' + self.username.lastname
+
+
