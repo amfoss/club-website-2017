@@ -1,7 +1,7 @@
 # Django libraries
 from django.template import RequestContext, context
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, request
 
 from register.forms import LoginForm, NewRegisterForm, UpdateProfileForm, SetPasswordForm
 from register.forms import ChangePasswordForm
@@ -445,6 +445,7 @@ def update_profile_pic(request):
 
 DEFAULT_FROM_EMAIL = 'amritapurifoss@gmail.com'
 
+
 class ResetPasswordRequestView(FormView):
     template_name = 'register/forpass.html'
     success_url = '/register/login'
@@ -552,6 +553,15 @@ class PasswordResetConfirmView(FormView):
     template_name = 'register/forpass_reset.html'
     success_url = '/register/login'
     form_class = SetPasswordForm
+
+
+    def get_context_data(self, **kwargs):
+        context = super(PasswordResetConfirmView, self).get_context_data(**kwargs)
+        is_loggedin, username = get_session_variables(self.request)
+        context['is_loggedin'] = is_loggedin
+        context['username'] = username
+        return context
+
 
     def post(self, request, uidb64=None, token=None, *arg, **kwargs):
         """
