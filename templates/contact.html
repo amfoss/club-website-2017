@@ -1,16 +1,64 @@
 <div class="theme theme-2">
     <h1 class="theme-2-h1 centered">Write to Us</h1>
     <br>
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-8 col-lg-offset-2">
         <form role="form" method="post" action="/contact/" id="profileForm" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="form-group" id="name">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <input type="text" class="form-control" name="name" placeholder="Name"/>
+                </div><!--input-group-->
+            </div><!--form-group-->
+            <div class="form-group" id="email">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                    <input type="email" class="form-control" name="email" placeholder="Email Address" required />
+                </div><!--input-group-->
+            </div><!--form-group-->
+            <div class="form-group" id="message">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-pencil"></i>
+                    </span>
+                    <textarea  maxlength="1500" name="message" class="form-control" rows="10" placeholder="Message"></textarea>
+                </div><!--input-group-->
+            </div><!--form-group-->
+            <div class="row"> <!--Captica and submit button goes in single row-->
+            	<div class="col-md-5">
+
+            <script type="text/javascript">
+                var DjangoRecaptchaOptions = {};
+                if (typeof RecaptchaOptions !== 'object') {
+                    RecaptchaOptions = DjangoRecaptchaOptions;
+                } else {
+                    for (key in DjangoRecaptchaOptions) {
+                        RecaptchaOptions[key] = DjangoRecaptchaOptions[key];
+                    }
+                }
+            </script>
+            <script type="text/javascript"
+                    src="//www.google.com/recaptcha/api/challenge?k=6LfcYvkSAAAAAAW8UHVHw3oBuF7S5NJZ-jnBUxn1&amp;hl=en"></script>
+            <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha.js"></script>
+
+            <noscript>
+                &lt;iframe src="//www.google.com/recaptcha/api/noscript?k=6LfcYvkSAAAAAAW8UHVHw3oBuF7S5NJZ-jnBUxn1&amp;hl=en"
+                height="300" width="500" frameborder="0"&gt;&lt;/iframe&gt;&lt;br /&gt;
+                &lt;textarea name="recaptcha_challenge_field" rows="3" cols="40"&gt;&lt;/textarea&gt;
+                &lt;input type='hidden' name='recaptcha_response_field' value='manual_challenge' /&gt;
+            </noscript>
+          		</div><!--col-md-5-->
+                <div class="col-md-5">
+
+                </div>
 
                 <div class="col-md-2">
 
-                    <input type="submit" value="Send" class="btn btn-info btn-block">
-
+                    <input type="submit" name="contact_button" id="contact_id" value="Send" class="btn btn-info btn-block">
                 </div><!--col-md-4-->
 
           	</div><!--row-->
@@ -19,3 +67,4 @@
     <div class="col-md-2"></div>
 </div><!--theme theme-2-->
 
+\
