@@ -4,7 +4,6 @@
 {% block script %}
 <script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
 <script src="{% static "js/bootstrapValidator.min.js" %}"></script>
-
 {% endblock script %}
 {% block body %}
 <div class="slide" id="slide-1" data-slide="1">
@@ -86,6 +85,9 @@
 </div><!-- slide-4 --> 
 <div class="slide theme" id="slide-5" data-slide="5" style="padding-bottom: 0px;">
     {% if captcha_error %}
+        <script>
+            alert("{{ captcha_error }}");
+        </script>
     {% endif %}
 {% include 'contact.html' %}
 </div>

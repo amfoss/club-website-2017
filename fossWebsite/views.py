@@ -25,11 +25,14 @@ def home(request):
     if logged_in(request):
         is_loggedin = True
         username = request.session['username']
+        render_form = False
     else:
         is_loggedin = False
         username = None
+        render_form = True
 
-    return render(request, 'home.html', {'is_loggedin':is_loggedin, 'username':username, 'form':form}, RequestContext(request))
+    return render(request, 'home.html', {'is_loggedin':is_loggedin, 'username':username, 'form':form,
+                                         'render_form':render_form }, RequestContext(request))
 
 
 def search(request):
@@ -73,6 +76,12 @@ def contact(request):
     """
     View implement contact-us.
     """
+    if logged_in(request):
+        is_loggedin = True
+        username = request.session['username']
+    else:
+        is_loggedin = False
+        username = None
     if request.POST:
         form = ContactForm(request.POST)
 
@@ -87,8 +96,17 @@ def contact(request):
 
             django_send_mail(email_subject, email_message, email_from, [sender_email, 'amritapurifoss@gmail.com'],
                              fail_silently=False)
+
             return render(request, 'contact_success.html', {}, RequestContext(request))
 
-        return HttpResponseRedirect('/')
+        else:
+
+
+
+            captcha_error = "Error in Captcha, Please try again"
+
+            return render(request, 'home.html', {'is_loggedin': is_loggedin, 'username': username, 'form': form,
+                                                 'captcha_error':captcha_error }, RequestContext(request))
+
 
 
