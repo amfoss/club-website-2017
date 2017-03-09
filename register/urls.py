@@ -4,6 +4,7 @@ from register.views import ResetPasswordRequestView, PasswordResetConfirmView
 
 urlpatterns = [
     url(r'^login/$', views.login, name='login'),
+    url(r'^password_change_success/$', views.password_change_success, name='password_change_success'),
     url(r'^logout/$', views.logout),
     url(r'^new/$', views.newregister),
     url(r'^mypage/$', views.mypage),

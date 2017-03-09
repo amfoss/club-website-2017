@@ -557,10 +557,10 @@ class PasswordResetConfirmView(FormView):
     username = ''
     correct_pass = False
     tocken_check = False
+    current_pass_error = False
 
     def get(self, request, *args, **kwargs):
         self.is_loggedin, self.username = get_session_variables(self.request)
-        print self.username
         return render(self.request, self.template_name, self.get_context_data())
 
     def get_context_data(self, **kwargs):
@@ -586,6 +586,8 @@ class PasswordResetConfirmView(FormView):
                 old_password = form.clean_old_password()
                 if user.password == hash_func(old_password).hexdigest():
                     self.correct_pass = True
+                    self.current_pass_error = True
+                    self.success_url = '/register/password_change_success'
         else:
             assert uidb64 is not None and token is not None  # checked by URLconf
             try:
@@ -594,6 +596,7 @@ class PasswordResetConfirmView(FormView):
                 self.tocken_check = default_token_generator.check_token(user, token)
             except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
                 user = None
+
 
         if user is not None and (self.tocken_check or self.correct_pass):
             if form.is_valid():
@@ -605,6 +608,25 @@ class PasswordResetConfirmView(FormView):
             else:
                 messages.error(request, 'Password reset has not been unsuccessful.')
                 return self.form_invalid(form)
+                return self.form_invalid(form)
         else:
-            messages.error(request, 'The reset password link is no longer valid.')
+            if not self.current_pass_error:
+                messages.error(request, 'The reset password link is no longer valid.')
+            else:
+                messages.error(request, 'Current password wrong.')
             return self.form_invalid(form)
+
+
+def password_change_success(request):
+    if logged_in(request):
+        is_loggedin = True
+        username = request.session['username']
+        render_form = False
+    else:
+        is_loggedin = False
+        username = None
+        render_form = True
+
+    return render(request, 'register/change_password_success.html', {'is_loggedin':is_loggedin, 'username':username,
+                                         'render_form':render_form }, RequestContext(request))
+

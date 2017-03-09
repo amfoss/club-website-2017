@@ -632,6 +632,5 @@ class SetPasswordForm(forms.Form):
                 raise forms.ValidationError(
                     self.error_messages['password_mismatch'],
                     code='password_mismatch',
-                    )
-        print password2
+                )
         return password2
