@@ -22,17 +22,28 @@ Password Change Page
                 {% endif %}
             </ul>
 
+        {% if is_loggedin %}
+
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input name="new_password1" type="password" class="form-control" id="password" placeholder="Password" />
+                <input name="old_password" type="password" class="form-control" id="password" placeholder="Old Password" />
+            </div><!--form-group-->
+        </div><!--form-group-->
+
+        {% endif %}
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <input name="new_password1" type="password" class="form-control" id="password" placeholder="New Password" />
             </div><!--form-group-->
         </div><!--form-group-->
 
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input name="new_password2" type="password" class="form-control" id="password" placeholder="Password" />
+                <input name="new_password2" type="password" class="form-control" id="password" placeholder="Verify Password" />
             </div><!--form-group-->
         </div><!--form-group-->
 

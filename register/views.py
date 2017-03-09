@@ -1,7 +1,7 @@
 # Django libraries
 from django.template import RequestContext, context
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, request
 
 from register.forms import LoginForm, NewRegisterForm, UpdateProfileForm, SetPasswordForm
 from register.forms import ChangePasswordForm
@@ -39,7 +39,7 @@ def login(request):
         if logged_in(request):
             return render(request, 'register/logged_in.html', {})
 
-        # Upon signin button click 
+        # Upon signin button click
         if request.method == 'POST':
             form = LoginForm(request.POST)
 
@@ -121,7 +121,7 @@ def forpass(request):
 
 def newregister(request):
     """
-    Make a new registration, inserting into User_info and 
+    Make a new registration, inserting into User_info and
     ProfileImage models.
     """
     try:
@@ -140,7 +140,7 @@ def newregister(request):
                 inp_password = cleaned_reg_data['password']
                 inp_email = cleaned_reg_data['email']
 
-                # Saving the user inputs into table 
+                # Saving the user inputs into table
                 new_register = form.save(commit=False)
                 new_register.password = hash_func(inp_password) \
                     .hexdigest()
@@ -239,7 +239,7 @@ def change_password(request):
         is_loggedin, username = get_session_variables(request)
         if not is_loggedin:
             return HttpResponseRedirect("/register/login")
-        # POST request 
+        # POST request
         if request.method == 'POST':
             form = ChangePasswordForm(request.POST)
 
@@ -259,7 +259,7 @@ def change_password(request):
 
                 # Given current and stored passwords same
                 if old_password == actual_pwd:
-                    # New and current passwords user provided are not same 
+                    # New and current passwords user provided are not same
                     if new_password != actual_pwd:
                         # Repass and new pass are same
                         if new_password == confirm_new_password:
@@ -445,6 +445,7 @@ def update_profile_pic(request):
 
 DEFAULT_FROM_EMAIL = 'amritapurifoss@gmail.com'
 
+
 class ResetPasswordRequestView(FormView):
     template_name = 'register/forpass.html'
     success_url = '/register/login'
@@ -552,6 +553,22 @@ class PasswordResetConfirmView(FormView):
     template_name = 'register/forpass_reset.html'
     success_url = '/register/login'
     form_class = SetPasswordForm
+    is_loggedin = False
+    username = ''
+    correct_pass = False
+    tocken_check = False
+    current_pass_error = False
+
+    def get(self, request, *args, **kwargs):
+        self.is_loggedin, self.username = get_session_variables(self.request)
+        return render(self.request, self.template_name, self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super(PasswordResetConfirmView, self).get_context_data(**kwargs)
+        context['is_loggedin'] = self.is_loggedin
+        context['username'] = self.username
+        return context
+
 
     def post(self, request, uidb64=None, token=None, *arg, **kwargs):
         """
@@ -560,14 +577,28 @@ class PasswordResetConfirmView(FormView):
         """
         UserModel = User_info
         form = self.form_class(request.POST)
-        assert uidb64 is not None and token is not None  # checked by URLconf
-        try:
-            uid = urlsafe_base64_decode(uidb64)
-            user = UserModel._default_manager.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
-            user = None
+        self.is_loggedin, self.username = get_session_variables(self.request)
+        if self.is_loggedin:
 
-        if user is not None and default_token_generator.check_token(user, token):
+            user = get_object_or_404(User_info, username=self.username)
+
+            if form.is_valid():
+                old_password = form.clean_old_password()
+                if user.password == hash_func(old_password).hexdigest():
+                    self.correct_pass = True
+                    self.current_pass_error = True
+                    self.success_url = '/register/password_change_success'
+        else:
+            assert uidb64 is not None and token is not None  # checked by URLconf
+            try:
+                uid = urlsafe_base64_decode(uidb64)
+                user = UserModel._default_manager.get(pk=uid)
+                self.tocken_check = default_token_generator.check_token(user, token)
+            except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+                user = None
+
+
+        if user is not None and (self.tocken_check or self.correct_pass):
             if form.is_valid():
                 new_password = form.cleaned_data['new_password2']
                 user.password = hash_func(new_password).hexdigest()
@@ -577,6 +608,25 @@ class PasswordResetConfirmView(FormView):
             else:
                 messages.error(request, 'Password reset has not been unsuccessful.')
                 return self.form_invalid(form)
+                return self.form_invalid(form)
         else:
-            messages.error(request, 'The reset password link is no longer valid.')
+            if not self.current_pass_error:
+                messages.error(request, 'The reset password link is no longer valid.')
+            else:
+                messages.error(request, 'Current password wrong.')
             return self.form_invalid(form)
+
+
+def password_change_success(request):
+    if logged_in(request):
+        is_loggedin = True
+        username = request.session['username']
+        render_form = False
+    else:
+        is_loggedin = False
+        username = None
+        render_form = True
+
+    return render(request, 'register/change_password_success.html', {'is_loggedin':is_loggedin, 'username':username,
+                                         'render_form':render_form }, RequestContext(request))
+
