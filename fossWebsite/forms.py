@@ -1,10 +1,10 @@
 from django import forms
-from captcha.fields import CaptchaField
+from captcha.fields import ReCaptchaField
 
 
 # Write to us (Contact field)
-class CaptchaTestForm(forms.Form):
+class ContactForm(forms.Form):
     name = forms.CharField(max_length=200)
     email = forms.EmailField()
-    message = forms.Textarea()
-    captcha = CaptchaField()
+    message = forms.CharField(max_length=1500)
+    captcha = ReCaptchaField()

@@ -14,12 +14,14 @@ from fossWebsite.helper import get_session_variables
 from register.models import User_info
 from register.helper import check_captcha
 from fossWebsite.settings import ADMINS_EMAIL
+from .forms import ContactForm
 
 
 def home(request):
     """
     Landing page
     """
+    form = ContactForm()
     if logged_in(request):
         is_loggedin = True
         username = request.session['username']
@@ -27,10 +29,7 @@ def home(request):
         is_loggedin = False
         username = None
 
-    return render(request, 'home.html', \
-            {'is_loggedin':is_loggedin, \
-            'username':username}, \
-            RequestContext(request))
+    return render(request, 'home.html', {'is_loggedin':is_loggedin, 'username':username, 'form':form}, RequestContext(request))
 
 
 def search(request):
@@ -74,28 +73,22 @@ def contact(request):
     """
     View implement contact-us.
     """
-    if request.method == 'POST':
-        sender_name = str(request.POST['sender_name'])
-        sender_email = str(request.POST['sender_email'])
-        email_message = str(request.POST['mail_text'])
-        email_from = "Amritapuri FOSS <amritapurifoss@gmail.com>"
+    if request.POST:
+        form = ContactForm(request.POST)
 
-        # if captcha field is not given
-        if not request.POST.get('g-recaptcha-response', False):
-             return render(request, 'home.html', {'captcha_error':'Captcha required'}, RequestContext(request))
-        recaptcha_challenge_field = request.POST.get('recaptcha_challenge_field', False)
-        recaptcha_response_field = request.POST.get('recaptcha_response_field', False)
-        recaptcha_remote_ip = ""
-        captcha_is_correct = check_captcha(recaptcha_challenge_field, \
-                            recaptcha_response_field,recaptcha_remote_ip)
-        email_subject = "[Contact Us]:"+ sender_name
+        # Validate the form: the captcha field will automatically
+        # check the input
+        if form.is_valid():
+            sender_name = str(form.cleaned_data['name'])
+            sender_email = str(form.cleaned_data['email'])
+            email_message = str(form.cleaned_data['message'])
+            email_from = "Amritapuri FOSS <amritapurifoss@gmail.com>"
+            email_subject = "[Contact Us]:" + sender_name
 
-        print request.POST.get('g-recaptcha-response', False)
-        # To-Do: Need to enable captcha once the site is hosted with
-        # with a domain name.
-        # if captcha_is_correct:
+            django_send_mail(email_subject, email_message, email_from, [sender_email, 'amritapurifoss@gmail.com'],
+                             fail_silently=False)
+            return render(request, 'contact_success.html', {}, RequestContext(request))
 
-        django_send_mail(email_subject, email_message, email_from, [sender_email, 'amritapurifoss@gmail.com'], fail_silently= False)
-        return render(request, 'contact_success.html', {}, RequestContext(request))
+        return HttpResponseRedirect('/')
 
-    return HttpResponseRedirect('/')
+
