@@ -79,27 +79,23 @@ def contact(request):
         sender_email = str(request.POST['sender_email'])
         email_message = str(request.POST['mail_text'])
         email_from = "Amritapuri FOSS <amritapurifoss@gmail.com>"
+
         # if captcha field is not given
-        if not (request.POST['recaptcha_challenge_field'] and request.POST['recaptcha_response_field']):
-            return render(request, 'home.html',{'captcha_error':'Captcha required'}, RequestContext(request))
-        recaptcha_challenge_field = request.POST['recaptcha_challenge_field']
-        recaptcha_response_field = request.POST['recaptcha_response_field']
+        if not request.POST.get('g-recaptcha-response', False):
+             return render(request, 'home.html', {'captcha_error':'Captcha required'}, RequestContext(request))
+        recaptcha_challenge_field = request.POST.get('recaptcha_challenge_field', False)
+        recaptcha_response_field = request.POST.get('recaptcha_response_field', False)
         recaptcha_remote_ip = ""
         captcha_is_correct = check_captcha(recaptcha_challenge_field, \
                             recaptcha_response_field,recaptcha_remote_ip)
-        email_subject = "[Contact Us]:"+ sender_name 
+        email_subject = "[Contact Us]:"+ sender_name
 
-        print captcha_is_correct
-        #To-Do: Need to enable captcha once the site is hosted with 
+        print request.POST.get('g-recaptcha-response', False)
+        # To-Do: Need to enable captcha once the site is hosted with
         # with a domain name.
-        #if captcha_is_correct:
-        django_send_mail(email_subject, \
-                            email_message, \
-                            email_from, \
-                            [sender_email, 'amritapurifoss@gmail.com'], \
-                            fail_silently= False)
-        return render(request, 'contact_success.html', \
-                {}, RequestContext(request))
-        
+        # if captcha_is_correct:
+
+        django_send_mail(email_subject, email_message, email_from, [sender_email, 'amritapurifoss@gmail.com'], fail_silently= False)
+        return render(request, 'contact_success.html', {}, RequestContext(request))
 
     return HttpResponseRedirect('/')

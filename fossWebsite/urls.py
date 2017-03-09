@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^proposal/', include('fossProposal.urls'), name='foss-proposals'),
     url(r'^attendance/', include('attendance.urls'), name='attendance'),
+    url(r'^captcha/', include('captcha.urls')),
 ]
