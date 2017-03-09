@@ -39,7 +39,7 @@ def login(request):
         if logged_in(request):
             return render(request, 'register/logged_in.html', {})
 
-        # Upon signin button click 
+        # Upon signin button click
         if request.method == 'POST':
             form = LoginForm(request.POST)
 
@@ -121,7 +121,7 @@ def forpass(request):
 
 def newregister(request):
     """
-    Make a new registration, inserting into User_info and 
+    Make a new registration, inserting into User_info and
     ProfileImage models.
     """
     try:
@@ -140,7 +140,7 @@ def newregister(request):
                 inp_password = cleaned_reg_data['password']
                 inp_email = cleaned_reg_data['email']
 
-                # Saving the user inputs into table 
+                # Saving the user inputs into table
                 new_register = form.save(commit=False)
                 new_register.password = hash_func(inp_password) \
                     .hexdigest()
@@ -239,7 +239,7 @@ def change_password(request):
         is_loggedin, username = get_session_variables(request)
         if not is_loggedin:
             return HttpResponseRedirect("/register/login")
-        # POST request 
+        # POST request
         if request.method == 'POST':
             form = ChangePasswordForm(request.POST)
 
@@ -259,7 +259,7 @@ def change_password(request):
 
                 # Given current and stored passwords same
                 if old_password == actual_pwd:
-                    # New and current passwords user provided are not same 
+                    # New and current passwords user provided are not same
                     if new_password != actual_pwd:
                         # Repass and new pass are same
                         if new_password == confirm_new_password:
@@ -553,13 +553,20 @@ class PasswordResetConfirmView(FormView):
     template_name = 'register/forpass_reset.html'
     success_url = '/register/login'
     form_class = SetPasswordForm
+    is_loggedin = False
+    username = ''
+    correct_pass = False
+    tocken_check = False
 
+    def get(self, request, *args, **kwargs):
+        self.is_loggedin, self.username = get_session_variables(self.request)
+        print self.username
+        return render(self.request, self.template_name, self.get_context_data())
 
     def get_context_data(self, **kwargs):
         context = super(PasswordResetConfirmView, self).get_context_data(**kwargs)
-        is_loggedin, username = get_session_variables(self.request)
-        context['is_loggedin'] = is_loggedin
-        context['username'] = username
+        context['is_loggedin'] = self.is_loggedin
+        context['username'] = self.username
         return context
 
 
@@ -570,14 +577,25 @@ class PasswordResetConfirmView(FormView):
         """
         UserModel = User_info
         form = self.form_class(request.POST)
-        assert uidb64 is not None and token is not None  # checked by URLconf
-        try:
-            uid = urlsafe_base64_decode(uidb64)
-            user = UserModel._default_manager.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
-            user = None
+        self.is_loggedin, self.username = get_session_variables(self.request)
+        if self.is_loggedin:
 
-        if user is not None and default_token_generator.check_token(user, token):
+            user = get_object_or_404(User_info, username=self.username)
+
+            if form.is_valid():
+                old_password = form.clean_old_password()
+                if user.password == hash_func(old_password).hexdigest():
+                    self.correct_pass = True
+        else:
+            assert uidb64 is not None and token is not None  # checked by URLconf
+            try:
+                uid = urlsafe_base64_decode(uidb64)
+                user = UserModel._default_manager.get(pk=uid)
+                self.tocken_check = default_token_generator.check_token(user, token)
+            except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+                user = None
+
+        if user is not None and (self.tocken_check or self.correct_pass):
             if form.is_valid():
                 new_password = form.cleaned_data['new_password2']
                 user.password = hash_func(new_password).hexdigest()

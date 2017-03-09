@@ -616,10 +616,13 @@ class SetPasswordForm(forms.Form):
     error_messages = {
         'password_mismatch': ("The two password fields didn't match."),
         }
-    new_password1 = forms.CharField(label=("New password"),
-                                    widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label=("New password confirmation"),
-                                    widget=forms.PasswordInput)
+    old_password = forms.CharField(label=("Old password"), widget=forms.PasswordInput)
+    new_password1 = forms.CharField(label=("New password"), widget=forms.PasswordInput)
+    new_password2 = forms.CharField(label=("New password confirmation"), widget=forms.PasswordInput)
+
+    def clean_old_password(self):
+        password = self.cleaned_data.get('old_password')
+        return password
 
     def clean_new_password2(self):
         password1 = self.cleaned_data.get('new_password1')
