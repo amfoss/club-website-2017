@@ -89,7 +89,10 @@
             alert("{{ captcha_error }}");
         </script>
     {% endif %}
-{% include 'contact.html' %}
+
+{% if render_form %} <!-- Display when not logged in -->
+    {% include 'contact.html' %}
+{% endif %}
 </div>
 {% endblock body %}
 
