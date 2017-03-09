@@ -4,59 +4,6 @@
 {% block script %}
 <script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
 <script src="{% static "js/bootstrapValidator.min.js" %}"></script>
-<script type="text/javascript">
-
-$(document).ready(function() {
-    $('#profileForm').bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-            fields: {
-                sender_name : {
-                    validators : {
-                        notEmpty: {
-                            message: 'The name cannot be empty'  
-                        },
-                        stringLength: {
-                            min: 2,
-                            max: 50,
-                            message: 'The name must be more than 2 and less than 50 characters long'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_]+$/,
-                            message: 'The name can only consist of alphabetical, number and underscore'
-                        }
-                    }
-                }, 
-                mail_text : {
-                    validators : {
-                        notEmpty: {
-                            message: 'The name cannot be empty'  
-                        },
-                    }
-                }, 
-                email : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Email cannot be empty'  
-                        },
-                        emailAddress: {
-                            message: 'The input is not a valid email address'
-                        }, 
-                    }
-                }
-            }
-        });
-});
-</script>
-    {% if captcha_error %}
-    <script type="text/javascript">
-        alert("Give Captcha");
-        window.location="/#slide-5";
-    </script>
-    {% endif %}
 {% endblock script %}
 {% block body %}
 <div class="slide" id="slide-1" data-slide="1">
@@ -138,8 +85,14 @@ $(document).ready(function() {
 </div><!-- slide-4 --> 
 <div class="slide theme" id="slide-5" data-slide="5" style="padding-bottom: 0px;">
     {% if captcha_error %}
+        <script>
+            alert("{{ captcha_error }}");
+        </script>
     {% endif %}
-{% include 'contact.html' %}
+
+{% if render_form %} <!-- Display when not logged in -->
+    {% include 'contact.html' %}
+{% endif %}
 </div>
 {% endblock body %}
 
