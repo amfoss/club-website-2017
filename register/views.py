@@ -1,7 +1,7 @@
 # Django libraries
 from django.template import RequestContext, context
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.http import HttpResponseRedirect, request
+from django.http import HttpResponseRedirect
 
 from register.forms import LoginForm, NewRegisterForm, UpdateProfileForm, SetPasswordForm, PasswordResetForm
 from register.forms import ChangePasswordForm
@@ -49,8 +49,7 @@ def login(request):
                 inp_username = cleaned_login_data['username']
                 inp_password = cleaned_login_data['password']
                 hashed_password = hash_func(inp_password).hexdigest()
-                user_tuple = User_info.objects.all().filter \
-                    (username=inp_username)
+                user_tuple = User_info.objects.all().filter(username=inp_username)
 
                 # There exist an entry in table with the given username
                 if user_tuple:
