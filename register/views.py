@@ -3,7 +3,7 @@ from django.template import RequestContext, context
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.http import HttpResponseRedirect, request
 
-from register.forms import LoginForm, NewRegisterForm, UpdateProfileForm, SetPasswordForm
+from register.forms import LoginForm, NewRegisterForm, UpdateProfileForm, SetPasswordForm, PasswordResetForm
 from register.forms import ChangePasswordForm
 from achievement.models import *
 from images.models import ProfileImage
@@ -576,12 +576,12 @@ class PasswordResetConfirmView(FormView):
         form for entering a new password.
         """
         UserModel = User_info
-        form = self.form_class(request.POST)
         self.is_loggedin, self.username = get_session_variables(self.request)
+
         if self.is_loggedin:
 
             user = get_object_or_404(User_info, username=self.username)
-
+            form = self.form_class(request.POST)
             if form.is_valid():
                 old_password = form.clean_old_password()
                 if user.password == hash_func(old_password).hexdigest():
@@ -589,6 +589,8 @@ class PasswordResetConfirmView(FormView):
                     self.current_pass_error = True
                     self.success_url = '/register/password_change_success'
         else:
+            self.form_class = PasswordResetForm
+            form = self.form_class(request.POST)
             assert uidb64 is not None and token is not None  # checked by URLconf
             try:
                 uid = urlsafe_base64_decode(uidb64)
@@ -596,7 +598,6 @@ class PasswordResetConfirmView(FormView):
                 self.tocken_check = default_token_generator.check_token(user, token)
             except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
                 user = None
-
 
         if user is not None and (self.tocken_check or self.correct_pass):
             if form.is_valid():
@@ -606,8 +607,7 @@ class PasswordResetConfirmView(FormView):
                 messages.success(request, 'Password has been reset.')
                 return self.form_valid(form)
             else:
-                messages.error(request, 'Password reset has not been unsuccessful.')
-                return self.form_invalid(form)
+                messages.error(request, 'Password reset has been unsuccessful.')
                 return self.form_invalid(form)
         else:
             if not self.current_pass_error:
