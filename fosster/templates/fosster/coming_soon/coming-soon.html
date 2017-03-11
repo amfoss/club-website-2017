@@ -21,7 +21,8 @@
 
         <!-- Your logo -->
         <div class="quick fadeIn fixed align-bottom align-right mt50 main-logo">
-            <h2 style="color:white;">FOSSTER</h2>
+            <h3 style="color:white;">FOSSTER'17</h3>
+            <h6 style="color:white;">Open Source Conference</h6>
         </div>
 
         <div id="leftSide" class="color">
@@ -32,13 +33,14 @@
               </h1>
 
               <div class="mt40 slow animated fadeInUp">
-                <div id="subscribe" class="fadeup vertical compress">
-                    <form id="subscribe-form" class="vertical-form compressed-form" action="" method="POST">
-                        <input required name="name" class="input-email round mr10" placeholder="Name">
+                <div class="fadeup vertical compress">
+                    <form id="subscribe-form" class="vertical-form compressed-form" action="."  method="post">
+                        {% csrf_token %}
+                        <input style="color:black;" required name="name" class="input-email round mr10" placeholder="Name">
                         <br>
                         <br>
-                        <input required type="email" name="email" class="input-email round mr10" placeholder="Email Address">
-                      <button type="submit" name="subscribe" class="submit btn-solid round input-submit"><i class="fa fa-check-square-o fa-lg"></i></button>
+                        <input style="color:black;" required type="email" name="email" class="input-email round mr10" placeholder="Email Address">
+                      <button type="submit" class="submit btn-solid round input-submit"><i class="fa fa-check-square-o fa-lg"></i></button>
                     </form>
                   </div>
               </div>
