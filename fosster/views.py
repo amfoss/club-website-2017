@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from fosster.models import Subscription
 
 
-class AuthorCreate(CreateView):
+class ComingSoon(CreateView):
     template_name = 'fosster/coming_soon/coming-soon.html'
     model = Subscription
     fields = ['name', 'email']
@@ -13,7 +13,7 @@ class AuthorCreate(CreateView):
 
     def form_valid(self, form):
 
-        return super(AuthorCreate, self).form_valid(form)
+        return super(ComingSoon, self).form_valid(form)
 
 
 class ThankYou(TemplateView):
