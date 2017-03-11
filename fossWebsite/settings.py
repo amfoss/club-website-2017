@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['35.167.82.240:8000', 'ec2-35-167-82-240.us-west-2.compute.amazonaws.com']
+ALLOWED_HOSTS = []
 
 
 ROOT_URLCONF = 'fossWebsite.urls'
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'images',
     'fossProposal',
     'attendance',
+    'fosster',
 ]
 
 MIDDLEWARE = [
