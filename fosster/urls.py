@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from fosster.views import CommingSoon
+from fosster.views import ComingSoon
 
 urlpatterns = [
-    url(r'$', CommingSoon.as_view(), name='coming_soon'),
+    url(r'$', ComingSoon.as_view(), name='coming_soon'),
 ]
