@@ -54,76 +54,27 @@ class RegistrationView(CreateView):
         return redirect('accounts:register-done')
 
 
+class ProfileDetailView(DetailView):
+    template_name = 'registration/profile.html'
+    model = get_user_model()
 
-def newregister(request):
-    """
-    Make a new registration, inserting into User_info and
-    ProfileImage models.
-    """
-    try:
-        # If the user is already loggedin never show the login page
-        if request.user.is_authenticated():
-            return render(request, 'register/logged_in.html', {})
+    fields = ['firstname', 'lastname', 'gender', 'contact', 'role', 'blog_url', 'twitter_id',
+              'topcoder_handle', 'github_id', 'bitbucket_id', 'typing_speed', 'interest',
+              'expertise', 'goal']
 
-        # Upon Register button click
-        if request.method == 'POST':
-            form = NewRegisterForm(request.POST, request.FILES)
-
-            # Form has all valid entries
-            if form.is_valid():
-                cleaned_reg_data = form.cleaned_data
-                inp_username = cleaned_reg_data['username']
-                inp_password = cleaned_reg_data['password']
-                inp_email = cleaned_reg_data['email']
-
-                # Saving the user inputs into table
-                new_register = form.save(commit=False)
-                new_register.password = hash_func(inp_password).hexdigest()
-                new_register.save()
-
-                user_object = get_object_or_404(User_info, username=inp_username)
-
-                # # Optional image upload processing and saving
-                # if 'image' in request.FILES:
-                #     profile_image = request.FILES['image']
-                #     profile_image_object = ProfileImage \
-                #         (image=profile_image, \
-                #          username=user_object)
-                #     profile_image_object.image.name = inp_username + \
-                #                                       ".jpg"
-                #     profile_image_object.save()
-
-                # Setting the session variables
-                request.session['username'] = cleaned_reg_data['username']
-                request.session['is_loggedin'] = True
-                request.session['email'] = cleaned_reg_data['email']
-                sendmail_after_userreg(inp_username, inp_password, inp_email)
-                notify_new_user(inp_username, inp_email)
-                return render(request, 'register/register_success.html',
-                              {'is_loggedin': request.user.is_authenticated(), 'username': request.session['username']},
-                              )
-
-            # Invalid form inputs
-            else:
-                error = "Invalid inputs"
-                return render(request, 'register/newregister.html',
-                              {'form': form, 'error': error},
-                              RequestContext(request))
-
-        return render(request, 'register/newregister.html',
-                      {'form': NewRegisterForm})
-
-    except KeyError:
-        return error_key(request)
+    def get_object(self):
+        return User_info.objects.get(username=self.request.user.username)
 
 
-def profile(request, user_name):
+def profile(request, user_name=None):
     """
     A view to display the profile (public)
     """
     is_loggedin, username = get_session_variables(request)
-    user_object = get_object_or_404(User_info, username=user_name)
+    user_object = User_info.objects.get(username=request.user.username)
+
     profile_image_object = ProfileImage.objects.filter(username=user_object)
+
     user_email = user_object.email.replace('.', ' DOT ').replace('@', ' AT ')
     contributions = Contribution.objects.all().filter(username=user_name)[:3]
     articles = Article.objects.all().filter(username=user_name)[:3]
@@ -140,7 +91,7 @@ def profile(request, user_name):
     else:
         image_name = "default_image.jpeg"
 
-    return render(request, 'register/profile.html', {'is_loggedin': is_loggedin, 'username': username,
+    return render(request, 'registration/profile.html', {'is_loggedin': is_loggedin, 'username': username,
                                                      'user_object': user_object, \
                                                      'user_email': user_email, \
                                                      'user_email': user_email, \
@@ -268,63 +219,6 @@ def mypage(request):
                       RequestContext(request))
 
 
-def update_profile(request):
-    try:
-        is_loggedin, username = get_session_variables(request)
-        # User is not logged in
-        if not request.user.is_authenticated():
-            return HttpResponseRedirect('/register/login')
-        else:
-            user_details = get_object_or_404(User_info, username=username)
-            init_user_details = user_details.__dict__
-
-            # If method is not POST
-            if request.method != 'POST':
-                # return form with old details
-                return render(request, 'register/update_profile.html', \
-                              {'form': UpdateProfileForm(init_user_details), \
-                               'is_loggedin': is_loggedin, 'username': username}, \
-                              RequestContext(request))
-
-            # If method is POST
-            else:
-                profile_update_form = UpdateProfileForm(request.POST)
-                # Form is not valid
-                if not profile_update_form.is_valid():
-                    # return form with old details
-
-                    print profile_update_form.cleaned_data
-                    return render(request, 'register/update_profile.html', \
-                                  {'form': UpdateProfileForm(init_user_details), \
-                                   'is_loggedin': is_loggedin, 'username': username}, \
-                                  RequestContext(request))
-                    # Form is valid:
-                else:
-                    user_details_form = profile_update_form.save(commit=False)
-                    user_details_obj = get_object_or_404(User_info, username=username)
-                    user_details_obj.firstname = user_details_form.firstname
-                    user_details_obj.lastname = user_details_form.lastname
-                    user_details_obj.gender = user_details_form.gender
-                    user_details_obj.contact = user_details_form.contact
-                    user_details_obj.role = user_details_form.role
-                    user_details_obj.blog_url = user_details_form.blog_url
-                    user_details_obj.twitter_id = user_details_form.twitter_id
-                    user_details_obj.bitbucket_id = user_details_form.topcoder_handle
-                    user_details_obj.github_id = user_details_form.github_id
-                    user_details_obj.bitbucket_id = user_details_form.bitbucket_id
-                    user_details_obj.typing_speed = user_details_form.typing_speed
-                    user_details_obj.interest = user_details_form.interest
-                    user_details_obj.expertise = user_details_form.expertise
-                    user_details_obj.goal = user_details_form.goal
-                    # user_details_obj.email = user_details_form.email
-                    user_details_obj.save()
-                    redirect_url = "/register/profile/" + username + "/"
-                    return HttpResponseRedirect(redirect_url)
-
-    except KeyError:
-        return error_key(request)
-
-
 def update_profile_pic(request):
     try:
         is_loggedin, username = get_session_variables(request)
@@ -375,5 +269,5 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     success_url = '/register/profile/'
 
     def get_object(self):
-        return User_info.objects.get(email=self.request.user.email)
+        return User_info.objects.get(username=self.request.user.username)
 
