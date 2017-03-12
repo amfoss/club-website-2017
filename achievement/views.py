@@ -133,7 +133,7 @@ def contrib_viewall(request):
 
     if contrib_list:
         return render(request, 'achievement/contrib_viewall.html',
-                                  {'is_loggedin': logged_in(request), 'username': username,
+                                  {'is_loggedin': request.user.is_authenticated(), 'username': username,
                                    'contrib_list': contrib_list, 'contrib_org': contrib_org},
                                   RequestContext(request))
     else:
@@ -282,14 +282,14 @@ def icpc_viewall(request):
             icpc_participants_list.append(icpc_participant_list)
 
         return render(request, 'achievement/icpc_viewall.html', \
-                                  {'is_loggedin': logged_in(request), \
+                                  {'is_loggedin': request.user.is_authenticated(), \
                                    'username': username, \
                                    'icpc_list': icpc_list, \
                                    'icpc_participants_list': icpc_participants_list}, RequestContext(request))
 
     else:
         return render(request, 'achievement/noview.html', \
-                                  {'is_loggedin': logged_in(request), \
+                                  {'is_loggedin': request.user.is_authenticated(), \
                                    'username': username, \
                                    'type': 'ACM ICPC Contest'}, \
                                   RequestContext(request))
@@ -303,7 +303,7 @@ def insert_contribution(request):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
 
         # User is logged in
@@ -362,7 +362,7 @@ def insert_article(request):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
 
         # User is logged in
@@ -421,7 +421,7 @@ def insert_talk(request):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
 
         # User is logged in
@@ -480,7 +480,7 @@ def insert_gsoc(request):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
 
         # User is logged in
@@ -539,7 +539,7 @@ def insert_intern(request):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
 
         # User is logged in
@@ -598,7 +598,7 @@ def insert_icpc(request):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
 
         # User is logged in
@@ -652,7 +652,7 @@ def update_contribution(request, achievement_id):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
         else:
             # achievement_id = get_object_or_404(Achievement, username = user_name)
@@ -703,7 +703,7 @@ def update_article(request, achievement_id):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
         else:
 
@@ -754,7 +754,7 @@ def update_intern(request, achievement_id):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
         else:
 
