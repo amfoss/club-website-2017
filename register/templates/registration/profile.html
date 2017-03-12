@@ -318,8 +318,10 @@ Login page
         </table>
     {% endif %}
 
+    {% if request.user.username == object.username %}
     <form action="{% url 'profile-update' %}">
         <button class="btn btn-default">Edit profile</button>
     </form>
+    {% endif %}
 </div><!--container-->
 {% endblock body %}

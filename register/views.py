@@ -62,47 +62,7 @@ class ProfileDetailView(DetailView):
               'topcoder_handle', 'github_id', 'bitbucket_id', 'typing_speed', 'interest',
               'expertise', 'goal']
 
-    def get_object(self):
-        return User_info.objects.get(username=self.request.user.username)
-
-
-def profile(request, user_name=None):
-    """
-    A view to display the profile (public)
-    """
-    is_loggedin, username = get_session_variables(request)
-    user_object = User_info.objects.get(username=request.user.username)
-
-    profile_image_object = ProfileImage.objects.filter(username=user_object)
-
-    user_email = user_object.email.replace('.', ' DOT ').replace('@', ' AT ')
-    contributions = Contribution.objects.all().filter(username=user_name)[:3]
-    articles = Article.objects.all().filter(username=user_name)[:3]
-    gsoc = Gsoc.objects.all().filter(username=user_name)[:3]
-    interns = Intern.objects.all().filter(username=user_name)[:3]
-    speakers = Speaker.objects.all().filter(username=user_name)[:3]
-    email = user_object.email
-    icpc_achievement = ACM_ICPC_detail.objects.filter(participant1_email=email) | \
-                       ACM_ICPC_detail.objects.filter(participant2_email=email) | \
-                       ACM_ICPC_detail.objects.filter(participant3_email=email)
-    print icpc_achievement
-    if profile_image_object:
-        image_name = user_name + ".jpg"
-    else:
-        image_name = "default_image.jpeg"
-
-    return render(request, 'registration/profile.html', {'is_loggedin': is_loggedin, 'username': username,
-                                                     'user_object': user_object, \
-                                                     'user_email': user_email, \
-                                                     'user_email': user_email, \
-                                                     'gsoc': gsoc, \
-                                                     'interns': interns, \
-                                                     'speakers': speakers, \
-                                                     'image_name': image_name, \
-                                                     'articles': articles, \
-                                                     'contributions': contributions, \
-                                                     'icpc_achievement': icpc_achievement}, \
-                  RequestContext(request))
+    slug_field = 'username'
 
 
 def change_password(request):
