@@ -15,20 +15,7 @@ from fossWebsite.helper import get_session_variables
 
 # Python libraries
 from hashlib import sha512 as hash_func
-
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template import loader
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-from django.core.mail import send_mail
-
 from django.views.generic import *
-from .forms import PasswordResetRequestForm
-from django.contrib import messages
-from django.db.models.query_utils import Q
-
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import redirect
 from django.views.generic import CreateView
@@ -368,3 +355,26 @@ def update_profile_pic(request):
 
     except KeyError:
         return error_key(request)
+
+
+class ChangePasswordView(FormView):
+    template_name = 'registration/password_change.html'
+    success_url = '/register/login'
+    form_class = ChangePasswordForm
+
+    def post(self, request, uidb64=None, token=None, *arg, **kwargs):
+        """
+        View that checks the hash in a password reset link and presents a
+        form for entering a new password.
+        """
+
+        if request.user.is_authenticated():
+            user = get_user_model().objects.get(username__exact=request.user.username)
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                user.set_password(form.clean_new_password2())
+                user.save()
+
+
+class ResetSuccess(TemplateView):
+    template_name = 'registration/password_reset_complete.html'
