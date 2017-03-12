@@ -356,25 +356,3 @@ def update_profile_pic(request):
     except KeyError:
         return error_key(request)
 
-
-class ChangePasswordView(FormView):
-    template_name = 'registration/password_change.html'
-    success_url = '/register/password_reset_success'
-    form_class = ChangePasswordForm
-
-    def post(self, request, uidb64=None, token=None, *arg, **kwargs):
-        """
-        View that checks the hash in a password reset link and presents a
-        form for entering a new password.
-        """
-
-        if request.user.is_authenticated():
-            user = get_user_model().objects.get(username__exact=request.user.username)
-            form = self.form_class(request.POST)
-            if form.is_valid():
-                user.set_password(form.clean_new_password2())
-                user.save()
-
-
-class ResetSuccess(TemplateView):
-    template_name = 'registration/password_reset_complete.html'
