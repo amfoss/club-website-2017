@@ -14,87 +14,6 @@ $(document).ready(function() {
                 validating: 'fa fa-refresh'
             },
             fields: {
-                firstname : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Firstname cannot be empty'
-                        },
-                        stringLength: {
-                            min: 2,
-                            max: 50,
-                            message: 'Firstname must be more than 2 and less than 50 characters long'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_]+$/,
-                            message: 'Firstname can only consist of alphabetical, number and underscore'
-                        }
-                    }
-                },
-                lastname : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Lastname cannot be empty'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_]+$/,
-                            message: 'Lastname can only consist of alphabetical, number and underscore'
-                        }
-                    }
-                },
-                interest : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Interests cannot be empty'
-                        },
-                    }
-                },
-                typing_speed : {
-                    validators : {
-                        regexp: {
-                            regexp: /^[0-9]+$/,
-                            message: 'Give typing speed in WPM (numeric)'
-                        }
-                    }
-                },
-                expertise : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Expertize cannot be empty'
-                        },
-                    }
-                },
-                gender : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Gender cannot be empty'
-                        },
-                    }
-                },
-                contact : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Contact cannot be empty'
-                        },
-                        regexp: {
-                            regexp: /^\d{10}$/,
-                            message: 'Not a valid contact number'
-                        }
-                    }
-                },
-                role : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Role cannot be empty'
-                        },
-                    }
-                },
-                goal : {
-                    validators : {
-                        notEmpty: {
-                            message: 'Goal cannot be empty'
-                        },
-                    }
-                },
                 username : {
                     validators : {
                         notEmpty: {
@@ -111,7 +30,7 @@ $(document).ready(function() {
                         }
                     }
                 },
-                password: {
+                password1: {
                     validators: {
                         notEmpty: {
                             message: 'The password cannot be empty'
@@ -126,7 +45,7 @@ $(document).ready(function() {
                         }
                     }
                 },
-                repass: {
+                password2: {
                     validators: {
                         notEmpty: {
                             message: 'The confirm password cannot be empty'
