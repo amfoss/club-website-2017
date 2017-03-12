@@ -22,12 +22,6 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from registration.forms import RegistrationForm
 
 
-class CustomRegisterUserForm(RegistrationForm):
-    class Meta:
-        model = User_info
-        fields = ['username', 'email']
-
-
 GENDER_CHOICES = (('M', 'Male'), \
         ('F', 'Female'))
 ROLE_CHOICES = (('S', 'Student'), \
@@ -269,6 +263,46 @@ class NewRegisterForm(ModelForm):
             return password
         else:
             raise forms.ValidationError("Passwords don't match")
+
+
+class CustomRegisterUserForm(RegistrationForm):
+    class Meta:
+        model = User_info
+        fields = ['username', 'email']
+
+    email = forms.EmailField(
+        required=True,
+        label='Email',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Email Address'}
+        )
+    )
+
+    username = forms.CharField(
+        required=True,
+        label='Username',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Username'}
+        )
+    )
+
+    password1 = forms.CharField(
+        required=True,
+        max_length=100,
+        label='Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Password'}
+        )
+    )
+
+    password2 = forms.CharField(
+        max_length=100,
+        required=True,
+        label='Re-enter password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Re Enter Your Password'}
+        ),
+    )
 
 
 class UpdateProfileForm(ModelForm):

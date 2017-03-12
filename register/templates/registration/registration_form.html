@@ -30,7 +30,7 @@ $(document).ready(function() {
                         }
                     }
                 },
-                password1: {
+                 password1: {
                     validators: {
                         notEmpty: {
                             message: 'The password cannot be empty'
@@ -48,14 +48,11 @@ $(document).ready(function() {
                 password2: {
                     validators: {
                         notEmpty: {
-                            message: 'The confirm password cannot be empty'
-                        },
-                        regexp: {
-                            regexp: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}$/
+                            message: 'The password cannot be empty'
                         },
                         identical: {
-                            field: 'password',
-                            message: 'The password and the confirm password doesn\'t match'
+                            field: 'password1',
+                            message: 'The password and its confirm are not the same'
                         }
                     }
                 },
@@ -66,9 +63,9 @@ $(document).ready(function() {
                         },
                         emailAddress: {
                             message: 'The input is not a valid email address'
-                        },
+                        }
                     }
-                }
+                },
             }
         });
 });
@@ -108,7 +105,8 @@ $(document).ready(function() {
                             {{ field|addcss:"form-control" }}
                         </div><!--input-group-->
                         {%  endif %}
-                        <div class="text-muted pull-right">
+
+                        <div style="padding-left: 5px" class="text-muted pull-right">
                             <small>{{ field.help_text }}</small>
                         </div><!--form-group-->
                         <span class="help-block">
