@@ -154,7 +154,13 @@ EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = 'amritapurifoss@gmail.com'
 
+# custom user model
+
 AUTH_USER_MODEL = 'register.User_info'
+
+# django-registration settings
+
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window;
 
 from local_settings import *
 

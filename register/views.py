@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 
-from register.forms import NewRegisterForm, UpdateProfileForm, SetPasswordForm, PasswordResetForm, RegistrationForm
+from register.forms import NewRegisterForm, UpdateProfileForm, PasswordResetForm, RegistrationForm
 from register.forms import ChangePasswordForm
 from achievement.models import *
 from images.models import ProfileImage
@@ -32,8 +32,6 @@ from django.db.models.query_utils import Q
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import redirect
 from django.views.generic import CreateView
-
-# register user
 
 
 class RegistrationView(CreateView):

@@ -5,7 +5,8 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', views.home),
-    url('^accounts/', include('django.contrib.auth.urls')),
+    # url('^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^search/', views.search),
     url(r'^contact/', views.contact),
     url(r'^register/', include('register.urls')),
