@@ -39,6 +39,8 @@ def get_session_variables(request):
     Output: is_loggedin, username
     """
     username = ''
-    if logged_in(request):
-        username = request.session['username']
-    return logged_in(request), username    
+    is_loggedin = False
+    if request.user.is_authenticated():
+        is_loggedin = True
+        username = request.user.username
+    return is_loggedin, username

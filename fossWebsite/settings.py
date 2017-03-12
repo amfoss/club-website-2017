@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['35.167.82.240:8000', 'ec2-35-167-82-240.us-west-2.compute.amazonaws.com']
+ALLOWED_HOSTS = []
 
 
 ROOT_URLCONF = 'fossWebsite.urls'
@@ -32,7 +32,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 INSTALLED_APPS = [
     # django default apps
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -55,6 +54,9 @@ INSTALLED_APPS = [
     'images',
     'fossProposal',
     'attendance',
+    'fosster',
+
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
@@ -151,6 +153,16 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = 'amritapurifoss@gmail.com'
+
+# custom user model
+
+AUTH_USER_MODEL = 'register.User_info'
+
+# django-registration settings
+
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window;
+
+LOGIN_REDIRECT_URL = '/'
 
 from local_settings import *
 

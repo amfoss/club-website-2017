@@ -1,3 +1,4 @@
+registration
 Django==1.10.5
 MySQL-python==1.2.5
 Pillow==4.0.0

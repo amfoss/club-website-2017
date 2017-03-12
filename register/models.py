@@ -1,43 +1,55 @@
+from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUsernameValidator
 from django.db import models
+from django.utils import six
 from django.urls import reverse
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import ugettext_lazy as _
+
 
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 ROLE_CHOICES = (('S', 'Student'), ('M', 'Mentor'), ('B', 'Both'))
 GOAL_CHOICES = (('startup', 'startup'), ('higher_studies', 'Higher Studies'), ('job', 'Job'), ('other', 'Others'))
 
 
-class User_info(models.Model):
+class User_info(AbstractUser):
 
-    firstname = models.CharField(max_length=20, blank=False, unique=False)
-    lastname = models.CharField(max_length=20, blank=False, unique=False)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    contact = models.CharField(max_length=11)
-    role = models.CharField(max_length=1, choices=ROLE_CHOICES)
-    blog_url = models.URLField(max_length=200)
-    twitter_id = models.CharField(max_length=30)
-    topcoder_handle = models.CharField(max_length=30)
-    github_id = models.CharField(max_length=30)
-    bitbucket_id = models.CharField(max_length=30)
-    typing_speed = models.BigIntegerField()
-    interest = models.CharField(max_length=200)
-    expertise = models.CharField(max_length=200)
-    goal = models.CharField(max_length=15, choices=GOAL_CHOICES)
-    username = models.CharField(max_length=20, unique=True, blank=False, primary_key=True)
-    email = models.EmailField(blank=False, unique=True) 
-    password = models.CharField(max_length=255, blank=False)
-    last_login = models.DateTimeField(auto_now=True)
+    firstname = models.CharField(max_length=20, blank=True, null=True, unique=False)
+    lastname = models.CharField(max_length=20, blank=True, null=True, unique=False)
+    gender = models.CharField(max_length=1, blank=True, null=True, choices=GENDER_CHOICES)
+    contact = models.CharField(max_length=11, blank=True, null=True)
+    role = models.CharField(max_length=1, blank=True, null=True, choices=ROLE_CHOICES)
+    blog_url = models.URLField(max_length=200, blank=True, null=True)
+    twitter_id = models.CharField(max_length=30, blank=True, null=True)
+    topcoder_handle = models.CharField(max_length=30, blank=True, null=True)
+    github_id = models.CharField(max_length=30, blank=True, null=True)
+    bitbucket_id = models.CharField(max_length=30, blank=True, null=True)
+    typing_speed = models.BigIntegerField(blank=True, null=True)
+    interest = models.CharField(max_length=200, blank=True, null=True)
+    expertise = models.CharField(max_length=200, blank=True, null=True)
+    goal = models.CharField(max_length=15, choices=GOAL_CHOICES, blank=True, null=True)
+
+    username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
+
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+        unique=True,
+        primary_key=True,
+        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        validators=[username_validator],
+        error_messages={
+            'unique': _("A user with that username already exists."),
+        },
+    )
+    # email = models.EmailField(blank=False, unique=True)
+    # password = models.CharField(max_length=255, blank=False)
+    # last_login = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'User_info'
 
     def get_absolute_url(self):
         return reverse('proposal-detail', kwargs={'pk': self.pk})
-
-    def __unicode__(self):
-        return self.firstname + ' ' + self.lastname
-
-    def __str__(self):
-        return self.username + ' ' + self.lastname
 
 
 class Student(models.Model):

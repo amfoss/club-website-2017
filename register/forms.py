@@ -19,6 +19,7 @@ from register.models import User_info
 
 # password reset
 from django.utils.translation import ugettext, ugettext_lazy as _
+from registration.forms import RegistrationForm
 
 
 GENDER_CHOICES = (('M', 'Male'), \
@@ -83,10 +84,22 @@ class LoginForm(forms.Form):
             raise forms.ValidationError("Passwords don't match")
 
 
+class RegistrationForm(forms.ModelForm):
+
+    class Meta:
+        model = User_info
+        fields = ['email', ]
+
+
 class NewRegisterForm(ModelForm):
     """
     Registration form
     """
+
+    class Meta:
+        model = User_info
+        fields = '__all__'
+
     firstname=forms.CharField(
          required=True,
          label='First Name', 
@@ -228,11 +241,6 @@ class NewRegisterForm(ModelForm):
         ),
     )
 
-
-    class Meta:
-        model = User_info
-	fields = '__all__'
-
     def clean_name(self):
         """
         Checks for non-alphabets in the username.
@@ -255,6 +263,46 @@ class NewRegisterForm(ModelForm):
             return password
         else:
             raise forms.ValidationError("Passwords don't match")
+
+
+class CustomRegisterUserForm(RegistrationForm):
+    class Meta:
+        model = User_info
+        fields = ['username', 'email']
+
+    email = forms.EmailField(
+        required=True,
+        label='Email',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Email Address'}
+        )
+    )
+
+    username = forms.CharField(
+        required=True,
+        label='Username',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Username'}
+        )
+    )
+
+    password1 = forms.CharField(
+        required=True,
+        max_length=100,
+        label='Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Password'}
+        )
+    )
+
+    password2 = forms.CharField(
+        max_length=100,
+        required=True,
+        label='Re-enter password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Re Enter Your Password'}
+        ),
+    )
 
 
 class UpdateProfileForm(ModelForm):
@@ -600,43 +648,7 @@ class PasswordResetForm(forms.Form):
                            html_email_template_name=html_email_template_name)
 
 
-# password reset
-
-from django import forms
-
-class PasswordResetRequestForm(forms.Form):
-    email_or_username = forms.CharField(label=("Email Or Username"), max_length=254)
-
-
-class SetPasswordForm(forms.Form):
-    """
-    A form that lets a user change set their password without entering the old
-    password
-    """
-    error_messages = {
-        'password_mismatch': ("The two password fields didn't match."),
-        }
-    old_password = forms.CharField(label=("Old password"), widget=forms.PasswordInput)
-    new_password1 = forms.CharField(label=("New password"), widget=forms.PasswordInput)
-    new_password2 = forms.CharField(label=("New password confirmation"), widget=forms.PasswordInput)
-
-    def clean_old_password(self):
-        password = self.cleaned_data.get('old_password')
-        return password
-
-    def clean_new_password2(self):
-        password1 = self.cleaned_data.get('new_password1')
-        password2 = self.cleaned_data.get('new_password2')
-        if password1 and password2:
-            if password1 != password2:
-                raise forms.ValidationError(
-                    self.error_messages['password_mismatch'],
-                    code='password_mismatch',
-                )
-        return password2
-
-
-class PasswordResetForm(forms.Form):
+class ChangePasswordForm(forms.Form):
     """
     A form that lets a user change set their password without entering the old
     password
@@ -646,7 +658,6 @@ class PasswordResetForm(forms.Form):
         }
     new_password1 = forms.CharField(label=("New password"), widget=forms.PasswordInput)
     new_password2 = forms.CharField(label=("New password confirmation"), widget=forms.PasswordInput)
-
 
     def clean_new_password2(self):
         password1 = self.cleaned_data.get('new_password1')

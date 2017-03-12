@@ -1,0 +1,130 @@
+{% extends "static/base.html" %}
+{%  load static %}
+{% load register_extras %}
+{% block title %} Register {% endblock %}
+{% block script %}
+<script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#registerForm')
+        .bootstrapValidator({
+            feedbackIcons: {
+                valid: 'fa fa-check',
+                invalid: 'fa fa-times',
+                validating: 'fa fa-refresh'
+            },
+            fields: {
+                username : {
+                    validators : {
+                        notEmpty: {
+                            message: 'The username cannot be empty'
+                        },
+                        stringLength: {
+                            min: 4,
+                            max: 50,
+                            message: 'The username must be more than 4 and less than 50 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: 'The username can only consist of alphabetical, number and underscore'
+                        }
+                    }
+                },
+                 password1: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The password cannot be empty'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 32,
+                            message: 'The password length must be between 6 and 32 characters.\nIt should have atleast one small letter, capital letter, digit and special character'
+                        },
+                        regexp: {
+                            regexp: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}$/
+                        }
+                    }
+                },
+                password2: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The password cannot be empty'
+                        },
+                        identical: {
+                            field: 'password1',
+                            message: 'The password and its confirm are not the same'
+                        }
+                    }
+                },
+                email : {
+                    validators : {
+                        notEmpty: {
+                            message: 'Email cannot be empty'
+                        },
+                        emailAddress: {
+                            message: 'The input is not a valid email address'
+                        }
+                    }
+                },
+            }
+        });
+});
+</script>
+{% endblock script %}
+{% block body %}
+<div class="container">
+    <div class="jumbo-header">
+        <h1> Register </h1>
+    </div><!--jumbo-header-->
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+        <form method="post" id="registerForm" role="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-signin-2">
+                {% for field in form.visible_fields %}
+                <div id="div_{{ field.html_name }}">
+                    <div class="form-group{% if field.errors %} has-error{% endif %}">
+                        {% if field.name == "email" %}
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            {{ field|addcss:"form-control" }}
+                        </div><!--input-group-->
+                        {% elif field.name == "username" %}
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            {{ field|addcss:"form-control" }}
+                        </div><!--input-group-->
+                        {% elif field.name == "password1" %}
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            {{ field|addcss:"form-control" }}
+                        </div><!--input-group-->
+                        {% elif field.name == "password2" %}
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            {{ field|addcss:"form-control" }}
+                        </div><!--input-group-->
+                        {%  endif %}
+
+                        <div style="padding-left: 5px" class="text-muted pull-right">
+                            <small>{{ field.help_text }}</small>
+                        </div><!--form-group-->
+                        <span class="help-block">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span><!--help-block-->
+                    </div><!--form-group-->
+                </div><!--div_{{field.html_name}}-->
+                {% endfor %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                <br>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div><!--form-signin-2-->
+        </form>
+    </div><!--col-lg-6-->
+    <div class="col-lg-3"></div>
+</div><!--container-->
+{% endblock body %}

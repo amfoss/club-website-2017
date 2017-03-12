@@ -11,3 +11,5 @@ class AttendanceList(generics.ListCreateAPIView):
 class AttendanceDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
+
+
