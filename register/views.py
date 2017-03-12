@@ -30,73 +30,74 @@ from django.contrib import messages
 from django.db.models.query_utils import Q
 
 
-# Create your views here.
-def login(request):
-    """
-    A view to evaluate login form
-    """
-    try:
-        # If the user is already loggedin never show the login page
-        if logged_in(request):
-            return render(request, 'register/logged_in.html', {})
+# Using django in build login and logout.
 
-        # Upon signin button click
-        if request.method == 'POST':
-            form = LoginForm(request.POST)
-
-            # Form has all valid entries
-            if form.is_valid():
-                cleaned_login_data = form.cleaned_data
-                inp_username = cleaned_login_data['username']
-                inp_password = cleaned_login_data['password']
-                hashed_password = hash_func(inp_password).hexdigest()
-                user_tuple = User_info.objects.all().filter(username=inp_username)
-
-                # There exist an entry in table with the given username
-                if user_tuple:
-                    actual_pwd = user_tuple[0].password
-
-                    # Password matches: session validation
-                    if actual_pwd == hashed_password:
-                        request.session['is_loggedin'] = True
-                        request.session['username'] = inp_username
-                        request.session['email'] = user_tuple[0].email
-                        return HttpResponseRedirect('/')
-
-                    # Invalid password
-                    else:
-                        error = "Invalid password. Is it really you, " + \
-                                str(inp_username) + "?"
-                        return render(request, 'register/login.html', \
-                                      {'form': form, 'error': error})
-
-                # There's no entry in the table with the given username
-                else:
-                    error = "User doesn't exist!"
-                    return render(request, 'register/login.html', \
-                                  {'form': form, 'error': error})
-
-            # Invalid form inputs
-            else:
-                error = "Invalid username and password"
-                return render(request, 'register/login.html',
-                              {'form': form, 'error': error}, )
-
-        # 'GET' request i.e refresh
-        else:
-            # User is logged in and hence redirect to home page
-            if 'is_loggedin' in request.session and \
-                    request.session['is_loggedin']:
-                return HttpResponseRedirect('/')
-            # User is not logged in and refresh the page
-            else:
-                form = LoginForm()
-
-        return render(request, 'register/login.html',
-                      {'form': form})
-
-    except KeyError:
-        return error_key(request)
+# def login(request):
+#     """
+#     A view to evaluate login form
+#     """
+#     try:
+#         # If the user is already loggedin never show the login page
+#         if request.user.is_authenticated():
+#             return render(request, 'register/logged_in.html', {})
+#
+#         # Upon signin button click
+#         if request.method == 'POST':
+#             form = LoginForm(request.POST)
+#
+#             # Form has all valid entries
+#             if form.is_valid():
+#                 cleaned_login_data = form.cleaned_data
+#                 inp_username = cleaned_login_data['username']
+#                 inp_password = cleaned_login_data['password']
+#                 hashed_password = hash_func(inp_password).hexdigest()
+#                 user_tuple = User_info.objects.all().filter(username=inp_username)
+#
+#                 # There exist an entry in table with the given username
+#                 if user_tuple:
+#                     actual_pwd = user_tuple[0].password
+#
+#                     # Password matches: session validation
+#                     if actual_pwd == hashed_password:
+#                         request.session['is_loggedin'] = True
+#                         request.session['username'] = inp_username
+#                         request.session['email'] = user_tuple[0].email
+#                         return HttpResponseRedirect('/')
+#
+#                     # Invalid password
+#                     else:
+#                         error = "Invalid password. Is it really you, " + \
+#                                 str(inp_username) + "?"
+#                         return render(request, 'register/login.html', \
+#                                       {'form': form, 'error': error})
+#
+#                 # There's no entry in the table with the given username
+#                 else:
+#                     error = "User doesn't exist!"
+#                     return render(request, 'register/login.html', \
+#                                   {'form': form, 'error': error})
+#
+#             # Invalid form inputs
+#             else:
+#                 error = "Invalid username and password"
+#                 return render(request, 'register/login.html',
+#                               {'form': form, 'error': error}, )
+#
+#         # 'GET' request i.e refresh
+#         else:
+#             # User is logged in and hence redirect to home page
+#             if 'is_loggedin' in request.session and \
+#                     request.session['is_loggedin']:
+#                 return HttpResponseRedirect('/')
+#             # User is not logged in and refresh the page
+#             else:
+#                 form = LoginForm()
+#
+#         return render(request, 'register/login.html',
+#                       {'form': form})
+#
+#     except KeyError:
+#         return error_key(request)
 
 
 # def logout(request):
@@ -110,13 +111,13 @@ def login(request):
 #         return render_to_response('register/logout.html', RequestContext(request))
 #     except KeyError:
 #         pass
-
-
-def forpass(request):
-    try:
-        return render(request, 'register/forpass.html', {'context': context})
-    except KeyError:
-        pass
+#
+#
+# def forpass(request):
+#     try:
+#         return render(request, 'register/forpass.html', {'context': context})
+#     except KeyError:
+#         pass
 
 
 def newregister(request):
@@ -166,7 +167,7 @@ def newregister(request):
                 sendmail_after_userreg(inp_username, inp_password, inp_email)
                 notify_new_user(inp_username, inp_email)
                 return render(request, 'register/register_success.html',
-                              {'is_loggedin': logged_in(request), \
+                              {'is_loggedin': request.user.is_authenticated(), \
                                'username': request.session['username']}, )
 
             # Invalid form inputs
@@ -330,7 +331,7 @@ def mypage(request):
     """
     An editable profile page for the user
     """
-    if not logged_in(request):
+    if not request.user.is_authenticated():
         return HttpResponseRedirect('/register/login')
 
     else:
@@ -349,7 +350,7 @@ def update_profile(request):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
         else:
             user_details = get_object_or_404(User_info, username=username)
@@ -406,7 +407,7 @@ def update_profile_pic(request):
     try:
         is_loggedin, username = get_session_variables(request)
         # User is not logged in
-        if not logged_in(request):
+        if not request.user.is_authenticated():
             return HttpResponseRedirect('/register/login')
         else:
             user_details = get_object_or_404(User_info, username=username)
@@ -615,7 +616,7 @@ class PasswordResetConfirmView(FormView):
 
 
 def password_change_success(request):
-    if logged_in(request):
+    if request.user.is_authenticated():
         is_loggedin = True
         username = request.session['username']
         render_form = False
