@@ -153,5 +153,7 @@ EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = 'amritapurifoss@gmail.com'
 
+AUTH_USER_MODEL = 'register.User_info'
+
 from local_settings import *
 
