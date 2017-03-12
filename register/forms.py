@@ -83,10 +83,22 @@ class LoginForm(forms.Form):
             raise forms.ValidationError("Passwords don't match")
 
 
+class RegistrationForm(forms.ModelForm):
+
+    class Meta:
+        model = User_info
+        fields = ['email', ]
+
+
 class NewRegisterForm(ModelForm):
     """
     Registration form
     """
+
+    class Meta:
+        model = User_info
+        fields = '__all__'
+
     firstname=forms.CharField(
          required=True,
          label='First Name', 
@@ -227,11 +239,6 @@ class NewRegisterForm(ModelForm):
             attrs={'placeholder': 'Re Enter Your Password'}
         ),
     )
-
-
-    class Meta:
-        model = User_info
-	fields = '__all__'
 
     def clean_name(self):
         """

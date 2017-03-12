@@ -1,16 +1,16 @@
 # Django libraries
 from django.contrib.auth import get_user_model
-from django.template import RequestContext, context
-from django.shortcuts import render_to_response, get_object_or_404, render
+from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 
-from register.forms import LoginForm, NewRegisterForm, UpdateProfileForm, SetPasswordForm, PasswordResetForm
+from register.forms import NewRegisterForm, UpdateProfileForm, SetPasswordForm, PasswordResetForm, RegistrationForm
 from register.forms import ChangePasswordForm
 from achievement.models import *
 from images.models import ProfileImage
 from register.helper import sendmail_after_userreg
 from register.helper import notify_new_user, sendmail_after_pass_change
-from fossWebsite.helper import error_key, logged_in
+from fossWebsite.helper import error_key
 from fossWebsite.helper import get_session_variables
 
 # Python libraries
@@ -28,6 +28,38 @@ from django.views.generic import *
 from .forms import PasswordResetRequestForm
 from django.contrib import messages
 from django.db.models.query_utils import Q
+
+from django.contrib.auth.forms import PasswordResetForm
+from django.shortcuts import redirect
+from django.views.generic import CreateView
+
+# register user
+
+
+class RegistrationView(CreateView):
+    form_class = RegistrationForm
+    model = User_info
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.set_password(User_info.objects.make_random_password())
+        obj.save()
+
+        # This form only requires the "email" field, so will validate.
+        reset_form = PasswordResetForm(self.request.POST)
+        reset_form.is_valid()  # Must trigger validation
+        # Copied from django/contrib/auth/views.py : password_reset
+        opts = {
+            'use_https': self.request.is_secure(),
+            'email_template_name': 'registration/verification.html',
+            'subject_template_name': 'registration/verification_subject.txt',
+            'request': self.request,
+            # 'html_email_template_name': provide an HTML content template if you desire.
+        }
+        # This form sends the email on save()
+        reset_form.save(**opts)
+
+        return redirect('accounts:register-done')
 
 
 # Using django in build login and logout.
@@ -143,12 +175,10 @@ def newregister(request):
 
                 # Saving the user inputs into table
                 new_register = form.save(commit=False)
-                new_register.password = hash_func(inp_password) \
-                    .hexdigest()
+                new_register.password = hash_func(inp_password).hexdigest()
                 new_register.save()
 
-                user_object = get_object_or_404(User_info, \
-                                                username=inp_username)
+                user_object = get_object_or_404(User_info, username=inp_username)
 
                 # # Optional image upload processing and saving
                 # if 'image' in request.FILES:
@@ -167,8 +197,8 @@ def newregister(request):
                 sendmail_after_userreg(inp_username, inp_password, inp_email)
                 notify_new_user(inp_username, inp_email)
                 return render(request, 'register/register_success.html',
-                              {'is_loggedin': request.user.is_authenticated(), \
-                               'username': request.session['username']}, )
+                              {'is_loggedin': request.user.is_authenticated(), 'username': request.session['username']},
+                              )
 
             # Invalid form inputs
             else:
@@ -189,46 +219,35 @@ def profile(request, user_name):
     A view to display the profile (public)
     """
     is_loggedin, username = get_session_variables(request)
-    user_object = get_object_or_404(User_info, \
-                                    username=user_name)
-    profile_image_object = ProfileImage.objects \
-        .filter(username=user_object)
-    user_email = user_object.email.replace('.', ' DOT ') \
-        .replace('@', ' AT ')
-    contributions = Contribution.objects.all() \
-                        .filter(username=user_name)[:3]
-    articles = Article.objects.all() \
-                   .filter(username=user_name)[:3]
-    gsoc = Gsoc.objects.all() \
-               .filter(username=user_name)[:3]
-    interns = Intern.objects.all() \
-                  .filter(username=user_name)[:3]
-    speakers = Speaker.objects.all() \
-                   .filter(username=user_name)[:3]
+    user_object = get_object_or_404(User_info, username=user_name)
+    profile_image_object = ProfileImage.objects.filter(username=user_object)
+    user_email = user_object.email.replace('.', ' DOT ').replace('@', ' AT ')
+    contributions = Contribution.objects.all().filter(username=user_name)[:3]
+    articles = Article.objects.all().filter(username=user_name)[:3]
+    gsoc = Gsoc.objects.all().filter(username=user_name)[:3]
+    interns = Intern.objects.all().filter(username=user_name)[:3]
+    speakers = Speaker.objects.all().filter(username=user_name)[:3]
     email = user_object.email
     icpc_achievement = ACM_ICPC_detail.objects.filter(participant1_email=email) | \
-                       ACM_ICPC_detail.objects.filter(participant2_email=email) | ACM_ICPC_detail.objects.filter(
-        participant3_email=email)
+                       ACM_ICPC_detail.objects.filter(participant2_email=email) | \
+                       ACM_ICPC_detail.objects.filter(participant3_email=email)
     print icpc_achievement
     if profile_image_object:
         image_name = user_name + ".jpg"
     else:
         image_name = "default_image.jpeg"
 
-    return render(request, \
-                  'register/profile.html', \
-                  {'is_loggedin': is_loggedin, \
-                   'username': username, \
-                   'user_object': user_object, \
-                   'user_email': user_email, \
-                   'user_email': user_email, \
-                   'gsoc': gsoc, \
-                   'interns': interns, \
-                   'speakers': speakers, \
-                   'image_name': image_name, \
-                   'articles': articles, \
-                   'contributions': contributions, \
-                   'icpc_achievement': icpc_achievement}, \
+    return render(request, 'register/profile.html', {'is_loggedin': is_loggedin, 'username': username,
+                                                     'user_object': user_object, \
+                                                     'user_email': user_email, \
+                                                     'user_email': user_email, \
+                                                     'gsoc': gsoc, \
+                                                     'interns': interns, \
+                                                     'speakers': speakers, \
+                                                     'image_name': image_name, \
+                                                     'articles': articles, \
+                                                     'contributions': contributions, \
+                                                     'icpc_achievement': icpc_achievement}, \
                   RequestContext(request))
 
 
@@ -465,7 +484,6 @@ class ResetPasswordRequestView(FormView):
         except ValidationError:
             return False
 
-
     def post(self, request, *args, **kwargs):
         """
         A normal post request which takes input from field "email_or_username" (in ResetPasswordRequestForm).
@@ -567,7 +585,6 @@ class PasswordResetConfirmView(FormView):
         context['username'] = self.username
         return context
 
-
     def post(self, request, uidb64=None, token=None, *arg, **kwargs):
         """
         View that checks the hash in a password reset link and presents a
@@ -625,6 +642,6 @@ def password_change_success(request):
         username = None
         render_form = True
 
-    return render(request, 'register/change_password_success.html', {'is_loggedin':is_loggedin, 'username':username,
-                                         'render_form':render_form }, RequestContext(request))
-
+    return render(request, 'register/change_password_success.html', {'is_loggedin': is_loggedin, 'username': username,
+                                                                     'render_form': render_form},
+                  RequestContext(request))

@@ -32,7 +32,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 INSTALLED_APPS = [
     # django default apps
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -56,6 +55,8 @@ INSTALLED_APPS = [
     'fossProposal',
     'attendance',
     'fosster',
+
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [

@@ -1,6 +1,10 @@
+from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUsernameValidator
 from django.db import models
+from django.utils import six
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import ugettext_lazy as _
+
 
 GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 ROLE_CHOICES = (('S', 'Student'), ('M', 'Mentor'), ('B', 'Both'))
@@ -23,7 +27,20 @@ class User_info(AbstractUser):
     interest = models.CharField(max_length=200, blank=True, null=True)
     expertise = models.CharField(max_length=200, blank=True, null=True)
     goal = models.CharField(max_length=15, choices=GOAL_CHOICES, blank=True, null=True)
-    username = models.CharField(max_length=20, unique=True, blank=False, primary_key=True)
+
+    username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
+
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+        unique=True,
+        primary_key=True,
+        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        validators=[username_validator],
+        error_messages={
+            'unique': _("A user with that username already exists."),
+        },
+    )
     # email = models.EmailField(blank=False, unique=True)
     # password = models.CharField(max_length=255, blank=False)
     # last_login = models.DateTimeField(auto_now=True)

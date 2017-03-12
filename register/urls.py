@@ -1,11 +1,8 @@
 from django.conf.urls import *
 from register import views
 from register.views import ResetPasswordRequestView, PasswordResetConfirmView
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    url(r'^login/$', auth_views.login, {'template_name': 'register/login.html'}, name='login'),
-    url(r'^logout/$', auth_views.logout, {'template_name': 'logged_out.html'}, name='logout'),
     # url(r'^login/$', views.login, name='login'),
     url(r'^password_change_success/$', views.password_change_success, name='password_change_success'),
     # url(r'^logout/$', views.logout),

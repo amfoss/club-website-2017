@@ -1,19 +1,15 @@
 # Django libraries
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.http import HttpResponse
 from django.template import RequestContext
 from django.db.models import Q
 
 from django.core.mail import send_mail as django_send_mail
-from mailer import send_mail as mailer_send_mail
 
 # Application specific libraries
-from register.views import logged_in
-from fossWebsite.helper import get_session_variables
+
+
 from register.models import User_info
-from register.helper import check_captcha
-from fossWebsite.settings import ADMINS_EMAIL
 from .forms import ContactForm
 
 
