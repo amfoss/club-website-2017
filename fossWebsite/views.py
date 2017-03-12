@@ -22,9 +22,9 @@ def home(request):
     Landing page
     """
     form = ContactForm()
-    if logged_in(request):
+    if request.user.is_authenticated():
         is_loggedin = True
-        username = request.session['username']
+        username = request.user.username
         render_form = False
     else:
         is_loggedin = False
@@ -39,7 +39,9 @@ def search(request):
     """
     Search view
     """
-    is_loggedin, username = get_session_variables(request)
+    if request.user.is_authenticated():
+        is_loggedin = True
+        username = request.user.username
     search_field = request.GET['search_field']
     #if search field is empty
     if not search_field:
@@ -76,9 +78,9 @@ def contact(request):
     """
     View implement contact-us.
     """
-    if logged_in(request):
+    if request.user.is_authenticated():
         is_loggedin = True
-        username = request.session['username']
+        username = request.user.username
     else:
         is_loggedin = False
         username = None

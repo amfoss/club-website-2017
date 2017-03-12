@@ -98,17 +98,17 @@ def login(request):
         return error_key(request)
 
 
-def logout(request):
-    """
-    A view to handle logout request
-    """
-    try:
-        del request.session['is_loggedin']
-        del request.session['username']
-        request.session.flush()
-        return render_to_response('register/logout.html', RequestContext(request))
-    except KeyError:
-        pass
+# def logout(request):
+#     """
+#     A view to handle logout request
+#     """
+#     try:
+#         del request.session['is_loggedin']
+#         del request.session['username']
+#         request.session.flush()
+#         return render_to_response('register/logout.html', RequestContext(request))
+#     except KeyError:
+#         pass
 
 
 def forpass(request):
