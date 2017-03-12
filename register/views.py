@@ -1,25 +1,17 @@
 # Django libraries
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import redirect_to_login
-from django.http import Http404
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
 
-from register.forms import NewRegisterForm, UpdateProfileForm, PasswordResetForm, RegistrationForm
-from register.forms import ChangePasswordForm
+from register.forms import UpdateProfileForm, PasswordResetForm, RegistrationForm
 from achievement.models import *
 from images.models import ProfileImage
-from register.helper import sendmail_after_userreg
-from register.helper import notify_new_user, sendmail_after_pass_change
 from fossWebsite.helper import error_key
 from fossWebsite.helper import get_session_variables
 
 # Python libraries
-from hashlib import sha512 as hash_func
 from django.views.generic import *
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import redirect
@@ -65,99 +57,18 @@ class ProfileDetailView(DetailView):
     slug_field = 'username'
 
 
-def change_password(request):
-    """
-    A view to change the password of a logged in user
-    """
-    try:
-        is_loggedin, username = get_session_variables(request)
-        if not is_loggedin:
-            return HttpResponseRedirect("/register/login")
-        # POST request
-        if request.method == 'POST':
-            form = ChangePasswordForm(request.POST)
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    template_name = 'registration/update_profile.html'
+    model = get_user_model()
+    fields = ['firstname', 'lastname', 'gender', 'contact', 'role', 'blog_url', 'twitter_id',
+              'topcoder_handle', 'github_id', 'bitbucket_id', 'typing_speed', 'interest',
+              'expertise', 'goal']
 
-            # Form inputs are valid
-            if form.is_valid():
-                new_pass = request.POST['new_password']
-                old_password = hash_func(request.POST['old_password']) \
-                    .hexdigest()
-                new_password = hash_func(request.POST['new_password']) \
-                    .hexdigest()
-                confirm_new_password = hash_func(
-                    request.POST['confirm_new_password']) \
-                    .hexdigest()
+    success_message = 'Your settings have been saved.'
+    success_url = '/register/profile/'
 
-                user_data = User_info.objects.get(username=username)
-                actual_pwd = user_data.password
-
-                # Given current and stored passwords same
-                if old_password == actual_pwd:
-                    # New and current passwords user provided are not same
-                    if new_password != actual_pwd:
-                        # Repass and new pass are same
-                        if new_password == confirm_new_password:
-                            user_data.password = new_password
-                            sendmail_after_pass_change( \
-                                username, \
-                                new_pass, \
-                                user_data.email)
-                            user_data.save()
-                            return render(request, \
-                                          'register/pass_success.html',
-                                          {'username': username, \
-                                           'is_loggedin': is_loggedin}, \
-                                          RequestContext(request))
-                        # Repass and new pass are not same
-                        else:
-                            error = "New passwords doesn't match"
-                            return render(request, \
-                                          'register/change_password.html',
-                                          {'form': form, \
-                                           'username': username, \
-                                           'is_loggedin': is_loggedin, \
-                                           'error': error}, \
-                                          RequestContext(request))
-                    # New and current password user provided are same
-                    else:
-                        error = "Your old and new password are same. Please \
-                                choose a different password"
-                        return render(request, \
-                                      'register/change_password.html',
-                                      {'form': form, \
-                                       'username': username, \
-                                       'is_loggedin': is_loggedin, \
-                                       'error': error}, \
-                                      RequestContext(request))
-                # Given current and stored passwords are not same
-                else:
-                    error = "Current password and given password doesn't match"
-                    return render(request, \
-                                  'register/change_password.html',
-                                  {'form': form, \
-                                   'username': username, \
-                                   'is_loggedin': is_loggedin, \
-                                   'error': error}, \
-                                  RequestContext(request))
-            # Form inputs is/are invalid
-            else:
-                form = ChangePasswordForm()
-
-            return render(request, \
-                          'register/change_password.html',
-                          {'form': form, \
-                           'username': username, \
-                           'is_loggedin': is_loggedin}, \
-                          RequestContext(request))
-
-        return render(request, \
-                      'register/change_password.html',
-                      {'username': username, \
-                       'is_loggedin': is_loggedin}, \
-                      RequestContext(request))
-
-    except KeyError:
-        return error_key(request)
+    def get_object(self):
+        return User_info.objects.get(username=self.request.user.username)
 
 
 def mypage(request):
@@ -216,18 +127,3 @@ def update_profile_pic(request):
 
     except KeyError:
         return error_key(request)
-
-
-class UpdateProfileView(LoginRequiredMixin, UpdateView):
-    template_name = 'registration/update_profile.html'
-    model = get_user_model()
-    fields = ['firstname', 'lastname', 'gender', 'contact', 'role', 'blog_url', 'twitter_id',
-              'topcoder_handle', 'github_id', 'bitbucket_id', 'typing_speed', 'interest',
-              'expertise', 'goal']
-
-    success_message = 'Your settings have been saved.'
-    success_url = '/register/profile/'
-
-    def get_object(self):
-        return User_info.objects.get(username=self.request.user.username)
-
