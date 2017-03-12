@@ -3,49 +3,59 @@
 Login page
 {% endblock %}
 {% block body %}
-<div class="container">
-    <br>
-    <div class="jumbo-header">
-        <h1> FOSS@Amrita Login </h1>
-    </div><!--page-header-->
-    <form class="form-signin" role="form" method="POST">
-        <h3 class="form-signin-heading centered">Please sign in</h3>
-        {% csrf_token %}
-        <div class="centered">
-            <span class="fa-stack fa-4x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-user fa-stack-1x" style="color:#eee;"></i>
-            </span>
-        </div><!--centered-->
-    {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <p>{{ message }}</p>
-                {% endfor %}
+    {% if user.is_authenticated %}
+      <br>
+        <div class="container">
+            <div class="alert alert-info" role="alert">
+                <p>You are already <strong>logged</strong> in!</p>
+            </div><!--alert alert-info-->
+        </div><!--container-->
+    {% else %}
+      <div class="container">
+            <br>
+            <div class="jumbo-header">
+                <h1> FOSS@Amrita Login </h1>
+            </div><!--page-header-->
+            <form class="form-signin" role="form" method="POST">
+                <h3 class="form-signin-heading centered">Please sign in</h3>
+                {% csrf_token %}
+                <div class="centered">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-user fa-stack-1x" style="color:#eee;"></i>
+                    </span>
+                </div><!--centered-->
+            {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <p>{{ message }}</p>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input name="username" type="text" class="form-control" id="username" placeholder="Username"/>
+                    </div><!--form-group-->
+                </div><!--form-group-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Password" />
+                    </div><!--form-group-->
+                </div><!--form-group-->
+                {% if error %}
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <i class="fa fa-warning"></i> {{ error }}
+                </div>
                 {% endif %}
-            </ul>
-        <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input name="username" type="text" class="form-control" id="username" placeholder="Username"/>
-            </div><!--form-group-->
-        </div><!--form-group-->
-        <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input name="password" type="password" class="form-control" id="password" placeholder="Password" />
-            </div><!--form-group-->
-        </div><!--form-group-->
-        {% if error %}
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <i class="fa fa-warning"></i> {{ error }}
-        </div>
-        {% endif %}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p class="centered"><a href="/register/new">New User?</a></p>
-        <p class="centered"><a href="/register/forpass">Forgot Password</a></p>
-    </form>
-</div><!--container-->
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <p class="centered"><a href="/register/new">New User?</a></p>
+                <p class="centered"><a href="/register/forpass">Forgot Password</a></p>
+            </form>
+        </div><!--container-->
+    {% endif %}
+
 {% endblock body %}
 
