@@ -41,9 +41,6 @@ class User_info(AbstractUser):
             'unique': _("A user with that username already exists."),
         },
     )
-    # email = models.EmailField(blank=False, unique=True)
-    # password = models.CharField(max_length=255, blank=False)
-    # last_login = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'User_info'
@@ -53,7 +50,6 @@ class User_info(AbstractUser):
 
 
 class Student(models.Model):
-
     username = models.ForeignKey(User_info, related_name='user_student', on_delete=models.CASCADE)
 
     # college

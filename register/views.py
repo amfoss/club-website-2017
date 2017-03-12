@@ -372,6 +372,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
               'expertise', 'goal']
 
     success_message = 'Your settings have been saved.'
+    success_url = '/register/profile/'
 
     def get_object(self):
         return User_info.objects.get(email=self.request.user.email)
