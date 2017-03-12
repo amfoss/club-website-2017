@@ -19,6 +19,8 @@ from django.shortcuts import redirect
 # generic views
 from django.views.generic import CreateView, UpdateView
 
+from register.models import Student
+
 
 class RegistrationView(CreateView):
     form_class = RegistrationForm
@@ -69,6 +71,31 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return User_info.objects.get(username=self.request.user.username)
+
+
+class StudentDetailView(DetailView):
+    template_name = 'registration/student_profile.html'
+    model = Student
+
+    fields = ['username', 'roll_number', 'branch', 'year', 'cgpa', 'mentors', 'system_number', 'responsibility1',
+              'responsibility2', 'responsibility3', 'responsibility4', 'responsibility5', 'responsibility_count',
+              'comments', ]
+
+    slug_field = 'username'
+
+
+class StudentCreateView(CreateView):
+    template_name = 'registration/student_profile_form.html'
+    model = Student
+    success_url = '/register/student/profile/'
+
+    fields = ['roll_number', 'branch', 'year', 'cgpa', 'mentors', 'system_number', 'responsibility1',
+              'responsibility2', 'responsibility3', 'responsibility4', 'responsibility5', 'responsibility_count',
+              'comments', ]
+
+    def form_valid(self, form):
+        form.instance.username = self.request.user
+        return super(StudentCreateView, self).form_valid(form)
 
 
 def mypage(request):
