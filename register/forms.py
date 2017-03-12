@@ -19,6 +19,13 @@ from register.models import User_info
 
 # password reset
 from django.utils.translation import ugettext, ugettext_lazy as _
+from registration.forms import RegistrationForm
+
+
+class CustomRegisterUserForm(RegistrationForm):
+    class Meta:
+        model = User_info
+        fields = ['username', 'email']
 
 
 GENDER_CHOICES = (('M', 'Male'), \
