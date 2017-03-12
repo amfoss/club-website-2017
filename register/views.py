@@ -1,8 +1,13 @@
 # Django libraries
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import redirect_to_login
+from django.http import Http404
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 
 from register.forms import NewRegisterForm, UpdateProfileForm, PasswordResetForm, RegistrationForm
 from register.forms import ChangePasswordForm
@@ -18,7 +23,9 @@ from hashlib import sha512 as hash_func
 from django.views.generic import *
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import redirect
-from django.views.generic import CreateView
+
+# generic views
+from django.views.generic import CreateView, UpdateView
 
 
 class RegistrationView(CreateView):
@@ -355,4 +362,17 @@ def update_profile_pic(request):
 
     except KeyError:
         return error_key(request)
+
+
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    template_name = 'registration/update_profile.html'
+    model = get_user_model()
+    fields = ['firstname', 'lastname', 'gender', 'contact', 'role', 'blog_url', 'twitter_id',
+              'topcoder_handle', 'github_id', 'bitbucket_id', 'typing_speed', 'interest',
+              'expertise', 'goal']
+
+    success_message = 'Your settings have been saved.'
+
+    def get_object(self):
+        return User_info.objects.get(email=self.request.user.email)
 

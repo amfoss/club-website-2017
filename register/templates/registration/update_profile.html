@@ -1,0 +1,115 @@
+{% extends 'static/base.html' %}
+{% block title %}
+Update Profile
+{% endblock %}
+{% block body %}
+<div class="container">
+    <br>
+    <div class="jumbo-header">
+        <h1> Update Profile </h1>
+    </div><!--page-header-->
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <form method="post" action = "" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-signin-2">
+                {% for field in form.visible_fields %}
+                <div id="div_{{ field.html_name }}"
+                class="form-group{% if field.errors %} has-error{% endif %}"> 
+                    {% if field.name == "firstname" %}
+                    <div class="input-group row">
+                            <div class="col-md-6"> <i>First Name :</i> </div>
+                            <div class="col-md-6"> {{ field }}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "lastname" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"> <i>Last Name :</i> </div>
+                        <div class="col-md-6"> {{ field }} </div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "gender" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Gender :</i></div>
+                        <div class="col-md-6">{{ field }}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "contact" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Phone Number:</i></div>
+                        <div class="col-md-6">{{ field }}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "role" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Role :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "blog_url" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Blog :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "twitter_id" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Twitter :</i></div>
+                        <div class="col-md-6">{{field }}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "topcoder_handle" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Topcoder :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "github_id" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Github :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "bitbucket_id" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Bitbucket :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "typing_speed" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Typing speed :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "interest" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Interest :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "expertise" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Expertise :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% elif field.name == "goal" %}
+                    <div class="input-group row">
+                        <div class="col-md-6"><i>Goal :</i></div>
+                        <div class="col-md-6">{{ field}}</div>
+                    </div><!--input-group--> 
+                    {% else %}
+                    {{ field }}
+                    {% endif %}
+                    <div class="text-muted pull-right">
+                        <small>{{ field.help_text }}</small>
+                    </div><!--form-group-->
+                    <span class="help-block">
+                        {% for error in field.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </span><!--help-block-->
+                </div><!--div_{{field.html_name}}-->
+                <br/>
+                {% endfor %}
+                <div class="col-md-5"></div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary ">Update</button>
+                </div>
+                <div class="col-md-5"></div>
+                <br/>
+            </div>
+        </form>
+        
+    </div><!--col-md-8-->
+    <div class="col-md-2"></div>
+</div><!--container-->
+{% endblock %}
