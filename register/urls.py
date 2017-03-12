@@ -11,10 +11,6 @@ urlpatterns = [
     url(r'^profile/(?P<user_name>\w+)/$',views.profile),
     url(r'^update_profile/$',views.update_profile),
     url(r'^update_profile_pic/$',views.update_profile_pic),
-    url(r'^reset_password_confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', PasswordResetConfirmView.as_view(),name='reset_password_confirm'),
-    url(r'^forpass/$', ResetPasswordRequestView.as_view(), name="reset_password"),
-    url(r'^change_password/$', PasswordResetConfirmView.as_view(), name="change_password"),
-
 ]
 
 
