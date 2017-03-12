@@ -87,14 +87,14 @@ if (typeof console === "undefined") {
                         </span>
                     </div><!--input-group-->
                 </form>  
-                {% if not is_loggedin %}
+                {% if not request.user.is_authenticated %}
                 <li class="{% ifequal request.path '/register/login' %}active{% endifequal %}">
                     <a href="/register/login"><i class="fa fa-sign-in fa-fw"></i> Login</a>
                 </li>
                 {% else %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user fa-fw"></i> {{ username }}<span class="caret"></span> 
+                        <i class="fa fa-user fa-fw"></i> {{ request.user.username }}<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li>

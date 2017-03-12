@@ -359,7 +359,7 @@ def update_profile_pic(request):
 
 class ChangePasswordView(FormView):
     template_name = 'registration/password_change.html'
-    success_url = '/register/login'
+    success_url = '/register/password_reset_success'
     form_class = ChangePasswordForm
 
     def post(self, request, uidb64=None, token=None, *arg, **kwargs):
