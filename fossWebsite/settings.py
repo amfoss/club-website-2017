@@ -162,5 +162,7 @@ AUTH_USER_MODEL = 'register.User_info'
 
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window;
 
+LOGIN_REDIRECT_URL = '/'
+
 from local_settings import *
 
