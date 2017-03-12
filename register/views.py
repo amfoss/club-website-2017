@@ -1,4 +1,5 @@
 # Django libraries
+from django.contrib.auth import get_user_model
 from django.template import RequestContext, context
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.http import HttpResponseRedirect
@@ -125,7 +126,7 @@ def newregister(request):
     """
     try:
         # If the user is already loggedin never show the login page
-        if logged_in(request):
+        if request.user.is_authenticated():
             return render(request, 'register/logged_in.html', {})
 
         # Upon Register button click
@@ -148,15 +149,15 @@ def newregister(request):
                 user_object = get_object_or_404(User_info, \
                                                 username=inp_username)
 
-                # Optional image upload processing and saving
-                if 'image' in request.FILES:
-                    profile_image = request.FILES['image']
-                    profile_image_object = ProfileImage \
-                        (image=profile_image, \
-                         username=user_object)
-                    profile_image_object.image.name = inp_username + \
-                                                      ".jpg"
-                    profile_image_object.save()
+                # # Optional image upload processing and saving
+                # if 'image' in request.FILES:
+                #     profile_image = request.FILES['image']
+                #     profile_image_object = ProfileImage \
+                #         (image=profile_image, \
+                #          username=user_object)
+                #     profile_image_object.image.name = inp_username + \
+                #                                       ".jpg"
+                #     profile_image_object.save()
 
                 # Setting the session variables
                 request.session['username'] = cleaned_reg_data['username']
@@ -465,12 +466,9 @@ class ResetPasswordRequestView(FormView):
 
 
     def post(self, request, *args, **kwargs):
-        '''
+        """
         A normal post request which takes input from field "email_or_username" (in ResetPasswordRequestForm).
-        '''
-        print request.POST
-
-
+        """
         form = self.form_class(request.POST)
         if form.is_valid():
             data = form.cleaned_data["email_or_username"]
@@ -574,7 +572,7 @@ class PasswordResetConfirmView(FormView):
         View that checks the hash in a password reset link and presents a
         form for entering a new password.
         """
-        UserModel = User_info
+        UserModel = get_user_model()
         self.is_loggedin, self.username = get_session_variables(self.request)
 
         if self.is_loggedin:
@@ -601,7 +599,7 @@ class PasswordResetConfirmView(FormView):
         if user is not None and (self.tocken_check or self.correct_pass):
             if form.is_valid():
                 new_password = form.cleaned_data['new_password2']
-                user.password = hash_func(new_password).hexdigest()
+                user.set_password(new_password)
                 user.save()
                 messages.success(request, 'Password has been reset.')
                 return self.form_valid(form)
