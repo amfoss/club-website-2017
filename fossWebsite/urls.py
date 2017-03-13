@@ -21,10 +21,10 @@ urlpatterns = [
     url(r'^attendance/', include('attendance.urls'), name='attendance'),
     url(r'fosster/', include('fosster.urls'), name='fosster'),
     url(r'^accounts/register/$',
-        RegistrationView.as_view(
-            form_class=CustomRegisterUserForm
+            RegistrationView.as_view(
+                form_class=CustomRegisterUserForm
+            ),
+            name='registration_register',
         ),
-        name='registration_register',
-    ),
     url(r'^accounts/', include('registration.backends.hmac.urls'), name='accounts'),
 ]

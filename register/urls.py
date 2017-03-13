@@ -1,13 +1,17 @@
 from django.conf.urls import *
 from register import views
-from register.views import ResetSuccess, ChangePasswordView
+from register.views import UpdateProfileView, ProfileDetailView, StudentDetailView, StudentCreateView, \
+    UpdateStudentDetailView
 
 urlpatterns = [
-    url(r'^new/$', views.newregister),
-    url(r'^mypage/$', views.mypage),
-    url(r'^profile/(?P<user_name>\w+)/$',views.profile),
-    url(r'^update_profile/$',views.update_profile),
-    url(r'^update_profile_pic/$', views.update_profile_pic),
-    url(r'^change_password', ChangePasswordView.as_view(), name='change_password'),
-    url(r'^reset_success', ResetSuccess.as_view(), name='password_reset_success'),
+    url(r'^mypage/$', views.mypage, name='my-page'),
+    url(r'^profile/$', ProfileDetailView.as_view(), name='profile'),
+    url(r'^profile/(?P<slug>[\w-]+)/$', ProfileDetailView.as_view(), name='profile'),
+    url(r'^update/profile$', UpdateProfileView.as_view(), name='profile-update'),
+    url(r'^update/profile/pic/$', views.update_profile_pic, name='profile-pic-update'),
+
+    url(r'^student/profile/$', StudentDetailView.as_view(), name='student-data'),
+    url(r'^student/profile/(?P<slug>[\w-]+)/$', StudentDetailView.as_view(), name='student-data'),
+    url(r'^student/add/profile/$', StudentCreateView.as_view(), name='student-data'),
+    url(r'^student/update/profile/$', UpdateStudentDetailView.as_view(), name='update-student-data'),
 ]

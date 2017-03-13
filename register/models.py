@@ -41,9 +41,6 @@ class User_info(AbstractUser):
             'unique': _("A user with that username already exists."),
         },
     )
-    # email = models.EmailField(blank=False, unique=True)
-    # password = models.CharField(max_length=255, blank=False)
-    # last_login = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'User_info'
@@ -53,28 +50,27 @@ class User_info(AbstractUser):
 
 
 class Student(models.Model):
-
     username = models.ForeignKey(User_info, related_name='user_student', on_delete=models.CASCADE)
 
     # college
-    roll_number = models.CharField(max_length=200)
-    branch = models.CharField(max_length=100)
-    year = models.CharField(max_length=10)
-    cgpa = models.CharField(max_length=10)
+    roll_number = models.CharField(max_length=200, blank=True, null=True)
+    branch = models.CharField(max_length=100, blank=True, null=True)
+    year = models.CharField(max_length=10, blank=True, null=True)
+    cgpa = models.CharField(max_length=10, blank=True, null=True)
 
     # lab
-    mentors = models.CharField(max_length=200)
-    system_number = models.CharField(max_length=10)
+    mentors = models.CharField(max_length=200, blank=True, null=True)
+    system_number = models.CharField(max_length=10, blank=True, null=True)
 
     # responsibilities
 
-    responsibility1 = models.CharField(max_length=600)
-    responsibility2 = models.CharField(max_length=600)
-    responsibility3 = models.CharField(max_length=600)
-    responsibility4 = models.CharField(max_length=600)
-    responsibility5 = models.CharField(max_length=600)
-    responsibility_count = models.CharField(max_length=10)
-    comments = models.TextField()
+    responsibility1 = models.CharField(max_length=600, blank=True, null=True)
+    responsibility2 = models.CharField(max_length=600, blank=True, null=True)
+    responsibility3 = models.CharField(max_length=600, blank=True, null=True)
+    responsibility4 = models.CharField(max_length=600, blank=True, null=True)
+    responsibility5 = models.CharField(max_length=600, blank=True, null=True)
+    responsibility_count = models.CharField(max_length=10, blank=True, null=True)
+    comments = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
         return self.username.firstname + ' ' + self.username.lastname

@@ -8,5 +8,8 @@ Register Success!!
     <div class="alert alert-success" role="alert">
         <p>Activation complete!</p>
     </div><!--alert alert-info-->
+    <form action="{% url 'profile-update' %}">
+        <button class="btn btn-default">Update profile</button>
+    </form>
 </div><!--container-->
 {% endblock body %} 
