@@ -25,13 +25,15 @@ Login page
                         <i class="fa fa-user fa-stack-1x" style="color:#eee;"></i>
                     </span>
                 </div><!--centered-->
-            {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                        <p>{{ message }}</p>
-                        {% endfor %}
-                        {% endif %}
-                    </ul>
+
+                {% if form.non_field_errors %}
+                  <div class="non-field-errors">
+                    {% for err in form.non_field_errors %}
+                      <p class="form-error">{{ err }}</p>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>

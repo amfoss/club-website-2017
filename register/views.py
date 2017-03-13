@@ -1,24 +1,27 @@
 # Django libraries
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
+from django.utils.translation import ugettext as _
 
-from register.forms import NewRegisterForm, UpdateProfileForm, PasswordResetForm, RegistrationForm
-from register.forms import ChangePasswordForm
+from register.forms import UpdateProfileForm, PasswordResetForm, RegistrationForm
 from achievement.models import *
 from images.models import ProfileImage
-from register.helper import sendmail_after_userreg
-from register.helper import notify_new_user, sendmail_after_pass_change
 from fossWebsite.helper import error_key
 from fossWebsite.helper import get_session_variables
 
 # Python libraries
-from hashlib import sha512 as hash_func
 from django.views.generic import *
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import redirect
-from django.views.generic import CreateView
+
+# generic views
+from django.views.generic import CreateView, UpdateView
+
+from register.models import Student
 
 
 class RegistrationView(CreateView):
@@ -47,199 +50,132 @@ class RegistrationView(CreateView):
         return redirect('accounts:register-done')
 
 
+class ProfileDetailView(DetailView):
+    template_name = 'registration/profile.html'
+    model = get_user_model()
 
-def newregister(request):
-    """
-    Make a new registration, inserting into User_info and
-    ProfileImage models.
-    """
-    try:
-        # If the user is already loggedin never show the login page
-        if request.user.is_authenticated():
-            return render(request, 'register/logged_in.html', {})
+    fields = ['firstname', 'lastname', 'gender', 'contact', 'role', 'blog_url', 'twitter_id',
+              'topcoder_handle', 'github_id', 'bitbucket_id', 'typing_speed', 'interest',
+              'expertise', 'goal']
 
-        # Upon Register button click
-        if request.method == 'POST':
-            form = NewRegisterForm(request.POST, request.FILES)
+    slug_field = 'username'
 
-            # Form has all valid entries
-            if form.is_valid():
-                cleaned_reg_data = form.cleaned_data
-                inp_username = cleaned_reg_data['username']
-                inp_password = cleaned_reg_data['password']
-                inp_email = cleaned_reg_data['email']
+    def get_object(self, queryset=None):
 
-                # Saving the user inputs into table
-                new_register = form.save(commit=False)
-                new_register.password = hash_func(inp_password).hexdigest()
-                new_register.save()
+        if queryset is None:
+            queryset = self.get_queryset()
 
-                user_object = get_object_or_404(User_info, username=inp_username)
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        slug = self.kwargs.get(self.slug_url_kwarg)
+        if pk is not None:
+            queryset = queryset.filter(pk=pk)
 
-                # # Optional image upload processing and saving
-                # if 'image' in request.FILES:
-                #     profile_image = request.FILES['image']
-                #     profile_image_object = ProfileImage \
-                #         (image=profile_image, \
-                #          username=user_object)
-                #     profile_image_object.image.name = inp_username + \
-                #                                       ".jpg"
-                #     profile_image_object.save()
+        if slug is None:
+            slug = self.request.user.username
 
-                # Setting the session variables
-                request.session['username'] = cleaned_reg_data['username']
-                request.session['is_loggedin'] = True
-                request.session['email'] = cleaned_reg_data['email']
-                sendmail_after_userreg(inp_username, inp_password, inp_email)
-                notify_new_user(inp_username, inp_email)
-                return render(request, 'register/register_success.html',
-                              {'is_loggedin': request.user.is_authenticated(), 'username': request.session['username']},
-                              )
+        # Next, try looking up by slug.
+        if slug is not None and (pk is None or self.query_pk_and_slug):
+            slug_field = self.get_slug_field()
+            queryset = queryset.filter(**{slug_field: slug})
 
-            # Invalid form inputs
-            else:
-                error = "Invalid inputs"
-                return render(request, 'register/newregister.html',
-                              {'form': form, 'error': error},
-                              RequestContext(request))
+        # If none of those are defined, it's an error.
+        if pk is None and slug is None:
+            raise AttributeError("Generic detail view %s must be called with "
+                                 "either an object pk or a slug."
+                                 % self.__class__.__name__)
 
-        return render(request, 'register/newregister.html',
-                      {'form': NewRegisterForm})
-
-    except KeyError:
-        return error_key(request)
+        try:
+            # Get the single item from the filtered queryset
+            obj = queryset.get()
+        except queryset.model.DoesNotExist:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                          {'verbose_name': queryset.model._meta.verbose_name})
+        return obj
 
 
-def profile(request, user_name):
-    """
-    A view to display the profile (public)
-    """
-    is_loggedin, username = get_session_variables(request)
-    user_object = get_object_or_404(User_info, username=user_name)
-    profile_image_object = ProfileImage.objects.filter(username=user_object)
-    user_email = user_object.email.replace('.', ' DOT ').replace('@', ' AT ')
-    contributions = Contribution.objects.all().filter(username=user_name)[:3]
-    articles = Article.objects.all().filter(username=user_name)[:3]
-    gsoc = Gsoc.objects.all().filter(username=user_name)[:3]
-    interns = Intern.objects.all().filter(username=user_name)[:3]
-    speakers = Speaker.objects.all().filter(username=user_name)[:3]
-    email = user_object.email
-    icpc_achievement = ACM_ICPC_detail.objects.filter(participant1_email=email) | \
-                       ACM_ICPC_detail.objects.filter(participant2_email=email) | \
-                       ACM_ICPC_detail.objects.filter(participant3_email=email)
-    print icpc_achievement
-    if profile_image_object:
-        image_name = user_name + ".jpg"
-    else:
-        image_name = "default_image.jpeg"
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    template_name = 'registration/update_profile.html'
+    model = get_user_model()
+    fields = ['firstname', 'lastname', 'gender', 'contact', 'role', 'blog_url', 'twitter_id',
+              'topcoder_handle', 'github_id', 'bitbucket_id', 'typing_speed', 'interest',
+              'expertise', 'goal']
 
-    return render(request, 'register/profile.html', {'is_loggedin': is_loggedin, 'username': username,
-                                                     'user_object': user_object, \
-                                                     'user_email': user_email, \
-                                                     'user_email': user_email, \
-                                                     'gsoc': gsoc, \
-                                                     'interns': interns, \
-                                                     'speakers': speakers, \
-                                                     'image_name': image_name, \
-                                                     'articles': articles, \
-                                                     'contributions': contributions, \
-                                                     'icpc_achievement': icpc_achievement}, \
-                  RequestContext(request))
+    success_message = 'Your settings have been saved.'
+    success_url = '/register/profile/'
+
+    def get_object(self):
+        return User_info.objects.get(username=self.request.user.username)
 
 
-def change_password(request):
-    """
-    A view to change the password of a logged in user
-    """
-    try:
-        is_loggedin, username = get_session_variables(request)
-        if not is_loggedin:
-            return HttpResponseRedirect("/register/login")
-        # POST request
-        if request.method == 'POST':
-            form = ChangePasswordForm(request.POST)
+class StudentDetailView(DetailView):
+    template_name = 'registration/student_profile.html'
+    model = Student
 
-            # Form inputs are valid
-            if form.is_valid():
-                new_pass = request.POST['new_password']
-                old_password = hash_func(request.POST['old_password']) \
-                    .hexdigest()
-                new_password = hash_func(request.POST['new_password']) \
-                    .hexdigest()
-                confirm_new_password = hash_func(
-                    request.POST['confirm_new_password']) \
-                    .hexdigest()
+    fields = ['username', 'roll_number', 'branch', 'year', 'cgpa', 'mentors', 'system_number', 'responsibility1',
+              'responsibility2', 'responsibility3', 'responsibility4', 'responsibility5', 'responsibility_count',
+              'comments', ]
 
-                user_data = User_info.objects.get(username=username)
-                actual_pwd = user_data.password
+    slug_field = 'username'
 
-                # Given current and stored passwords same
-                if old_password == actual_pwd:
-                    # New and current passwords user provided are not same
-                    if new_password != actual_pwd:
-                        # Repass and new pass are same
-                        if new_password == confirm_new_password:
-                            user_data.password = new_password
-                            sendmail_after_pass_change( \
-                                username, \
-                                new_pass, \
-                                user_data.email)
-                            user_data.save()
-                            return render(request, \
-                                          'register/pass_success.html',
-                                          {'username': username, \
-                                           'is_loggedin': is_loggedin}, \
-                                          RequestContext(request))
-                        # Repass and new pass are not same
-                        else:
-                            error = "New passwords doesn't match"
-                            return render(request, \
-                                          'register/change_password.html',
-                                          {'form': form, \
-                                           'username': username, \
-                                           'is_loggedin': is_loggedin, \
-                                           'error': error}, \
-                                          RequestContext(request))
-                    # New and current password user provided are same
-                    else:
-                        error = "Your old and new password are same. Please \
-                                choose a different password"
-                        return render(request, \
-                                      'register/change_password.html',
-                                      {'form': form, \
-                                       'username': username, \
-                                       'is_loggedin': is_loggedin, \
-                                       'error': error}, \
-                                      RequestContext(request))
-                # Given current and stored passwords are not same
-                else:
-                    error = "Current password and given password doesn't match"
-                    return render(request, \
-                                  'register/change_password.html',
-                                  {'form': form, \
-                                   'username': username, \
-                                   'is_loggedin': is_loggedin, \
-                                   'error': error}, \
-                                  RequestContext(request))
-            # Form inputs is/are invalid
-            else:
-                form = ChangePasswordForm()
+    def get_object(self, queryset=None):
 
-            return render(request, \
-                          'register/change_password.html',
-                          {'form': form, \
-                           'username': username, \
-                           'is_loggedin': is_loggedin}, \
-                          RequestContext(request))
+        if queryset is None:
+            queryset = self.get_queryset()
 
-        return render(request, \
-                      'register/change_password.html',
-                      {'username': username, \
-                       'is_loggedin': is_loggedin}, \
-                      RequestContext(request))
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        slug = self.kwargs.get(self.slug_url_kwarg)
+        if pk is not None:
+            queryset = queryset.filter(pk=pk)
 
-    except KeyError:
-        return error_key(request)
+        if slug is None:
+            slug = self.request.user.username
+
+        # Next, try looking up by slug.
+        if slug is not None and (pk is None or self.query_pk_and_slug):
+            slug_field = self.get_slug_field()
+            queryset = queryset.filter(**{slug_field: slug})
+
+        # If none of those are defined, it's an error.
+        if pk is None and slug is None:
+            raise AttributeError("Generic detail view %s must be called with "
+                                 "either an object pk or a slug."
+                                 % self.__class__.__name__)
+
+        try:
+            # Get the single item from the filtered queryset
+            obj = queryset.get()
+        except queryset.model.DoesNotExist:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                          {'verbose_name': queryset.model._meta.verbose_name})
+        return obj
+
+
+class UpdateStudentDetailView(LoginRequiredMixin, UpdateView):
+    template_name = 'registration/update_profile.html'
+    model = Student
+    fields = ['roll_number', 'branch', 'year', 'cgpa', 'mentors', 'system_number', 'responsibility1',
+              'responsibility2', 'responsibility3', 'responsibility4', 'responsibility5', 'responsibility_count',
+              'comments', ]
+
+    success_message = 'Your settings have been saved.'
+    success_url = '/register/student/profile/'
+
+    def get_object(self):
+        return Student.objects.get(username=self.request.user.username)
+
+
+class StudentCreateView(CreateView):
+    template_name = 'registration/student_profile_form.html'
+    model = Student
+    success_url = '/register/student/profile/'
+
+    fields = ['roll_number', 'branch', 'year', 'cgpa', 'mentors', 'system_number', 'responsibility1',
+              'responsibility2', 'responsibility3', 'responsibility4', 'responsibility5', 'responsibility_count',
+              'comments', ]
+
+    def form_valid(self, form):
+        form.instance.username = self.request.user
+        return super(StudentCreateView, self).form_valid(form)
 
 
 def mypage(request):
@@ -259,63 +195,6 @@ def mypage(request):
                        'is_loggedin': is_loggedin, \
                        'lastname': name.lastname, }, \
                       RequestContext(request))
-
-
-def update_profile(request):
-    try:
-        is_loggedin, username = get_session_variables(request)
-        # User is not logged in
-        if not request.user.is_authenticated():
-            return HttpResponseRedirect('/register/login')
-        else:
-            user_details = get_object_or_404(User_info, username=username)
-            init_user_details = user_details.__dict__
-
-            # If method is not POST
-            if request.method != 'POST':
-                # return form with old details
-                return render(request, 'register/update_profile.html', \
-                              {'form': UpdateProfileForm(init_user_details), \
-                               'is_loggedin': is_loggedin, 'username': username}, \
-                              RequestContext(request))
-
-            # If method is POST
-            else:
-                profile_update_form = UpdateProfileForm(request.POST)
-                # Form is not valid
-                if not profile_update_form.is_valid():
-                    # return form with old details
-
-                    print profile_update_form.cleaned_data
-                    return render(request, 'register/update_profile.html', \
-                                  {'form': UpdateProfileForm(init_user_details), \
-                                   'is_loggedin': is_loggedin, 'username': username}, \
-                                  RequestContext(request))
-                    # Form is valid:
-                else:
-                    user_details_form = profile_update_form.save(commit=False)
-                    user_details_obj = get_object_or_404(User_info, username=username)
-                    user_details_obj.firstname = user_details_form.firstname
-                    user_details_obj.lastname = user_details_form.lastname
-                    user_details_obj.gender = user_details_form.gender
-                    user_details_obj.contact = user_details_form.contact
-                    user_details_obj.role = user_details_form.role
-                    user_details_obj.blog_url = user_details_form.blog_url
-                    user_details_obj.twitter_id = user_details_form.twitter_id
-                    user_details_obj.bitbucket_id = user_details_form.topcoder_handle
-                    user_details_obj.github_id = user_details_form.github_id
-                    user_details_obj.bitbucket_id = user_details_form.bitbucket_id
-                    user_details_obj.typing_speed = user_details_form.typing_speed
-                    user_details_obj.interest = user_details_form.interest
-                    user_details_obj.expertise = user_details_form.expertise
-                    user_details_obj.goal = user_details_form.goal
-                    # user_details_obj.email = user_details_form.email
-                    user_details_obj.save()
-                    redirect_url = "/register/profile/" + username + "/"
-                    return HttpResponseRedirect(redirect_url)
-
-    except KeyError:
-        return error_key(request)
 
 
 def update_profile_pic(request):
@@ -355,26 +234,3 @@ def update_profile_pic(request):
 
     except KeyError:
         return error_key(request)
-
-
-class ChangePasswordView(FormView):
-    template_name = 'registration/password_change.html'
-    success_url = '/register/password_reset_success'
-    form_class = ChangePasswordForm
-
-    def post(self, request, uidb64=None, token=None, *arg, **kwargs):
-        """
-        View that checks the hash in a password reset link and presents a
-        form for entering a new password.
-        """
-
-        if request.user.is_authenticated():
-            user = get_user_model().objects.get(username__exact=request.user.username)
-            form = self.form_class(request.POST)
-            if form.is_valid():
-                user.set_password(form.clean_new_password2())
-                user.save()
-
-
-class ResetSuccess(TemplateView):
-    template_name = 'registration/password_reset_complete.html'

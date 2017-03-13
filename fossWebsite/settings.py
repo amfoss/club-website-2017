@@ -75,7 +75,7 @@ X_FRAME_OPTIONS = 'ALLOWALL'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR + '/templates',],
+        'DIRS': [BASE_DIR + '/templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': DEBUG,
@@ -160,7 +160,7 @@ AUTH_USER_MODEL = 'register.User_info'
 
 # django-registration settings
 
-ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window;
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window;
 
 LOGIN_REDIRECT_URL = '/'
 
