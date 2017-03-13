@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
-from register.forms import UpdateProfileForm, PasswordResetForm, RegistrationForm
 from achievement.models import *
 from images.models import ProfileImage
 from fossWebsite.helper import error_key
@@ -15,39 +14,10 @@ from fossWebsite.helper import get_session_variables
 
 # Python libraries
 from django.views.generic import *
-from django.contrib.auth.forms import PasswordResetForm
-from django.shortcuts import redirect
 
 # generic views
 from django.views.generic import CreateView, UpdateView
-
 from register.models import Student
-
-
-class RegistrationView(CreateView):
-    form_class = RegistrationForm
-    model = User_info
-
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.set_password(User_info.objects.make_random_password())
-        obj.save()
-
-        # This form only requires the "email" field, so will validate.
-        reset_form = PasswordResetForm(self.request.POST)
-        reset_form.is_valid()  # Must trigger validation
-        # Copied from django/contrib/auth/views.py : password_reset
-        opts = {
-            'use_https': self.request.is_secure(),
-            'email_template_name': 'registration/verification.html',
-            'subject_template_name': 'registration/verification_subject.txt',
-            'request': self.request,
-            # 'html_email_template_name': provide an HTML content template if you desire.
-        }
-        # This form sends the email on save()
-        reset_form.save(**opts)
-
-        return redirect('accounts:register-done')
 
 
 class ProfileDetailView(DetailView):
