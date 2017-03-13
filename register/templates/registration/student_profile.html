@@ -1,2 +1,129 @@
-<h1>{{ object.username }}</h1>
-{{  object.roll_number }}
+{% extends 'static/base.html' %}
+{%  load static %}
+{% block title %}
+Login page
+{% endblock %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="thumbnail">
+                <img src="{% static 'images/profile_image/' %}{{ image_name }}"
+                    class="img-rounded img-thumbnail img-responsive"
+                    alt="{{ image_name }}" height="107" width="107">
+                <div class="caption centered">
+                    <strong>{{ object.firstname | title }} 
+                        {{ object.lastname | title }} </strong>
+                </div><!--caption-->
+            </div><!--thumbnail-->
+        </div><!--col-sm-2-->
+        <div class="col-sm-6">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <td>
+                        <strong>Email</strong> 
+                    </td>
+                    <td>
+                        {{ object.email }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Interests</strong>
+                    </td>
+                    <td>
+                        {{ object.interest }}
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        <strong>Expertise</strong> 
+                    </td>
+                    <td>
+                        {{ object.expertise }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Blog URL</strong>
+                    </td>
+                    <td>
+                        {% if object.blog_url %}
+                            {{object.blog_url }}
+                        {% else %}
+                            _
+                        {% endif %}
+
+                    </td>
+                </tr>
+                    <tr>
+                    <td>
+                        <strong>Twitter ID</strong>
+                    </td>
+                    <td>
+                        {% if object.twitter_id %}
+                            {{object.twitter_id }}
+                        {% else %}
+                            _
+                        {% endif %}
+
+                    </td>
+               </tr>
+               <tr>
+                    <td>
+                        <strong>Topcoder Handle</strong>
+                    </td>
+                    <td>
+                        {% if object.topcoder_handle %}
+                            {{object.topcoder_handle }}
+                        {% else %}
+                            _
+                        {% endif %}
+                    </td>
+                </tr>               
+                <tr>
+                    <td>
+                        <strong>Github ID</strong>
+                    </td>
+                    <td>                       
+                        {% if object.github_id %}
+                            {{object.github_id }}
+                        {% else %}
+                            _
+                        {% endif %}
+                   </td>
+               </tr>
+               <tr>
+                    <td>
+                        <strong>Bitbucket ID</strong>
+                    </td>
+                    <td>
+                        {% if object.bitbucket_id %} 
+                            {{object.bitbucket_id }}
+                        {% else %}
+                            _
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Typing Speed</strong>
+                    </td>
+                    <td>
+                        {{ object.typing_speed }} WPM
+                    </td>
+                </tr>
+           </table>
+        </div><!--col-sm-6-->
+        <div class="col-sm-4"></div>
+    </div><!--row-->
+
+
+    {% if request.user.username == object.username %}
+    <form action="{% url 'update-student-data' %}">
+        <button class="btn btn-default">Edit data</button>
+    </form>
+    {% endif %}
+</div><!--container-->
+{% endblock body %}
