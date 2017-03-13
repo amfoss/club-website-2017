@@ -8,49 +8,44 @@ Login page
 <div class="container">
     <div class="row">
         <div class="col-sm-2">
-            <div class="thumbnail">
-                <img src="{% static 'images/profile_image/' %}{{ image_name }}"
-                    class="img-rounded img-thumbnail img-responsive"
-                    alt="{{ image_name }}" height="107" width="107">
-                <div class="caption centered">
-                    <strong>{{ object.firstname | title }} 
-                        {{ object.lastname | title }} </strong>
-                </div><!--caption-->
-            </div><!--thumbnail-->
         </div><!--col-sm-2-->
         <div class="col-sm-6">
             <table class="table table-hover table-bordered">
                 <tr>
                     <td>
-                        <strong>Email</strong> 
+                        <strong>Name</strong>
                     </td>
                     <td>
-                        {{ object.email }}
+                        {{ object.username.first_name }}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <strong>Interests</strong>
+                        <strong>Roll Number</strong>
                     </td>
                     <td>
-                        {{ object.interest }}
+                        {{ object.roll_number }}
                     </td>
                 </tr> 
                 <tr>
                     <td>
-                        <strong>Expertise</strong> 
+                        <strong>Branch</strong>
                     </td>
                     <td>
-                        {{ object.expertise }}
+                        {% if object.branch %}
+                            {{object.branch }}
+                        {% else %}
+                            _
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <strong>Blog URL</strong>
+                        <strong>Year</strong>
                     </td>
                     <td>
-                        {% if object.blog_url %}
-                            {{object.blog_url }}
+                        {% if object.year %}
+                            {{object.year }}
                         {% else %}
                             _
                         {% endif %}
@@ -59,11 +54,11 @@ Login page
                 </tr>
                     <tr>
                     <td>
-                        <strong>Twitter ID</strong>
+                        <strong>CGPA</strong>
                     </td>
                     <td>
-                        {% if object.twitter_id %}
-                            {{object.twitter_id }}
+                        {% if object.cgpa %}
+                            {{object.cgpa }}
                         {% else %}
                             _
                         {% endif %}
@@ -72,11 +67,11 @@ Login page
                </tr>
                <tr>
                     <td>
-                        <strong>Topcoder Handle</strong>
+                        <strong>Mentor</strong>
                     </td>
                     <td>
-                        {% if object.topcoder_handle %}
-                            {{object.topcoder_handle }}
+                        {% if object.mentors %}
+                            {{object.mentors }}
                         {% else %}
                             _
                         {% endif %}
@@ -84,11 +79,11 @@ Login page
                 </tr>               
                 <tr>
                     <td>
-                        <strong>Github ID</strong>
+                        <strong>System number</strong>
                     </td>
                     <td>                       
-                        {% if object.github_id %}
-                            {{object.github_id }}
+                        {% if object.system_number %}
+                            {{object.system_number }}
                         {% else %}
                             _
                         {% endif %}
@@ -96,11 +91,15 @@ Login page
                </tr>
                <tr>
                     <td>
-                        <strong>Bitbucket ID</strong>
+                        <strong>Responsibilty</strong>
                     </td>
                     <td>
-                        {% if object.bitbucket_id %} 
-                            {{object.bitbucket_id }}
+                        {% if object.responsibility1 %}
+                            <p>{{object.responsibility1 }}</p>
+                            <p>{{object.responsibility2 }}</p>
+                            <p>{{object.responsibility3 }}</p>
+                            <p>{{object.responsibility4 }}</p>
+                            <p>{{object.responsibility5 }}</p>
                         {% else %}
                             _
                         {% endif %}
@@ -108,10 +107,10 @@ Login page
                 </tr>
                 <tr>
                     <td>
-                        <strong>Typing Speed</strong>
+                        <strong>Other info</strong>
                     </td>
                     <td>
-                        {{ object.typing_speed }} WPM
+                        {{ object.comments }} WPM
                     </td>
                 </tr>
            </table>
@@ -120,7 +119,7 @@ Login page
     </div><!--row-->
 
 
-    {% if request.user.username == object.username %}
+    {% if request.user.username == object.username.username %}
     <form action="{% url 'update-student-data' %}">
         <button class="btn btn-default">Edit data</button>
     </form>

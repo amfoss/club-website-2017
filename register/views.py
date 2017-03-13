@@ -121,7 +121,7 @@ class StudentDetailView(DetailView):
 
 
 class UpdateStudentDetailView(LoginRequiredMixin, UpdateView):
-    template_name = 'registration/update_profile.html'
+    template_name = 'registration/student_profile_form.html'
     model = Student
     fields = ['roll_number', 'branch', 'year', 'cgpa', 'mentors', 'system_number', 'responsibility1',
               'responsibility2', 'responsibility3', 'responsibility4', 'responsibility5', 'responsibility_count',
