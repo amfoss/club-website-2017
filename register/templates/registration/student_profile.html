@@ -1,2 +1,128 @@
-<h1>{{ object.username }}</h1>
-{{  object.roll_number }}
+{% extends 'static/base.html' %}
+{%  load static %}
+{% block title %}
+Login page
+{% endblock %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+        </div><!--col-sm-2-->
+        <div class="col-sm-6">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <td>
+                        <strong>Name</strong>
+                    </td>
+                    <td>
+                        {{ object.username.first_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Roll Number</strong>
+                    </td>
+                    <td>
+                        {{ object.roll_number }}
+                    </td>
+                </tr> 
+                <tr>
+                    <td>
+                        <strong>Branch</strong>
+                    </td>
+                    <td>
+                        {% if object.branch %}
+                            {{object.branch }}
+                        {% else %}
+                            _
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Year</strong>
+                    </td>
+                    <td>
+                        {% if object.year %}
+                            {{object.year }}
+                        {% else %}
+                            _
+                        {% endif %}
+
+                    </td>
+                </tr>
+                    <tr>
+                    <td>
+                        <strong>CGPA</strong>
+                    </td>
+                    <td>
+                        {% if object.cgpa %}
+                            {{object.cgpa }}
+                        {% else %}
+                            _
+                        {% endif %}
+
+                    </td>
+               </tr>
+               <tr>
+                    <td>
+                        <strong>Mentor</strong>
+                    </td>
+                    <td>
+                        {% if object.mentors %}
+                            {{object.mentors }}
+                        {% else %}
+                            _
+                        {% endif %}
+                    </td>
+                </tr>               
+                <tr>
+                    <td>
+                        <strong>System number</strong>
+                    </td>
+                    <td>                       
+                        {% if object.system_number %}
+                            {{object.system_number }}
+                        {% else %}
+                            _
+                        {% endif %}
+                   </td>
+               </tr>
+               <tr>
+                    <td>
+                        <strong>Responsibilty</strong>
+                    </td>
+                    <td>
+                        {% if object.responsibility1 %}
+                            <p>{{object.responsibility1 }}</p>
+                            <p>{{object.responsibility2 }}</p>
+                            <p>{{object.responsibility3 }}</p>
+                            <p>{{object.responsibility4 }}</p>
+                            <p>{{object.responsibility5 }}</p>
+                        {% else %}
+                            _
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Other info</strong>
+                    </td>
+                    <td>
+                        {{ object.comments }} WPM
+                    </td>
+                </tr>
+           </table>
+        </div><!--col-sm-6-->
+        <div class="col-sm-4"></div>
+    </div><!--row-->
+
+
+    {% if request.user.username == object.username.username %}
+    <form action="{% url 'update-student-data' %}">
+        <button class="btn btn-default">Edit data</button>
+    </form>
+    {% endif %}
+</div><!--container-->
+{% endblock body %}

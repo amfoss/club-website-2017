@@ -3,7 +3,7 @@ from django.contrib import auth
 from registration.backends.hmac.views import RegistrationView
 from fossWebsite import views
 from django.contrib import admin
-from register.forms import CustomRegisterUserForm
+from .forms import CustomRegisterUserForm
 
 admin.autodiscover()
 
